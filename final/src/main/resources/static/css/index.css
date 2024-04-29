@@ -1,0 +1,16 @@
+@charset "UTF-8";
+* {
+   box-sizing: border-box;
+}
+
+html {
+   height: 100%;
+}
+
+body {
+   margin: 0;
+   height: 100%;
+   background-color: #dbdffd;
+   display: flex;
+   flex-direction: column;
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.finalpro.start.dao.MemberDAO">
+	<insert id="signupProc" parameterType="member">
+		INSERT INTO membertbl
+		(m_email, m_pw, m_name, m_gender, m_age, m_point, m_phone)
+		VALUES
+		(#{m_email}, #{m_pw}, #{m_name}, #{m_gender}, #{m_age}, #{m_point},
+		#{m_phone})
+	</insert>
+	<update id="updateM_point" parameterType="member">
+		UPDATE membertbl
+		SET
+		m_point = m_point + 1000
+		WHERE m_id = #{m_id}
+	</update>
+	<select id="findByEmail" parameterType="String"
+		resultType="member">
+		SELECT * FROM membertbl
+		WHERE m_email = #{m_email}
+	</select>
+	<select id="checkEmail" parameterType="String"
+		resultType="member">
+		SELECT * FROM membertbl
+		WHERE m_email = #{m_email}
+	</select>
+	<select id="findEmail" parameterType="map" resultType="String">
+		SELECT
+		m_email FROM membertbl
+		WHERE m_name = #{m_name} AND m_phone =
+		#{m_phone} AND m_gender =
+		#{m_gender}
+	</select>
+	<select id="selectEmail" parameterType="String"
+		resultType="String">
+		SELECT m_email FROM member WHERE m_id=#{m_id}
+	</select>
+	<update id="changePassword" parameterType="java.util.Map">
+		UPDATE membertbl
+		SET m_pw=#{encodePassword}
+		WHERE m_email=#{changePwEmail}
+	</update>
+
+</mapper>

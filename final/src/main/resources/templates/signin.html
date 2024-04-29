@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>로그인</title>
+<link rel="stylesheet" th:href="@{/css/signin.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<!-- jQuery 로드 구문 -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    function findEmail() {
+        // 이메일 찾기 페이지로 이동
+        window.location.href = "findEmail";
+    }
+    
+    function resetPassword() {
+        // 비밀번호 재설정 페이지로 이동
+        window.location.href = "resetPassword";
+    }
+    
+</script>
+</head>
+<body>
+	<th:block th:replace="~{fragments/header :: header}"></th:block>
+	<div class="center-background">
+		<div class="login-container">
+			<div class="center-text">로그인</div>
+			<form id="signin-form" action="signinProc" method="post">
+				<div class="form-group">
+					<input class="email-write-box" type="email" id="m_email"
+						name="m_email" required placeholder="Email">
+				</div>
+				<div class="form-group">
+					<input class="password-write-box" type="password" id="m_pw"
+						name="m_pw" required placeholder="Password">
+				</div>
+				<button class="center-button" type="submit">로그인</button>
+				<button class="id-find-button" onclick="findEmail()">이메일 찾기</button>
+				<button class="password-find-button" onclick="resetPassword()">비밀번호
+					찾기</button>
+			</form>
+			            <div th:if="${msg}" class="flash-message" th:text="${msg}"></div>
+			
+		</div>
+	</div>
+</body>
+</html>

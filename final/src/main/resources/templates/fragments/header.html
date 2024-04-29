@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<header class="--header" th:fragment="header">
+   <div class="header">
+      <div class="logo">
+        <a class="logo" href="/">START</a>
+      </div>
+      <div class="header-right">
+            <!-- 로그인 상태일 때 -->
+            <th:block th:if="${session.signedInUser != null}">
+            <!-- 로그인한 사용자를 위한 다른 UI 표시 -->
+                <a href="mypage">My Page</a>
+                <a href="/logout">Log Out</a>
+            </th:block>
+            <!-- 비로그인 상태일 때 -->
+            <th:block th:if="${session.signedInUser == null}">
+                <a href="signup">Sign Up</a>
+                <a href="signin">Sign In</a>
+            </th:block>
+      </div>
+    </div>
+</header>
+</html>

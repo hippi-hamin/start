@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이메일 찾기</title>
+<link rel="stylesheet" th:href="@{/css/findEmail.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<script
+   src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+   <th:block th:replace="~{fragments/header :: header}"></th:block>
+   <div class="center-background">
+      <div class="center-text">이메일 찾기</div>
+      <form id="findEmailProc" action="findEmailProc" method="post">
+            <input class="name-write-box" type="text" id="m_name"
+               name="m_name" required placeholder="Name">
+            <input class="phone-write-box" type="text" id="m_phone"
+               name="m_phone" required placeholder="Phone">
+            <input class="gender-male" type="radio" id="male" name="m_gender" value="male">
+                <span class="gender-male-text">남성</span>
+                <input class="gender-female" type="radio" id="female" name="m_gender" value="female">
+                <span class="gender-female-text">여성</span>
+         <input class="center-button" type="submit" value="이메일 찾기">
+      </form>
+   </div>
+</body>
+</html>

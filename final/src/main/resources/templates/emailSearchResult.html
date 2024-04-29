@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- foundEmail 모델이 비어 있지 않은 경우에만 출력 -->
+    <p th:if="${not #strings.isEmpty(foundEmail)}" th:text="${foundEmail}"></p>
+
+</body>
+</html>

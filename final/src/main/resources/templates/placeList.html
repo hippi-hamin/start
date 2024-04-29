@@ -1,0 +1,28 @@
+<!-- placeList.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>장소 리스트</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+	<h1>장소 리스트</h1>
+	<ul>
+		<!-- 장소 리스트를 반복하여 표시 -->
+		<th:block th:each="place : ${placeList}">
+    <li>
+            <a th:href="@{'/placeDetail/' + ${place.p_id}}">
+            <span th:text="${place.p_name}"></span><br />
+            지역 : <span th:text="${place.p_location}"></span><br />
+            별점: <span th:text="${place.p_stScore}"></span><br />
+			<img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
+
+	 </a>
+    </li>
+    <br />
+		</th:block>
+	</ul>
+	
+</body>
+</html>

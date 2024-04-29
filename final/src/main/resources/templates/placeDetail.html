@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div th:if="${place}">
+    <!-- 이미지 출력 -->
+    <img th:src="@{'/upLoad/' + ${place.p_iname}}" width="100px" />
+    
+    <!-- 장소 이름 -->
+    <h1 th:text="${place.p_name}"></h1>
+    
+    <!-- 장소 지역 -->
+    <p>지역: <span th:text="${place.p_location}"></span></p>
+    
+    <!-- 장소 설명 -->
+    <p>상세: <span th:text="${place.p_description}"></span></p>
+    
+    <!-- 조회수 -->
+    <p>조회수: <span th:text="${place.p_views}"></span></p>
+    
+    <!-- 좋아요 -->
+    <p>별점: <span th:text="${place.p_stScore}"></span></p>
+</div>
+	
+</body>
+</html>

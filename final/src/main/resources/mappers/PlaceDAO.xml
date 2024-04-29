@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.finalpro.start.dao.PlaceDAO">
+	<insert id="upLoadPlaceProc" parameterType="place">
+		INSERT INTO
+		place.placetbl
+		(p_name, p_location, p_description, p_thema, p_iname,
+		p_views, p_stScore, p_price, p_people)
+		VALUES
+		(#{p_name}, #{p_location},
+		#{p_description}, #{p_thema}, #{p_iname}, #{p_views}, #{p_stScore},
+		#{p_price},
+		#{p_people})
+	</insert>
+	<select id="getPlaceList" resultType="place">
+		SELECT * FROM
+		place.placetbl
+	</select>
+	<select id="findById" parameterType="int" resultType="place">
+		SELECT * FROM place.placetbl
+		WHERE p_id=#{p_id}
+	</select>
+	<update id="increaseViews" parameterType="int">
+		UPDATE place.placetbl 
+		SET p_views=p_views + 1
+		WHERE p_id=#{p_id}
+	</update>
+
+
+
+</mapper>

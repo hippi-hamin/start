@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+<link rel="stylesheet" th:href="@{/css/signup.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+   <th:block th:replace="~{fragments/header :: header}"></th:block>
+    <div class="center-background">
+    <div class="center-text">회원가입</div>
+   <form class="form" action="signupProc" method="post">
+      <input class="email-write-box" type="email" id="m_email" name="m_email" required placeholder="Email">
+      <button class="email-check" type="button" id="checkEmail">이메일 중복 확인</button>
+      <input class="password-write-box" type="password" id="m_pw" name="m_pw" required placeholder="Password">
+      <input class="name-write-box"type="text" id="m_name" name="m_name" required placeholder="Name">
+      <input class="gender-male" type="radio" id="male" name="m_gender" value="male">
+                <span class="gender-male-text">남성</span>
+                <input class="gender-female" type="radio" id="female" name="m_gender" value="female">
+                <span class="gender-female-text">여성</span>
+                <div class="YY">
+            <div class="yy-write-box">
+      <input type="date" id="m_birthday" name="m_birthday" value="2020-02-22" min="1950-01-01" max="2050-01-01" />
+      </div>
+            </div>
+      <input class="phone-write-box" type="text" id="m_phone" name="m_phone" required placeholder="Phone"><br>
+      <input class="center-button" type="submit" value="가입하기">
+   </form>
+   </div>
+   <script>
+    $(document).ready(function(){
+        $('#checkEmail').click(function(){
+            var m_email = $('#m_email').val();
+            $.ajax({
+                type: 'POST',
+                url: 'checkEmail', // 이메일 중복 확인을 처리할 서버 측 URL
+                data: {m_email: m_email},
+                success: function(response){
+                    if(response == 'available'){
+                        alert('사용 가능한 이메일입니다.');
+                    } else if(response == 'exists'){
+                        alert('이미 등록된 이메일입니다.');
+                    } else {
+                        alert('이메일 중복 확인에 실패했습니다.');
+                    }
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>

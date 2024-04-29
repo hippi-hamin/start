@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+.header {
+    background-color: black;
+    padding: 10px 20px; 
+    color: white;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    z-index: 3;
+}
+
+.logo {
+    margin: 0;
+    font-size: 24px;
+    text-decoration: none;
+    color: white;
+}
+
+.logo a {
+    margin: 0;
+    font-size: 24px;
+    text-decoration: none;
+    color: white;
+}
+
+.logo a:hover {
+   color: blue;
+}
+
+.header-right {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.header-right a {
+    color: white;
+    text-decoration: none;
+}
+
+.header-right logo:hover {
+    text-decoration: underline;
+}
+
+.header-right a:nth-child(n+2) {
+    color: white;
+}
