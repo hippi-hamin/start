@@ -66,6 +66,20 @@ public class PlaceController {
 		model.addAttribute("placeList", placeList);
 		return "placeList";
 	}
+	
+		@GetMapping("placeListByLocation")
+		public String placeListByLocation(@RequestParam("p_location") String p_location, Model model) {
+			String view = null;
+			List<PlaceDTO> place = placeService.placeListByLocation(p_location);
+			if(place != null) {
+				model.addAttribute("placeListByLocation", place);
+				view = "placeListByLocation";
+			} else {
+				view = "placeListByLocation";
+			}
+			
+			return view;
+		}
 
 	// placeDetail
 	@GetMapping("/placeDetail/{p_id}")
