@@ -9,13 +9,16 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finalpro.start.dto.PlaceDTO;
 import com.finalpro.start.util.kakaoUtil.Document;
 import com.finalpro.start.util.kakaoUtil.KakaoAddress;
 import com.finalpro.start.util.kakaoUtil.KakaoDirections;
-import com.finalpro.start.util.kakaoUtil.KakaoDirections.Route.Road;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class KakaoApiUtil {
 
 	private static final String REST_API_KEY = "448274e35c1f29a434d87a9242405056";
@@ -36,7 +39,7 @@ public class KakaoApiUtil {
 
 		KakaoAddress kakaoAddress = new ObjectMapper().readValue(responseBody, KakaoAddress.class);
 		List<Document> documents = kakaoAddress.getDocuments();
-		
+
 		if (documents == null || documents.isEmpty()) {
 			System.out.print("documents is null or empty");
 			return null;
@@ -53,12 +56,8 @@ public class KakaoApiUtil {
 		return placeList;
 	}
 
-	
-	
 	public static List<PlaceDTO> getVehiclePaths(PlaceDTO from, PlaceDTO to, List<PlaceDTO> waypoints)
 			throws IOException, InterruptedException {
-
-
 		HttpClient client = HttpClient.newHttpClient();
 		String url = "https://apis-navi.kakaomobility.com/v1/directions";
 		url += "?origin=" + from.getX() + "," + from.getY() + "," + from.getP_name();
@@ -70,24 +69,31 @@ public class KakaoApiUtil {
 		}
 		url += "&destination=" + to.getX() + "," + to.getY() + "," + from.getP_name();
 
-		HttpRequest request = HttpRequest.newBuilder()//
-				.header("Authorization", "KakaoAK " + REST_API_KEY).header("Content-Type", "application/json")
-				.uri(URI.create(url)).GET().build();
+		HttpRequest request = HttpRequest.newBuilder().header("Authorization", "KakaoAK " + REST_API_KEY)
+				.header("Content-Type", "application/json").uri(URI.create(url)).GET().build();
 
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 		String responseBody = response.body();
 
-		List<PlaceDTO> placeList = new ArrayList<PlaceDTO>();
+		List<PlaceDTO> placeList = new ArrayList<>();
 
-		KakaoDirections kakaoDirections = new ObjectMapper().readValue(responseBody, KakaoDirections.class);
-		List<Road> roads = kakaoDirections.getRoutes().get(0).getSections().get(0).getRoads();
-		for (Road road : roads) {
-			List<Double> vertexes = road.getVertexes();
-			for (int i = 0; i < vertexes.size(); i++) {
-				placeList.add(new PlaceDTO(vertexes.get(i), vertexes.get(++i)));
+		try {
+			KakaoDirections kakaoDirections = new ObjectMapper().readValue(responseBody, KakaoDirections.class);
+			log.info(responseBody);
+			if (kakaoDirections != null && kakaoDirections.getRoutes() != null
+					&& !kakaoDirections.getRoutes().isEmpty()) {
+				// 정상적으로 역직렬화된 경우
+				// 이후 작업 수행
+			} else {
+				// 역직렬화가 실패하거나 반환된 데이터가 비어있는 경우
+				System.out.println("Failed to deserialize KakaoDirections object or received empty data");
 			}
+		} catch (JsonProcessingException e) {
+			// 역직렬화 과정에서 예외가 발생한 경우
+			e.printStackTrace();
+			System.out.println("Failed to deserialize JSON data: " + e.getMessage());
 		}
+
 		return placeList;
 	}
-
 }

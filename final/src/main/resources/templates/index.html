@@ -13,9 +13,7 @@ $(function () {
         alert(m);
     }
 });
-document.getElementById("submitBtn").addEventListener("click", function() {
-    window.location.href = "make_place.html";
-  })
+
 
   function goToScroll(targetId) {
     var target = document.getElementById(targetId);
@@ -27,13 +25,17 @@ document.getElementById("submitBtn").addEventListener("click", function() {
         window.scrollTo({ top: scrollToPosition, behavior: 'smooth' });
     }
 }
+
+
 </script>
+
+
 <title>START</title>
 </head>
 <body>
 <th:block th:replace="~{fragments/header :: header}"></th:block>
    <a href="upLoadPlace">장소 등록</a>
-   <a href="placeList">장소 리스트</a>
+   
    <a href="apitest">장소 검색</a>
    <div class="slider">
       <div class="slide">
@@ -68,35 +70,42 @@ document.getElementById("submitBtn").addEventListener("click", function() {
   </div>
     <div class="container">
       <div class="blue-box">
-        <select name="place" id="place">
-          <option value="" disabled selected hidden>장소</option>
-          <option value="jeju">제주</option>
-          <option value="seoul">서울</option>
-          <option value="incheon">인천</option>
-          <option value="Gangwon">강원</option>
-        </select>
-        
-        <select name="theme" id="theme">
-          <option value="" disabled selected hidden>테마</option>
-          <option value="park">공원</option>
-          <option value="inside">실내</option>
-          <option value="food">음식</option>
-          <option value="cafe">카페</option>
-        </select>
-        
-        <select name="with" id="with">
-          <option value="" disabled selected hidden>인원</option>
-          <option value="people1">사람1</option>
-          <option value="people2">사람2</option>
-          <option value="people3">사람3</option>
-          <option value="people4">사람4</option>
-        </select>
-
-        <button id="submitBtn">
-          <img src="/images/2946467-200.png" width="60" height="60" alt="Search Icon">
-        </button>
-
-      </div>
+	        <form id="searchForm" action="placeList" method="GET">
+			    <select name="p_location" id="p_location">
+			        <option value="" disabled selected hidden>장소</option>
+			        <option value="제주">제주</option>
+			        <option value="서울">서울</option>
+			        <option value="인천">인천</option>
+			        <option value="강원도">강원</option>
+			    </select>
+			
+			    <select name="p_thema" id="p_thema">
+			        <option value="" disabled selected hidden>테마</option>
+			        <option value="공원">공원</option>
+			        <option value="효도여행">효도</option>
+			        <option value="맛집">맛집</option>
+			        <option value="카페">카페</option>
+			    </select>
+			
+			    <select name="p_people" id="p_people">
+			        <option value="" disabled selected hidden>인원</option>
+			        <option value="연인">연인</option>
+			        <option value="친구">친구</option>
+			        <option value="가족">가족</option>
+			        <option value="애견">애견</option>
+			    </select>
+			
+			    <button id="submitBtn" type="button">
+			        <img src="/images/2946467-200.png" width="60" height="60" alt="Search Icon">
+			    </button>
+			</form>
+			<script>
+			    document.getElementById("submitBtn").addEventListener("click", function() {
+			        var form = document.getElementById("searchForm");
+			        form.submit(); // 폼 제출
+			    });
+			</script>
+	</div>
     </div>
   </div>
   <br>
@@ -287,6 +296,6 @@ document.getElementById("submitBtn").addEventListener("click", function() {
       <p>세계를 선두하는 롤토체스 전문 기업</p>
   </div>
 </footer>
-   <a href="searchPlace">장소 검색</a>
+   
 </body>
 </html>
