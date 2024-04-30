@@ -98,9 +98,6 @@ public class PlaceController {
 
 	}
 	
+	
 
-	@GetMapping("apitest")
-	public String apitest() {
-		return "apitest";
-	}
 }
