@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" th:href="@{/css/header.css}">
 <link rel="stylesheet" th:href="@{/css/index.css}">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 $(function () {
     let m = "[[${msg}]]"; // 변수를 문자열로 변환하고 큰 따옴표로 둘러싸기
@@ -33,73 +34,74 @@ $(function () {
 <title>START</title>
 </head>
 <body>
-<th:block th:replace="~{fragments/header :: header}"></th:block>
-   <a href="upLoadPlace">장소 등록</a>
-   
-   <a href="apitest">장소 검색</a>
-   <div class="slider">
-      <div class="slide">
-         <img src="/images/1 (1).jpg">
-      </div>
-      <div class="slide">
-         <img src="/images/1 (2).jpg">
-      </div>
-      <div class="slide">
-         <img src="/images/1 (3).jpg">
-      </div>
-   </div>
+	<th:block th:replace="~{fragments/header :: header}"></th:block>
+	<a href="upLoadPlace">장소 등록</a>
 
-    <div class="text-center">
-      <div class="btn-group" role="group" aria-label="Basic example">
-        <a class="btn btn-secondary custom-btn" onclick="goToScroll('make_place')">MAKE PLAN</a>
-        <a class="btn btn-secondary custom-btn" onclick="goToScroll('location')">LOCATION</a>
-        <a class="btn btn-secondary custom-btn" onclick="goToScroll('theme2')">THEME</a>
-        <a class="btn btn-secondary custom-btn" onclick="goToScroll('with_who')">WITH WHO</a>
-        <a class="btn btn-secondary custom-btn" onclick="goToScroll('recommend')">RECOMMEND</a>
-      </div>
-    </div>
-    
+	<a href="apitest">장소 검색</a>
+	<div class="slider">
+		<div class="slide">
+			<img src="/images/1 (1).jpg">
+		</div>
+		<div class="slide">
+			<img src="/images/1 (2).jpg">
+		</div>
+		<div class="slide">
+			<img src="/images/1 (3).jpg">
+		</div>
+	</div>
 
-  <br>
-  <br>
-  <br>
-  <br>
-  
-  <div id="h1_container">
-    <h1 id="make_place">MAKE PLAN</h1>
-  </div>
-    <div class="container">
-      <div class="blue-box">
-	        <form id="searchForm" action="placeList" method="GET">
-			    <select name="p_location" id="p_location">
-			        <option value="" disabled selected hidden>장소</option>
-			        <option value="제주">제주</option>
-			        <option value="서울">서울</option>
-			        <option value="인천">인천</option>
-			        <option value="강원도">강원</option>
-			    </select>
-			
-			    <select name="p_thema" id="p_thema">
-			        <option value="" disabled selected hidden>테마</option>
-			        <option value="놀이공원">놀이공원</option>
-			        <option value="효도여행">효도</option>
-			        <option value="먹방여행">맛집</option>
-			        <option value="역사여행">역사</option>
-			        <option value="반려동물과 함께하는 여행">반려동물</option>
-			    </select>
-			
-			    <select name="p_people" id="p_people">
-			        <option value="" disabled selected hidden>인원</option>
-			        <option value="데이트">연인</option>
-			        <option value="친구">친구</option>
-			        <option value="가족">가족</option>
-			        <option value="나홀로 집">나홀로</option>
-			        
-			    </select>
-			
-			    <button id="submitBtn" type="button">
-			        <img src="/images/2946467-200.png" width="60" height="60" alt="Search Icon">
-			    </button>
+	<div class="text-center">
+		<div class="btn-group" role="group" aria-label="Basic example">
+			<a class="btn btn-secondary custom-btn"
+				onclick="goToScroll('make_place')">MAKE PLAN</a> <a
+				class="btn btn-secondary custom-btn"
+				onclick="goToScroll('location')">LOCATION</a> <a
+				class="btn btn-secondary custom-btn" onclick="goToScroll('theme2')">THEME</a>
+			<a class="btn btn-secondary custom-btn"
+				onclick="goToScroll('with_who')">WITH WHO</a> <a
+				class="btn btn-secondary custom-btn"
+				onclick="goToScroll('recommend')">RECOMMEND</a>
+		</div>
+	</div>
+
+
+	<br>
+	<br>
+	<br>
+	<br>
+
+	<div id="h1_container">
+		<h1 id="make_place">MAKE PLAN</h1>
+	</div>
+	<div class="container">
+		<div class="blue-box">
+			<form id="searchForm" action="placeList" method="GET">
+				<select name="p_location" id="p_location">
+					<option value="" disabled selected hidden>장소</option>
+					<option value="제주">제주</option>
+					<option value="서울">서울</option>
+					<option value="인천">인천</option>
+					<option value="강원도">강원</option>
+				</select> <select name="p_thema" id="p_thema">
+					<option value="" disabled selected hidden>테마</option>
+					<option value="놀이공원">놀이공원</option>
+					<option value="효도여행">효도</option>
+					<option value="먹방여행">맛집</option>
+					<option value="역사여행">역사</option>
+					<option value="반려동물과 함께하는 여행">반려동물</option>
+				</select> <select name="p_people" id="p_people">
+					<option value="" disabled selected hidden>인원</option>
+					<option value="데이트">연인</option>
+					<option value="친구">친구</option>
+					<option value="가족">가족</option>
+					<option value="나홀로 집">나홀로</option>
+
+				</select>
+
+				<button id="submitBtn" type="button">
+					<img src="/images/2946467-200.png" width="60" height="60"
+						alt="Search Icon">
+				</button>
 			</form>
 			<script>
 			    document.getElementById("submitBtn").addEventListener("click", function() {
@@ -107,197 +109,205 @@ $(function () {
 			        form.submit(); // 폼 제출
 			    });
 			</script>
+		</div>
 	</div>
-    </div>
-  </div>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-<div id="h1_container">
-  <h1 id="location">LOCATION</h1>
-</div>
-<div class="image-container">
-  <div class="image-wrapper">
-    <a href="seoul.html">
-      <img src="/images/seoul.jpg" alt="Image 1" width="238" height="238">
-      <div class="caption">서울</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="busan.html">
-      <img src="/images/busan.jpg" alt="Image 2" width="238" height="238">
-      <div class="caption">부산</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="incheon.html">
-      <img src="/images/incheon.jpg" alt="Image 3" width="238" height="238">
-      <div class="caption">인천</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="more.html">
-      <img src="/images/2.jpg" alt="Image 4" width="238" height="238">
-      <div class="caption">더보기</div>
-    </a>
-  </div>
-</div>
+	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div id="h1_container">
+		<h1 id="location">LOCATION</h1>
+	</div>
+	<div class="image-container">
+		<div class="image-wrapper">
+			<a href="#" onclick="imageClicked('서울')"> <img
+				src="/images/seoul.jpg" alt="Image 1" width="238" height="238">
+				<div class="caption">서울</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="#" onclick="imageClicked('부산')"> <img src="/images/busan.jpg" alt="Image 2"
+				width="238" height="238">
+				<div class="caption">부산</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="#" onclick="imageClicked('인천')"> <img src="/images/incheon.jpg"
+				alt="Image 3" width="238" height="238">
+				<div class="caption">인천</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="#"> <img src="/images/2.jpg" alt="Image 4"
+				width="238" height="238">
+				<div class="caption">더보기</div>
+			</a>
+		</div>
+	</div>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<div id="h1_container">
-  <h1 id="theme2">THEME</h1>
-</div>
-<div class="image-container">
-  <div class="image-wrapper">
-    <a href="seoul.html">
-      <img src="/images/theme1.jpg" alt="Image 1" width="238" height="238">
-      <div class="caption">힐링</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="busan.html">
-      <img src="/images/theme2.jpg" alt="Image 2" width="238" height="238">
-      <div class="caption">레저/스포츠</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="incheon.html">
-      <img src="images/js1.jpg" alt="Image 3" width="238" height="238">
-      <div class="caption">전시</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="more.html">
-      <img src="/images/2.jpg" alt="Image 4" width="238" height="238">
-      <div class="caption">더보기</div>
-    </a>
-  </div>
-</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div id="h1_container">
+		<h1 id="theme2">THEME</h1>
+	</div>
+	<div class="image-container">
+		<div class="image-wrapper">
+			<a href="seoul.html"> <img src="/images/theme1.jpg" alt="Image 1"
+				width="238" height="238">
+				<div class="caption">힐링</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="busan.html"> <img src="/images/theme2.jpg" alt="Image 2"
+				width="238" height="238">
+				<div class="caption">레저/스포츠</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="incheon.html"> <img src="images/js1.jpg" alt="Image 3"
+				width="238" height="238">
+				<div class="caption">전시</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="more.html"> <img src="/images/2.jpg" alt="Image 4"
+				width="238" height="238">
+				<div class="caption">더보기</div>
+			</a>
+		</div>
+	</div>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<div id="h1_container">
-  <h1 id="with_who">WITH WHO</h1>
-</div>
-<div class="image-container">
-  <div class="image-wrapper">
-    <a href="seoul.html">
-      <img src="/images/fam1.jpg" alt="Image 1" width="317" height="317">
-      <div class="caption">가족</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="busan.html">
-      <img src="/images/coup3.png" alt="Image 2" width="317" height="317">
-      <div class="caption">커플</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="incheon.html">
-      <img src="/images/fre3.jpeg" alt="Image 3" width="317" height="317">
-      <div class="caption">우정</div>
-    </a>
-  </div>
-  </div>
-</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div id="h1_container">
+		<h1 id="with_who">WITH WHO</h1>
+	</div>
+	<div class="image-container">
+		<div class="image-wrapper">
+			<a href="seoul.html"> <img src="/images/fam1.jpg" alt="Image 1"
+				width="317" height="317">
+				<div class="caption">가족</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="busan.html"> <img src="/images/coup3.png" alt="Image 2"
+				width="317" height="317">
+				<div class="caption">커플</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="incheon.html"> <img src="/images/fre3.jpeg"
+				alt="Image 3" width="317" height="317">
+				<div class="caption">우정</div>
+			</a>
+		</div>
+	</div>
+	</div>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<div id="h1_container">
-  <h1 id="recommend">REC</h1>
-</div>
-<div class="image-container">
-  <div class="image-wrapper">
-    <a href="seoul.html">
-      <img src="/images/seoul.jpg" alt="Image 1" width="317" height="317">
-      <div class="caption">엄빠 힘내세요!</div>
-      <div class="caption2">예상 비용 : 70,000원</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="busan.html">
-      <img src="/images/busan.jpg" alt="Image 2" width="317" height="317">
-      <div class="caption">부산 커플 여행</div>
-      <div class="caption2">예상 비용 : 60,000원</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="incheon.html">
-      <img src="/images/incheon.jpg" alt="Image 3" width="317" height="317">
-      <div class="caption">북한산 코스</div>
-      <div class="caption2">예상 비용 : 45,000원</div>
-    </a>
-  </div>
-</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div id="h1_container">
+		<h1 id="recommend">REC</h1>
+	</div>
+	<div class="image-container">
+		<div class="image-wrapper">
+			<a href="seoul.html"> <img src="/images/seoul.jpg" alt="Image 1"
+				width="317" height="317">
+				<div class="caption">엄빠 힘내세요!</div>
+				<div class="caption2">예상 비용 : 70,000원</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="busan.html"> <img src="/images/busan.jpg" alt="Image 2"
+				width="317" height="317">
+				<div class="caption">부산 커플 여행</div>
+				<div class="caption2">예상 비용 : 60,000원</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="incheon.html"> <img src="/images/incheon.jpg"
+				alt="Image 3" width="317" height="317">
+				<div class="caption">북한산 코스</div>
+				<div class="caption2">예상 비용 : 45,000원</div>
+			</a>
+		</div>
+	</div>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 
-<script src="test.js"></script>
-<footer>
-  <div class="footer-left">
-      <div class="contact-info">
-          <p>고객센터 (오전 9시 - 새벽 3시 운영)</p>
-          <p>전화번호: 123-456-7890</p>
-          <button class="messenger-btn">카카오톡 문의</button> <!--호버 효과 있음 (마우스 올리면)-->
-      </div>
-  </div>
-  <div class="footer-right">
-      <div class="company-info">
-          <a href="ABOUT 게시판">회사 소개</a>
-          <a href="공지사항 게시판">공지사항</a>
-      </div>
-  </div>
-  <div class="footer-bottom">
-      <p>START</p>
-      <p>인천일보아카데미</p>
-      <p>우편주소 : 26256</p>
-      <p>세계를 선두하는 롤토체스 전문 기업</p>
-  </div>
-</footer>
-   
+	<script src="test.js"></script>
+	<footer>
+		<div class="footer-left">
+			<div class="contact-info">
+				<p>고객센터 (오전 9시 - 새벽 3시 운영)</p>
+				<p>전화번호: 123-456-7890</p>
+				<button class="messenger-btn">카카오톡 문의</button>
+				<!--호버 효과 있음 (마우스 올리면)-->
+			</div>
+		</div>
+		<div class="footer-right">
+			<div class="company-info">
+				<a href="ABOUT 게시판">회사 소개</a> <a href="공지사항 게시판">공지사항</a>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<p>START</p>
+			<p>인천일보아카데미</p>
+			<p>우편주소 : 26256</p>
+			<p>세계를 선두하는 롤토체스 전문 기업</p>
+		</div>
+	</footer>
+	<script>
+  // 이미지 클릭 시 처리할 함수
+    function imageClicked(p_location) {
+        // 파라미터와 함께 URL 생성
+        var url = "placeListByLocation?p_location=" + p_location;
+        // 해당 URL로 이동
+        window.location.href = url;
+    }
+    </script>
 </body>
 </html>

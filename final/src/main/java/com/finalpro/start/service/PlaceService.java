@@ -114,4 +114,10 @@ public class PlaceService {
 	public void increaseViews(int p_id) {
 		placeDAO.increaseViews(p_id);
 	}
+
+	public List<PlaceDTO> placeListByLocation(String p_location) {
+		
+		List<PlaceDTO> place = placeDAO.placeListByLocation(p_location);
+		return place;
+	}
 }
