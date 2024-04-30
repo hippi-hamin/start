@@ -1,0 +1,91 @@
+@charset "UTF-8";
+* {
+   box-sizing: border-box;
+}
+
+html {
+   height: 100%;
+}
+
+body {
+   margin: 0;
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+}
+
+.center-background {
+    background-color: black;
+    opacity: 50%;
+    text-align: center;
+    height: 100%;
+    width: 50%;
+    position: fixed; /* 고정 위치 설정 */
+    top: 50%; /* 화면 상단으로부터의 거리를 50%로 설정 */
+    left: 50%; /* 화면 좌측으로부터의 거리를 50%로 설정 */
+    transform: translate(-50%, -50%); /* 요소를 수평 및 수직으로 중앙으로 이동 */
+    
+}
+
+.center-text {
+    text-align: center;
+    color: white;
+    font-size: 50px;
+    font-weight: bold;
+    position: relative;
+    top: 10%;
+}
+
+.container {
+   position: relative;
+   top: 15%;
+}
+
+.write-input {
+   width: 80%;
+   height: 30%;
+}
+
+.img-file {
+   width: 50%;
+   height: 30px;
+   background-color: white;
+   border: 1px solid blue;
+}
+
+input[type=file]::file-selector-button {
+  width: 35%;
+  height: 35px;
+  color: white;
+  background: black;
+  border: 2px solid white;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.location-button {
+	background-color: white;
+    font-weight: bold; 
+    width: 25%;
+    height: 35px;
+    font-size: 14px;
+    margin-top: 5%;
+    text-align: center;
+    &:focus {
+    outline: none;
+  }
+}
+
+.place-name-write {
+	background-color: white;
+    font-weight: bold; 
+    width: 25%;
+    height: 35px;
+    font-size: 14px;
+    margin-top: 5%;
+    text-align: center;
+    &:focus {
+    outline: none;
+  }
+}
+
