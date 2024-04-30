@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>지도상에 장소 마커 따라 선 그리기</title>
+    
+</head>
+<body>
+<div id="map" style="width:100%;height:350px;"></div>
+<p>
+
+	검색 할 장소 이름을 입력해 주세요.
+	<form name="searchForm">
+		<input type="text" name="keyword" th:value="${param.keyword}"/><button>검색</button>
+		<input type="hidden" id="x" name="x" value="126.675113024566"/>
+		<input type="hidden" id="y" name="y" value="37.4388938204128"/>
+	</form>
+</p>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3926d3c8dcc51df1b147cee756c64e7"></script>
+
+<script th:inline="javascript">
+// 버튼을 클릭하면 아래 배열의 좌표들이 모두 보이게 지도 범위를 재설정합니다
+	var placeList = JSON.parse([[${keywordPlacetList}]]);
+	//var pathPlaceList = JSON.parse([[${pathPlaceList}]])||[];
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = { 
+        center: new kakao.maps.LatLng(37.4388938204128, 126.675113024566), // 지도의 중심좌표(인천일보아카데미)
+        level: 3 // 지도의 확대 레벨
+    };
+
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+ 
+
+
+// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+var bounds = new kakao.maps.LatLngBounds();  
+
+for (var i = 0; i <placeList.length; i++) {
+	const point = placeList[i];
+	const position = new kakao.maps.LatLng(point.y, point.x);
+    // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
+    const marker = new kakao.maps.Marker({ position : position, clickable: true});
+    marker.setMap(map);
+    // 인포윈도우를 생성합니다
+	//const infowindow = new kakao.maps.InfoWindow({ content : '<div style="padding:5px;">'+name+'<br/>'+phone+'</div>',
+	  //  removable : true
+	//});
+	
+	// 마커에 클릭이벤트를 등록합니다
+	kakao.maps.event.addListener(marker, 'click', function() {
+     // infowindow.open(map, marker);  
+	});
+    
+    // LatLngBounds 객체에 좌표를 추가합니다
+    bounds.extend(position);
+}
+if(placetList.length > 0) {
+  map.setBounds(bounds);
+}
+
+if(pathPlaceList.length > 0) {
+	// 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
+	var linePath = [];
+	for(var point of pathPlaceList) {
+		linePath.push(new kakao.maps.LatLng(point.y, point.x));
+	}
+	
+	// 지도에 표시할 선을 생성합니다
+	var polyline = new kakao.maps.Polyline({
+	    path: linePath, // 선을 구성하는 좌표배열 입니다
+	    strokeWeight: 5, // 선의 두께 입니다
+	    strokeColor: 'red', // 선의 색깔입니다
+	    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+	    strokeStyle: 'solid' // 선의 스타일입니다
+	});
+	// 지도에 선을 표시합니다 
+	polyline.setMap(map);
+}
+
+// 지도가 이동, 확대, 소로 인해 중심좌표가 변경되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
+kakao.maps.event.addListener(map, 'center_changed', function() {
+    // 지도의 중심좌표를 얻어옵니다 
+    var latlng = map.getCenter(); 
+    
+    const x = latlng.getLng();
+    const y = latlng.getLat();
+    console.log(x, y);
+    document.getElementById("x").value = x;
+    document.getElementById("y").value = y;
+});
+
+kakao.maps.event.addListener(map, 'dragend', function() {
+	document.searchForm.submit();
+});
+</script>
+</body>
+</html>

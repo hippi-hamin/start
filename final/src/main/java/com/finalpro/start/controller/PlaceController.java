@@ -106,7 +106,7 @@ public class PlaceController {
 		return "apitest";
 	}
 	
-	@GetMapping("searchRoad")
+	@GetMapping("searchPlace")
 	public String getPlacePath(
 							   @RequestParam (name="x", required = false) Double x,
 							   @RequestParam (name="y", required = false) Double y,
@@ -127,7 +127,7 @@ public class PlaceController {
 			model.addAttribute("pathPlaceList", pathPlaceListJson);
 		}
 		
-		return "searchRoad";
+		return "searchPlace";
 	}
 	
 	@GetMapping("map")
