@@ -22,5 +22,18 @@ public class PlaceDTO {
 	private int p_stScore;
 	private int p_price;
 	private String p_people;
+	private Double x;
+	private Double y;
+	
+public PlaceDTO (Double x, Double y) {
+		
+		this.x = x;
+		this.y = y;
+		
+	}
+
+public PlaceDTO() {
+	// TODO Auto-generated constructor stub
+}
 	
 }
