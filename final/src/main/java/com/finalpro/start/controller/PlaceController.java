@@ -101,11 +101,6 @@ public class PlaceController {
 
 	}
 	
-	@GetMapping("apitest")
-	public String apitest() {
-		return "apitest";
-	}
-	
 	@GetMapping("searchPlace")
 	public String getPlacePath(
 							   @RequestParam (name="x", required = false) Double x,
@@ -126,7 +121,6 @@ public class PlaceController {
 			String pathPlaceListJson = new ObjectMapper().writer().writeValueAsString(pathPlaceList);
 			model.addAttribute("pathPlaceList", pathPlaceListJson);
 		}
-		
 		return "searchPlace";
 	}
 	

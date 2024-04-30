@@ -36,7 +36,7 @@ public class KakaoApiUtil {
 
 		KakaoAddress kakaoAddress = new ObjectMapper().readValue(responseBody, KakaoAddress.class);
 		List<Document> documents = kakaoAddress.getDocuments();
-
+		
 		if (documents == null || documents.isEmpty()) {
 			System.out.print("documents is null or empty");
 			return null;
