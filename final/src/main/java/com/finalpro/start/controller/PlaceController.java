@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finalpro.start.dto.PlaceDTO;
 import com.finalpro.start.service.PlaceService;
+import com.finalpro.start.util.KakaoApiUtil;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -98,6 +101,34 @@ public class PlaceController {
 
 	}
 	
+
+	@GetMapping("searchPlace")
+	public String getPlacePath(
+							   @RequestParam (name="x", required = false) Double x,
+							   @RequestParam (name="y", required = false) Double y,
+							   @RequestParam (name="keyword", required = false) String keyword,
+							   Model model) throws IOException, InterruptedException {
+		if(x != null && y != null && keyword != null) {
+			List<PlaceDTO> keywordPlaceList = KakaoApiUtil.getPlaceByKeyWord(keyword, new PlaceDTO(x, y));
+			String keywordPlaceListJson = new ObjectMapper().writer().writeValueAsString(keywordPlaceList);
+			model.addAttribute("keywordPlacetList", keywordPlaceListJson);
+			
+			List<PlaceDTO> pathPlaceList = new ArrayList<>();
+			for (int i=1; i<keywordPlaceList.size(); i++){
+				PlaceDTO prevPoint = keywordPlaceList.get(i-1);
+				PlaceDTO nextPoint = keywordPlaceList.get(i);
+				pathPlaceList.addAll(KakaoApiUtil.getVehiclePaths(prevPoint, nextPoint, null));
+			}
+			String pathPlaceListJson = new ObjectMapper().writer().writeValueAsString(pathPlaceList);
+			model.addAttribute("pathPlaceList", pathPlaceListJson);
+		}
+		return "searchPlace";
+	}
 	
+	@GetMapping("map")
+	public String getMethodName() {
+		return "map";
+	}
 
 }
+
