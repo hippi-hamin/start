@@ -27,7 +27,8 @@
 }
 
 .logo a:hover {
-   color: blue;
+    color: blue;
+    text-decoration: underline; /* 링크에 호버 시 밑줄 표시 */
 }
 
 .header-right {
@@ -41,8 +42,8 @@
     text-decoration: none;
 }
 
-.header-right logo:hover {
-    text-decoration: underline;
+.header-right .logo:hover {
+    text-decoration: underline; /* 로고에 호버 시 밑줄 표시 */
 }
 
 .header-right a:nth-child(n+2) {
