@@ -101,6 +101,7 @@ public class PlaceController {
 
 	}
 	
+
 	@GetMapping("searchPlace")
 	public String getPlacePath(
 							   @RequestParam (name="x", required = false) Double x,
@@ -128,5 +129,6 @@ public class PlaceController {
 	public String getMethodName() {
 		return "map";
 	}
+
 }
 
