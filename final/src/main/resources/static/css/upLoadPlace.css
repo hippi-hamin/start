@@ -48,19 +48,44 @@ body {
 
 .img-file {
    width: 50%;
-    background-color: white;
-    border: 2px solid white;
+   height: 30px;
+   background-color: white;
+   border: 1px solid blue;
 }
 
 input[type=file]::file-selector-button {
   width: 35%;
+  height: 35px;
   color: white;
   background: black;
   border: 2px solid white;
   border-radius: 2px;
   cursor: pointer;
-  &:hover {
-    background: white;
-    color: black;
+}
+
+.location-button {
+	background-color: white;
+    font-weight: bold; 
+    width: 25%;
+    height: 35px;
+    font-size: 14px;
+    margin-top: 5%;
+    text-align: center;
+    &:focus {
+    outline: none;
   }
 }
+
+.place-name-write {
+	background-color: white;
+    font-weight: bold; 
+    width: 25%;
+    height: 35px;
+    font-size: 14px;
+    margin-top: 5%;
+    text-align: center;
+    &:focus {
+    outline: none;
+  }
+}
+

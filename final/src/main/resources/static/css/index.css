@@ -3,14 +3,266 @@
    box-sizing: border-box;
 }
 
-html {
-   height: 100%;
-}
-
 body {
    margin: 0;
    height: 100%;
-   background-color: #dbdffd;
    display: flex;
    flex-direction: column;
+}
+
+.slider {
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  width: 55%; /* 슬라이더의 너비를 변경 */
+  margin: 0 auto; 
+  height: 500px;
+}
+
+.custom-btn {
+  width: 199.5px;
+  height: 80px;
+  margin-right: 5px;
+  font-size: 26px;
+  font-weight: bold;
+  background-color: black; 
+  color: white;
+  text-decoration: none;
+  display: inline-block; 
+  text-align: center;
+  margin: 0 5px; 
+  margin-top: 10px;
+  padding-top: 5px; 
+  line-height: 65px;
+  cursor : pointer;
+}
+/* 슬라이드 밑 검은색 버튼 */
+
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0; 
+  width: 100%; 
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  animation: slider 15s infinite linear;
+}
+/* 슬라이더 박스 */
+
+.slide img {
+width: 100%; 
+height: 500px;
+}
+
+.slide:nth-child(1) {
+
+  animation-delay: 0;
+}
+.slide:nth-child(2) {
+
+  animation-delay: -5s;
+}
+.slide:nth-child(3) {
+
+  animation-delay: -10s;
+}
+
+@keyframes slider {
+  0% {
+    transform: translateX(0);
+  }
+
+  26% {
+    transform: translateX(0);
+  }
+  33% {
+    transform: translateX(-100%);
+    animation-timing-function: step-end;
+  }
+  93% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+
+/* 슬라이더 기능 부분 */
+
+
+
+
+.text-center {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-group {
+  display: flex;
+}
+
+.container {
+  width: 100%;
+}
+
+.blue-box {
+  width: 1020px;
+  height: 200px;
+  border: 10px solid rgb(153, 216, 241);
+  margin: 0 auto;
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+}
+/* 드롭다운 선택 박스 */
+
+select {
+  border: none;
+  width: 340px;
+  height: 80px;
+  text-align: center;
+  border-radius: 5px;
+  background-color: #D9D9D9; /* 조금 어두운 회색 배경색 지정 */
+  font-size: 25px; /* 텍스트 크기를 16px로 지정 */
+  font-style: bold;
+  margin: 0 70px; 
+}
+
+select:focus{
+  outline:none;
+}
+
+
+
+
+
+.image-container{
+  display: flex;
+  justify-content: space-between;
+  margin-left: 22.6%;
+  margin-right: 22.6%;
+}
+
+/* 도시 이미지 부분 */
+
+.image-wrapper {
+  position: relative;
+  text-align: center; /* 이미지를 가운데 정렬 */
+}
+
+.caption {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: black;
+  font-size: 21px;
+  text-shadow: 0.1px 0.5px 0 black;
+  text-align: center; /* 가운데 정렬 */
+}
+
+/* 도시 이름 부분 */
+
+.caption2 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 58px;
+  color: black;
+  font-size: 16px;
+  text-shadow: 0.1px 0.5px 0 black;
+  text-align: center; /* 가운데 정렬 */
+}
+/* 추천 코스 밑 가격 부분 */
+
+
+
+
+
+.image-wrapper img {
+  transition: transform 0.3s ease; /* 호버 시 전환 효과를 부드럽게 만듦 */
+}
+
+.image-wrapper:hover img {
+  transform: scale(1.05); /* 호버 시 이미지를 약간 확대함 */
+}
+
+
+
+
+
+/* 푸터 부분 */
+
+footer {
+  background-color: #000000;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; 
+}
+
+.footer-left, .footer-right {
+  color: #fff;
+  flex: 1;
+}
+
+.contact-info {
+  text-align: left;
+  color: #fff;
+}
+
+.contact-info p {
+  margin: 5px 0;
+  color: #fff;
+
+}
+
+.messenger-btn {
+  background-color: #ffff00;
+  color: black;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.messenger-btn:hover {
+  background-color: rgb(162, 142, 16)
+}
+
+.company-info {
+  text-align: right;
+  color: #fff;
+}
+
+.company-info a {
+  margin-right: 10px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer-bottom {
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  color: #fff;
+}
+
+.footer-bottom p {
+  margin: 5px 0;
+  font-size: 12px;
+  color: #fff;
+}
+
+.custom-btn:hover {
+  background-color: #6c757d; /* 호버 시 배경색 변경 */
+  color: #fff; /* 호버 시 텍스트 색상 변경 */
+}
+
+#h1_container {
+  margin-left: 425px;
 }
