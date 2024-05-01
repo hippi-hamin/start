@@ -19,13 +19,16 @@
 	<select id="getPlaceList" resultType="place">
 		SELECT * FROM
 		place.placetbl
+		WHERE p_location=#{p_location} and p_thema=#{p_thema}
+		and p_people=#{p_people}
 	</select>
 	<select id="findById" parameterType="int" resultType="place">
-		SELECT * FROM place.placetbl
+		SELECT *
+		FROM place.placetbl
 		WHERE p_id=#{p_id}
 	</select>
 	<update id="increaseViews" parameterType="int">
-		UPDATE place.placetbl 
+		UPDATE place.placetbl
 		SET p_views=p_views + 1
 		WHERE p_id=#{p_id}
 	</update>
