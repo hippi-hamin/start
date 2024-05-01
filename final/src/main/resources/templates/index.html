@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" th:href="@{/css/header.css}">
 <link rel="stylesheet" th:href="@{/css/index.css}">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 $(function () {
     let m = "[[${msg}]]"; // 변수를 문자열로 변환하고 큰 따옴표로 둘러싸기
@@ -26,6 +27,8 @@ $(function () {
 }
 
 </script>
+
+
 <title>START</title>
 </head>
 <body>
@@ -47,15 +50,16 @@ $(function () {
       <div class="btn-group" role="group" aria-label="Basic example">
         <a class="btn btn-secondary custom-btn" onclick="goToScroll('make_place')">MAKE PLAN</a>
         <a class="btn btn-secondary custom-btn" onclick="goToScroll('location')">LOCATION</a>
-        <a class="btn btn-secondary custom-btn" onclick="goToScroll('theme-text')">THEME</a>
+        <a class="btn btn-secondary custom-btn" onclick="goToScroll('theme2')">THEME</a>
         <a class="btn btn-secondary custom-btn" onclick="goToScroll('with_who')">WITH WHO</a>
         <a class="btn btn-secondary custom-btn" onclick="goToScroll('recommend')">RECOMMEND</a>
       </div>
     </div>
-  <br>
-  <br>
-  <br>
-  <br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <div id="h1_container">
   <h1 id="make_place">MAKE PLAN</h1>
   	</div>
@@ -82,7 +86,7 @@ $(function () {
 			    <select name="p_thema" id="p_thema">
 			        <option value="" disabled selected hidden>테마</option>
 			        <option value="놀이공원">놀이공원</option>
-                        <option value="먹방여행">먹방여행</option>
+                        <option value="맛집탐방">맛집탐방</option>
                         <option value="효도여행">효도여행</option>
                         <option value="역사여행">역사여행</option>
                         <option value="반려동물과 함께하는 여행">반려동물과 함께하는 여행</option>
@@ -104,48 +108,6 @@ $(function () {
 			</script>
 	</div>
     </div>
-  </div>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-<div id="h1_container">
-  <h1 id="location">LOCATION</h1>
-</div>
-<div class="text-line"></div>
-<div class="image-container">
-  <div class="image-wrapper">
-    <a href="seoul.html">
-      <img src="/images/seoul.jpg" alt="Image 1">
-      <div class="caption">서울</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="busan.html">
-      <img src="/images/busan.jpg" alt="Image 2">
-      <div class="caption">부산</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="incheon.html">
-      <img src="/images/incheon.jpg" alt="Image 3">
-      <div class="caption">인천</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="more.html">
-      <img src="/images/2.jpg" alt="Image 4">
-      <div class="caption">더보기</div>
-    </a>
-  </div>
-</div>
-
 <br>
 <br>
 <br>
@@ -156,40 +118,36 @@ $(function () {
 <br>
 <br>
 <br>
-<div id="h1_container">
-  <h1 id="theme-text">THEME</h1>
-</div>
-<div class="text-line"></div>
-<div class="image-container">
-  <div class="image-wrapper">
-    <a href="seoul.html">
-      <img src="/images/theme1.jpg" alt="Image 1" width="238" height="238">
-      <div class="caption">힐링</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="busan.html">
-      <img src="/images/theme2.jpg" alt="Image 2" width="238" height="238">
-      <div class="caption">레저/스포츠</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="incheon.html">
-      <img src="images/js1.jpg" alt="Image 3" width="238" height="238">
-      <div class="caption">전시</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="more.html">
-      <img src="/images/2.jpg" alt="Image 4" width="238" height="238">
-      <div class="caption">더보기</div>
-    </a>
-  </div>
-</div>
-
-<br>
-<br>
-<br>
+    <div id="h1_container">
+		<h1 id="location">LOCATION</h1>
+	</div>
+	<div class="text-line"></div>
+	<div class="image-container">
+		<div class="image-wrapper">
+			<a href="#" onclick="imageClicked('서울')"> <img
+				src="/images/seoul.jpg" alt="Image 1" width="238" height="238">
+				<div class="caption">서울</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="#" onclick="imageClicked('부산')"> <img src="/images/busan.jpg" alt="Image 2"
+				width="238" height="238">
+				<div class="caption">부산</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="#" onclick="imageClicked('인천')"> <img src="/images/incheon.jpg"
+				alt="Image 3" width="238" height="238">
+				<div class="caption">인천</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="#" > <img src="/images/2.jpg" alt="Image 4"
+				width="238" height="238">
+				<div class="caption">더보기</div>
+			</a>
+		</div>
+	</div>
 <br>
 <br>
 <br>
@@ -198,35 +156,65 @@ $(function () {
 <br>
 <br>
 <div id="h1_container">
-  <h1 id="with_who">WITH WHO</h1>
-</div>
-<div class="text-line"></div>
-<div class="image-container">
-  <div class="image-wrapper">
-    <a href="seoul.html">
-      <img src="/images/fam1.jpg" alt="Image 1" width="317" height="317">
-      <div class="caption">가족</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="busan.html">
-      <img src="/images/coup3.png" alt="Image 2" width="317" height="317">
-      <div class="caption">커플</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="incheon.html">
-      <img src="/images/fre3.jpeg" alt="Image 3" width="317" height="317">
-      <div class="caption">우정</div>
-    </a>
-  </div>
-  </div>
-</div>
-
+		<h1 id="theme2">THEME</h1>
+	</div>
+	<div class="text-line"></div>
+	<div class="image-container">
+		<div class="image-wrapper">
+			<a href="#" onclick="imageClickedTheme('효도여행')"> <img src="/images/theme1.jpg" alt="Image 1"
+				width="238" height="238">
+				<div class="caption">효도</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="#" onclick="imageClickedTheme('맛집탐방')"> <img src="/images/theme2.jpg" alt="Image 2"
+				width="238" height="238">
+				<div class="caption">맛집</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="#" onclick="imageClickedTheme('효도여행')"> <img src="images/js1.jpg" alt="Image 3"
+				width="238" height="238">
+				<div class="caption">효도</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="#"> <img src="/images/2.jpg" alt="Image 4"
+				width="238" height="238">
+				<div class="caption">더보기</div>
+			</a>
+		</div>
+	</div>
 <br>
 <br>
 <br>
 <br>
+<br>
+<br>
+<div id="h1_container">
+		<h1 id="with_who">WITH WHO</h1>
+	</div>
+	<div class="text-line"></div>
+	<div class="image-container">
+		<div class="image-wrapper">
+			<a href="seoul.html"> <img src="/images/fam1.jpg" alt="Image 1"
+				width="317" height="317">
+				<div class="caption">가족</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="busan.html"> <img src="/images/coup3.png" alt="Image 2"
+				width="317" height="317">
+				<div class="caption">커플</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="incheon.html"> <img src="/images/fre3.jpeg"
+				alt="Image 3" width="317" height="317">
+				<div class="caption">우정</div>
+			</a>
+		</div>
+	</div>
 <br>
 <br>
 <br>
@@ -260,7 +248,6 @@ $(function () {
     </a>
   </div>
 </div>
-
 <br>
 <br>
 <br>
@@ -269,13 +256,6 @@ $(function () {
 <br>
 <br>
 <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<script src="test.js"></script>
 <footer>
   <div class="footer-left">
       <div class="contact-info">
@@ -297,7 +277,20 @@ $(function () {
       <p>세계를 선두하는 롤토체스 전문 기업</p>
   </div>
 </footer>
-   <a href="upLoadPlace">장소 등록</a>
-	<a href="apitest">장소 검색</a> -->
+ <script>
+  // 이미지 클릭 시 처리할 함수
+    function imageClicked(p_location) {
+        // 파라미터와 함께 URL 생성
+        var url = "placeListByLocation?p_location=" + p_location;
+        // 해당 URL로 이동
+        window.location.href = url;
+    }
+    function imageClickedTheme(p_thema) {
+        // 파라미터와 함께 URL 생성
+        var url = "placeListByTheme?p_thema=" + p_thema;
+        // 해당 URL로 이동
+        window.location.href = url;
+    }
+    </script>
 </body>
 </html>

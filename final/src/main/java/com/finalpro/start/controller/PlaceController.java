@@ -59,12 +59,41 @@ public class PlaceController {
 
 	// 장소 리스트 페이지 이동(테마별)
 	@GetMapping("placeList")
-	public String placeList(Model model, @RequestParam("p_location") String p_location, @RequestParam("p_thema") String p_thema,
-							@RequestParam("p_people") String p_people) {
+	public String placeList(Model model, @RequestParam("p_location") String p_location,
+			@RequestParam("p_thema") String p_thema, @RequestParam("p_people") String p_people) {
+
 		log.info("placeList()");
 		List<PlaceDTO> placeList = placeService.getPlaceList(p_location, p_thema, p_people);
 		model.addAttribute("placeList", placeList);
 		return "placeList";
+	}
+
+	@GetMapping("placeListByLocation")
+	public String placeListByLocation(@RequestParam("p_location") String p_location, Model model) {
+		String view = null;
+		List<PlaceDTO> place = placeService.placeListByLocation(p_location);
+		if (place != null) {
+			model.addAttribute("placeListByLocation", place);
+			view = "placeListByLocation";
+		} else {
+			view = "placeListByLocation";
+		}
+
+		return view;
+	}
+
+	// 테마별 리스트
+	@GetMapping("placeListByTheme")
+	public String placeByTheme(@RequestParam("p_thema") String p_thema, Model model) {
+		String view = null;
+		List<PlaceDTO> place = placeService.placeListByTheme(p_thema);
+		if (place != null) {
+			model.addAttribute("placeListByTheme", place);
+			view = "placeListByTheme";
+		} else {
+			view = "placeListByTheme";
+		}
+		return view;
 	}
 
 	// placeDetail
@@ -101,22 +130,20 @@ public class PlaceController {
 		}
 
 	}
-	
 
 	@GetMapping("searchPlace")
-	public String getPlacePath(
-							   @RequestParam (name="x", required = false) Double x,
-							   @RequestParam (name="y", required = false) Double y,
-							   @RequestParam (name="keyword", required = false) String keyword,
-							   Model model) throws IOException, InterruptedException {
-		if(x != null && y != null && keyword != null) {
+	public String getPlacePath(@RequestParam(name = "x", required = false) Double x,
+			@RequestParam(name = "y", required = false) Double y,
+			@RequestParam(name = "keyword", required = false) String keyword, Model model)
+			throws IOException, InterruptedException {
+		if (x != null && y != null && keyword != null) {
 			List<PlaceDTO> keywordPlaceList = KakaoApiUtil.getPlaceByKeyWord(keyword, new PlaceDTO(x, y));
 			String keywordPlaceListJson = new ObjectMapper().writer().writeValueAsString(keywordPlaceList);
 			model.addAttribute("keywordPlacetList", keywordPlaceListJson);
-			
+
 			List<PlaceDTO> pathPlaceList = new ArrayList<>();
-			for (int i=1; i<keywordPlaceList.size(); i++){
-				PlaceDTO prevPoint = keywordPlaceList.get(i-1);
+			for (int i = 1; i < keywordPlaceList.size(); i++) {
+				PlaceDTO prevPoint = keywordPlaceList.get(i - 1);
 				PlaceDTO nextPoint = keywordPlaceList.get(i);
 				pathPlaceList.addAll(KakaoApiUtil.getVehiclePaths(prevPoint, nextPoint, null));
 			}
@@ -125,11 +152,10 @@ public class PlaceController {
 		}
 		return "searchPlace";
 	}
-	
+
 	@GetMapping("map")
 	public String getMethodName() {
 		return "map";
 	}
 
 }
-

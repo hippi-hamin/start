@@ -32,7 +32,16 @@
 		SET p_views=p_views + 1
 		WHERE p_id=#{p_id}
 	</update>
-
+	<select id="placeListByLocation" parameterType="String"
+		resultType="place">
+		SELECT * FROM place.placetbl
+		WHERE p_location=#{p_location}
+	</select>
+	<select id="placeListByTheme" parameterType="String"
+		resultType="place">
+		SELECT * FROM place.placetbl
+		WHERE p_thema=#{p_thema}
+	</select>
 
 
 </mapper>

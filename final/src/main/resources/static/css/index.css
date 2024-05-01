@@ -164,8 +164,6 @@ select:focus{
   margin-right: 10%;
 }
 
-/* 도시 이미지 부분 */
-
 .image-wrapper {
   position: relative;
   text-align: center; /* 이미지를 가운데 정렬 */
@@ -186,8 +184,6 @@ select:focus{
   text-align: center; /* 가운데 정렬 */
 }
 
-/* 도시 이름 부분 */
-
 .caption2 {
   position: absolute;
   left: 50%;
@@ -198,11 +194,6 @@ select:focus{
   text-shadow: 0.1px 0.5px 0 black;
   text-align: center; /* 가운데 정렬 */
 }
-/* 추천 코스 밑 가격 부분 */
-
-
-
-
 
 .image-wrapper img {
   transition: transform 0.3s ease; /* 호버 시 전환 효과를 부드럽게 만듦 */
@@ -212,6 +203,18 @@ select:focus{
   transform: scale(1.05); /* 호버 시 이미지를 약간 확대함 */
 }
 
+.custom-btn:hover {
+  background-color: #6c757d; /* 호버 시 배경색 변경 */
+  color: #fff; /* 호버 시 텍스트 색상 변경 */
+}
+
+
+.text-line {
+	width: 80%;
+	border-top: black 2px solid;
+	margin-left: 10%;
+	margin-bottom: 2%;
+}
 
 
 
@@ -278,16 +281,4 @@ footer {
   margin: 5px 0;
   font-size: 12px;
   color: #fff;
-}
-
-.custom-btn:hover {
-  background-color: #6c757d; /* 호버 시 배경색 변경 */
-  color: #fff; /* 호버 시 텍스트 색상 변경 */
-}
-
-.text-line {
-	width: 80%;
-	border-top: black 2px solid;
-	margin-left: 10%;
-	margin-bottom: 2%;
 }

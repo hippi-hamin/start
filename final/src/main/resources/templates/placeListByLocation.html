@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+    <h1>장소 리스트</h1>
+    <ul>
+        <!-- 장소 리스트를 반복하여 표시 -->
+        <th:block th:if="${placeListByLocation != null and placeListByLocation.size() > 0}">
+            <th:block th:each="place : ${placeListByLocation}">
+                <li>
+                    <a th:href="@{'/placeDetail/' + ${place.p_id}}">
+                        <span th:text="${place.p_name}"></span><br />
+                        지역 : <span th:text="${place.p_location}"></span><br />
+                        별점: <span th:text="${place.p_stScore}"></span><br />
+                        <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
+                    </a>
+                </li>
+            </th:block>
+        </th:block>
+        <th:block th:unless="${placeListByLocation != null and placeListByLocation.size() > 0}">
+            <p>장소 리스트가 존재하지 않습니다.</p>
+        </th:block>
+    </ul>
+</body>
+</html>

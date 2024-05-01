@@ -23,4 +23,10 @@ public interface PlaceDAO {
 	// 조회수 증가
 	void increaseViews(int p_id);
 	
+	// 지역별 리스트 
+	List<PlaceDTO> placeListByLocation(@Param("p_location")String p_location);
+
+	// 테마별 리스트 
+	List<PlaceDTO> placeListByTheme(@Param("p_thema") String p_thema);
+	
 }
