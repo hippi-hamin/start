@@ -208,7 +208,6 @@ select:focus{
   color: #fff; /* 호버 시 텍스트 색상 변경 */
 }
 
-
 .text-line {
 	width: 80%;
 	border-top: black 2px solid;
