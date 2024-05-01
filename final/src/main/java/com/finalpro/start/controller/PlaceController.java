@@ -61,8 +61,7 @@ public class PlaceController {
 	@GetMapping("placeList")
 	public String placeList(Model model, @RequestParam("p_location") String p_location,
 			@RequestParam("p_thema") String p_thema, @RequestParam("p_people") String p_people) {
-
-		log.info("placeList()");
+    log.info("placeList()");
 		List<PlaceDTO> placeList = placeService.getPlaceList(p_location, p_thema, p_people);
 		model.addAttribute("placeList", placeList);
 		return "placeList";
