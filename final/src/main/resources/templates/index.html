@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/footer.css}">
 <link rel="stylesheet" th:href="@{/css/index.css}">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -256,27 +257,7 @@ $(function () {
 <br>
 <br>
 <br>
-<footer>
-  <div class="footer-left">
-      <div class="contact-info">
-          <p>고객센터 (오전 9시 - 새벽 3시 운영)</p>
-          <p>전화번호: 123-456-7890</p>
-          <button class="messenger-btn">카카오톡 문의</button> <!--호버 효과 있음 (마우스 올리면)-->
-      </div>
-  </div>
-  <div class="footer-right">
-      <div class="company-info">
-          <a href="ABOUT 게시판">회사 소개</a>
-          <a href="공지사항 게시판">공지사항</a>
-      </div>
-  </div>
-  <div class="footer-bottom">
-      <p>START</p>
-      <p>인천일보아카데미</p>
-      <p>우편주소 : 26256</p>
-      <p>세계를 선두하는 롤토체스 전문 기업</p>
-  </div>
-</footer>
+<th:block th:replace="~{fragments/footer :: footer}"></th:block>
  <script>
   // 이미지 클릭 시 처리할 함수
     function imageClicked(p_location) {
