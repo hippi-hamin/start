@@ -36,7 +36,12 @@
 		resultType="place">
 		SELECT * FROM place.placetbl
 		WHERE p_location=#{p_location}
-		</select>
+	</select>
+	<select id="placeListByTheme" parameterType="String"
+		resultType="place">
+		SELECT * FROM place.placetbl
+		WHERE p_thema=#{p_thema}
+	</select>
 
 
 </mapper>

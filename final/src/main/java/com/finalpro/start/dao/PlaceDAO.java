@@ -25,5 +25,8 @@ public interface PlaceDAO {
 	
 	// 지역별 리스트 
 	List<PlaceDTO> placeListByLocation(@Param("p_location")String p_location);
+
+	// 테마별 리스트 
+	List<PlaceDTO> placeListByTheme(@Param("p_thema") String p_thema);
 	
 }

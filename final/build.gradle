@@ -11,11 +11,14 @@ java {
 	sourceCompatibility = '17'
 }
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+
+
+
+// 컴파일러 옵션 추가
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-parameters"
 }
+
 
 repositories {
 	mavenCentral()
@@ -37,6 +40,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
 	
+}
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-parameters"
 }
 
 tasks.named('test') {

@@ -85,9 +85,9 @@ $(function () {
 				</select> <select name="p_thema" id="p_thema">
 					<option value="" disabled selected hidden>테마</option>
 					<option value="놀이공원">놀이공원</option>
-					<option value="효도여행">효도</option>
-					<option value="먹방여행">맛집</option>
-					<option value="역사여행">역사</option>
+					<option value="효도여행">효도여행</option>
+					<option value="먹방여행">맛집탐방</option>
+					<option value="역사여행">역사여행</option>
 					<option value="반려동물과 함께하는 여행">반려동물</option>
 				</select> <select name="p_people" id="p_people">
 					<option value="" disabled selected hidden>인원</option>
@@ -145,7 +145,7 @@ $(function () {
 			</a>
 		</div>
 		<div class="image-wrapper">
-			<a href="#"> <img src="/images/2.jpg" alt="Image 4"
+			<a href="#" > <img src="/images/2.jpg" alt="Image 4"
 				width="238" height="238">
 				<div class="caption">더보기</div>
 			</a>
@@ -167,25 +167,25 @@ $(function () {
 	</div>
 	<div class="image-container">
 		<div class="image-wrapper">
-			<a href="seoul.html"> <img src="/images/theme1.jpg" alt="Image 1"
+			<a href="#" onclick="imageClickedTheme('효도여행')"> <img src="/images/theme1.jpg" alt="Image 1"
 				width="238" height="238">
-				<div class="caption">힐링</div>
+				<div class="caption">효도</div>
 			</a>
 		</div>
 		<div class="image-wrapper">
-			<a href="busan.html"> <img src="/images/theme2.jpg" alt="Image 2"
+			<a href="#" onclick="imageClickedTheme('맛집탐방')"> <img src="/images/theme2.jpg" alt="Image 2"
 				width="238" height="238">
-				<div class="caption">레저/스포츠</div>
+				<div class="caption">맛집</div>
 			</a>
 		</div>
 		<div class="image-wrapper">
-			<a href="incheon.html"> <img src="images/js1.jpg" alt="Image 3"
+			<a href="#" onclick="imageClickedTheme('효도여행')"> <img src="images/js1.jpg" alt="Image 3"
 				width="238" height="238">
-				<div class="caption">전시</div>
+				<div class="caption">효도</div>
 			</a>
 		</div>
 		<div class="image-wrapper">
-			<a href="more.html"> <img src="/images/2.jpg" alt="Image 4"
+			<a href="#"> <img src="/images/2.jpg" alt="Image 4"
 				width="238" height="238">
 				<div class="caption">더보기</div>
 			</a>
@@ -305,6 +305,12 @@ $(function () {
     function imageClicked(p_location) {
         // 파라미터와 함께 URL 생성
         var url = "placeListByLocation?p_location=" + p_location;
+        // 해당 URL로 이동
+        window.location.href = url;
+    }
+    function imageClickedTheme(p_thema) {
+        // 파라미터와 함께 URL 생성
+        var url = "placeListByTheme?p_thema=" + p_thema;
         // 해당 URL로 이동
         window.location.href = url;
     }
