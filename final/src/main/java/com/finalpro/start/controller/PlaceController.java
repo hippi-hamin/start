@@ -59,16 +59,16 @@ public class PlaceController {
 
 	// 장소 리스트 페이지 이동(테마별)
 	@GetMapping("placeList")
-	public String placeList(Model model, @RequestParam("p_location") String p_location,
-			@RequestParam("p_thema") String p_thema, @RequestParam("p_people") String p_people) {
+	public String placeList(Model model, @RequestParam(value="p_location") String p_location,
+			@RequestParam(value="p_thema") String p_thema) {
     log.info("placeList()");
-		List<PlaceDTO> placeList = placeService.getPlaceList(p_location, p_thema, p_people);
+		List<PlaceDTO> placeList = placeService.getPlaceList(p_location, p_thema);
 		model.addAttribute("placeList", placeList);
 		return "placeList";
 	}
 
 	@GetMapping("placeListByLocation")
-	public String placeListByLocation(@RequestParam("p_location") String p_location, Model model) {
+	public String placeListByLocation(@RequestParam(value="p_location") String p_location, Model model) {
 		String view = null;
 		List<PlaceDTO> place = placeService.placeListByLocation(p_location);
 		if (place != null) {
@@ -83,7 +83,7 @@ public class PlaceController {
 
 	// 테마별 리스트
 	@GetMapping("placeListByTheme")
-	public String placeByTheme(@RequestParam("p_thema") String p_thema, Model model) {
+	public String placeByTheme(@RequestParam(value="p_thema") String p_thema, Model model) {
 		String view = null;
 		List<PlaceDTO> place = placeService.placeListByTheme(p_thema);
 		if (place != null) {

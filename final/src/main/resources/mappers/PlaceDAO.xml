@@ -19,8 +19,8 @@
 	<select id="getPlaceList" resultType="place">
 		SELECT * FROM
 		place.placetbl
-		WHERE p_location=#{p_location} and p_thema=#{p_thema}
-		and p_people=#{p_people}
+		
+
 	</select>
 	<select id="findById" parameterType="int" resultType="place">
 		SELECT *
