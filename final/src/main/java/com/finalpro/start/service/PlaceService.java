@@ -48,7 +48,7 @@ public class PlaceService {
 			msg = "장소 등록 실패";
 		}
 		log.info(msg);
-		
+
 		rttr.addFlashAttribute("msg", msg);
 
 		return view;
@@ -115,9 +115,17 @@ public class PlaceService {
 		placeDAO.increaseViews(p_id);
 	}
 
+	// 지역별 리스트
 	public List<PlaceDTO> placeListByLocation(String p_location) {
-		
+
 		List<PlaceDTO> place = placeDAO.placeListByLocation(p_location);
+		return place;
+	}
+
+	// 테마별 리스트
+	public List<PlaceDTO> placeListByTheme(String p_thema) {
+		List<PlaceDTO> place = placeDAO.placeListByTheme(p_thema);
+
 		return place;
 	}
 }
