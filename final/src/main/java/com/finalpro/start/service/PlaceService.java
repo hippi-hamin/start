@@ -60,8 +60,10 @@ public class PlaceService {
 		log.info("fileUpLoad()");
 
 		// 파일 저장 경로 설정
-		String uploadDirectory = session.getServletContext().getRealPath("/"); // 원하는 고정된 디렉토리 경로로 변경하세요
+		String uploadDirectory = "src/main/resources/static/upload";
 
+		// 원하는 고정된 디렉토리 경로로 변경하세요
+		log.info(uploadDirectory);
 		File folder = new File(uploadDirectory);
 		if (!folder.exists()) {
 			// 폴더가 존재하지 않으면 생성

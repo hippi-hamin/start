@@ -11,16 +11,17 @@
 	<ul>
 		<!-- 장소 리스트를 반복하여 표시 -->
 		<th:block th:each="place : ${placeList}">
-    <li>
+    	<li>
             <a th:href="@{'/placeDetail/' + ${place.p_id}}">
-            <span th:text="${place.p_name}"></span><br />
-            지역 : <span th:text="${place.p_location}"></span><br />
-            별점: <span th:text="${place.p_stScore}"></span><br />
-			<img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
-
-	 </a>
-    </li>
-    <br />
+            	<span th:text="${place.p_name}"></span><br />
+            	지역 : <span th:text="${place.p_location}"></span><br />
+            	별점: <span th:text="${place.p_stScore}"></span><br />
+				<!-- <img th:src="@{'/uploads/' + ${place.p_iname}}" alt="이미지" width="100px"> -->
+				<img alt="" src="@{/upload/place.p_iname}">
+				
+			</a>
+    	</li>
+    <br/>
 		</th:block>
 	</ul>
 	
