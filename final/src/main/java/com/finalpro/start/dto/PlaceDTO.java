@@ -24,16 +24,12 @@ public class PlaceDTO {
 	private String p_people;
 	private Double x;
 	private Double y;
-	
-public PlaceDTO (Double x, Double y) {
-		
-		this.x = x;
-		this.y = y;
-		
-	}
-
-public PlaceDTO() {
-	// TODO Auto-generated constructor stub
-}
-	
+	// 기본 생성자
+    public PlaceDTO() {
+    }
+    // 두 개의 인수를 받는 생성자
+    public PlaceDTO(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
 }

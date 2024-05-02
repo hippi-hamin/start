@@ -99,9 +99,9 @@ public class PlaceService {
 		}
 	}
 
-	public List<PlaceDTO> getPlaceList() {
+	public List<PlaceDTO> getPlaceList(String p_location, String p_thema, String p_people) {
 		// 장소 리스트 가져오기
-		return placeDAO.getPlaceList();
+		return placeDAO.getPlaceList(p_location, p_thema, p_people);
 	}
 
 	// 장소 정보

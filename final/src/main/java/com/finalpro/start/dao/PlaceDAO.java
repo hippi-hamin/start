@@ -3,6 +3,7 @@ package com.finalpro.start.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.finalpro.start.dto.PlaceDTO;
@@ -14,7 +15,7 @@ public interface PlaceDAO {
 	void upLoadPlaceProc(PlaceDTO placeDTO);
 
 	// 장소 리스트
-	List<PlaceDTO> getPlaceList();
+	List<PlaceDTO> getPlaceList(@Param("p_location")String p_location, @Param("p_thema")String p_thema, @Param("p_people")String p_people);
 
 	// 장소정보 가져오기
 	PlaceDTO findById(int p_id);
