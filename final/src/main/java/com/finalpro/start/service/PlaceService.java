@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -22,6 +23,8 @@ public class PlaceService {
 	@Autowired
 	private PlaceDAO placeDAO;
 
+	@Autowired
+	private Environment env;
 	public String upLoadPlaceProc(List<MultipartFile> files, HttpSession session, PlaceDTO placeDTO,
 			RedirectAttributes rttr) {
 
@@ -60,14 +63,14 @@ public class PlaceService {
 		log.info("fileUpLoad()");
 
 		// 파일 저장 경로 설정
-		String uploadDirectory = "src/main/resources/static/upload";
+		String uploadDirectory = "/Users/yed0/Development/start/final/src/main/resources/static/upLoad/";
 
-		// 원하는 고정된 디렉토리 경로로 변경하세요
 		log.info(uploadDirectory);
 		File folder = new File(uploadDirectory);
 		if (!folder.exists()) {
 			// 폴더가 존재하지 않으면 생성
-			if (!folder.mkdirs()) {
+			boolean createDir = folder.mkdir();
+			if (!createDir) {
 				throw new IOException("Failed to create directory: " + uploadDirectory);
 			}
 		}
