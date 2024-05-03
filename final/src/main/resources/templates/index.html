@@ -27,10 +27,12 @@ $(function () {
     }
 }
 </script>
-<title>START</title>
+
 </head>
 <body>
+	<!-- 헤더 -->
 	<th:block th:replace="~{fragments/header :: header}"></th:block>
+	<!-- 슬라이드 배너 -->
 	<div class="slider-background">
 		<div class="slider">
 			<div class="slide">
@@ -44,6 +46,7 @@ $(function () {
 			</div>
 		</div>
 	</div>
+	<!-- 위치변경 버튼 -->
 	<div class="btn-center">
 		<div class="btn-group" role="group" aria-label="Basic example">
 			<a class="btn btn-secondary custom-btn"
@@ -62,13 +65,19 @@ $(function () {
 	<br>
 	<br>
 	<br>
+
+	<!-- Make Plan 위치 -->
 	<div id="h1_container">
 		<h1 id="make_place">MAKE PLAN</h1>
 	</div>
 	<div class="text-line"></div>
+
+	<!-- 필터 박스 정렬 -->
 	<div class="container">
 		<div class="make-box">
 			<form id="searchForm" action="placeList" method="GET">
+				<!-- 장소 드롭다운 -->
+
 				<select name="p_location" id="p_location">
 					<option value="" disabled selected hidden>장소</option>
 					<option value="서울">서울</option>
@@ -84,7 +93,11 @@ $(function () {
 					<option value="전라도">전라도</option>
 					<option value="충청도">충청도</option>
 					<option value="제주도">제주도</option>
-				</select> <select name="p_thema" id="p_thema">
+
+				</select>
+				<!-- 테마 드롭다운 -->
+				<select name="p_thema" id="p_thema">
+
 					<option value="" disabled selected hidden>테마</option>
 					<option value="놀이공원">놀이공원</option>
 					<option value="맛집탐방">맛집탐방</option>
@@ -94,13 +107,15 @@ $(function () {
 					<option value="가족">가족</option>
 					<option value="데이트">데이트</option>
 					<option value="친구">친구</option>
-					<option value="나홀로">나홀로 집</option>
-				</select> </select>
+					<option value="나홀로">나홀로</option>
+
+				</select>
+				<!-- 검색 버튼 -->
 				<button id="submitBtn" type="button">
 					<img src="/images/2946467-200.png" width="50" height="50"
 						alt="Search Icon">
 				</button>
-			<br> <br> <br> <br>
+
 			</form>
 			<script>
 			    document.getElementById("submitBtn").addEventListener("click", function() {
@@ -121,10 +136,13 @@ $(function () {
 	<br>
 	<br>
 	<br>
+
+	<!-- Location 위치 -->
 	<div id="h1_container">
 		<h1 id="location">LOCATION</h1>
 	</div>
 	<div class="text-line"></div>
+	<!-- 이미지 정렬 -->
 	<div class="image-container">
 		<div class="image-wrapper">
 			<a href="#" onclick="imageClicked('서울')"> <img
@@ -158,10 +176,15 @@ $(function () {
 	<br>
 	<br>
 	<br>
+
+	<!-- Theme 위치 -->
+
+
 	<div id="h1_container">
 		<h1 id="theme2">THEME</h1>
 	</div>
 	<div class="text-line"></div>
+	<!-- 이미지 정렬 -->
 	<div class="image-container">
 		<div class="image-wrapper">
 			<a href="#" onclick="imageClickedTheme('효도여행')"> <img
@@ -194,10 +217,14 @@ $(function () {
 	<br>
 	<br>
 	<br>
+
+	<!-- With who 위치 -->
+
 	<div id="h1_container">
 		<h1 id="with_who">WITH WHO</h1>
 	</div>
 	<div class="text-line"></div>
+	<!-- 이미지 정렬 -->
 	<div class="image-container">
 		<div class="image-wrapper">
 			<a href="seoul.html"> <img src="/images/fam1.jpg" alt="Image 1"
@@ -218,49 +245,51 @@ $(function () {
 			</a>
 		</div>
 	</div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<div id="h1_container">
-  <h1 id="recommend">RECOMMEND</h1>
-</div>
-<div class="text-line"></div>
-<div class="image-container">
-  <div class="image-wrapper">
-    <a href="seoul.html">
-      <img src="/images/seoul.jpg" alt="Image 1" width="317" height="317">
-      <div class="caption">엄빠 힘내세요!</div>
-      <div class="caption2">예상 비용 : 70,000원</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="busan.html">
-      <img src="/images/busan.jpg" alt="Image 2" width="317" height="317">
-      <div class="caption">부산 커플 여행</div>
-      <div class="caption2">예상 비용 : 60,000원</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="incheon.html">
-      <img src="/images/incheon.jpg" alt="Image 3" width="317" height="317">
-      <div class="caption">북한산 코스</div>
-      <div class="caption2">예상 비용 : 45,000원</div>
-    </a>
-  </div>
-</div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<th:block th:replace="~{fragments/footer :: footer}"></th:block>
- <script>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div id="h1_container">
+		<h1 id="recommend">RECOMMEND</h1>
+	</div>
+	<div class="text-line"></div>
+	<div class="image-container">
+		<div class="image-wrapper">
+			<a href="seoul.html"> <img src="/images/seoul.jpg" alt="Image 1"
+				width="317" height="317">
+				<div class="caption">엄빠 힘내세요!</div>
+				<div class="caption2">예상 비용 : 70,000원</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="busan.html"> <img src="/images/busan.jpg" alt="Image 2"
+				width="317" height="317">
+				<div class="caption">부산 커플 여행</div>
+				<div class="caption2">예상 비용 : 60,000원</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="incheon.html"> <img src="/images/incheon.jpg"
+				alt="Image 3" width="317" height="317">
+				<div class="caption">북한산 코스</div>
+				<div class="caption2">예상 비용 : 45,000원</div>
+			</a>
+		</div>
+	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+	<script>
+
     function imageClicked(p_location) {
         // 파라미터와 함께 URL 생성
         var url = "placeListByLocation?p_location=" + p_location;

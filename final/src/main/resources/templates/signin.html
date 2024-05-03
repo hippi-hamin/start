@@ -6,6 +6,7 @@
 <title>로그인</title>
 <link rel="stylesheet" th:href="@{/css/signin.css}">
 <link rel="stylesheet" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/footer.css}">
 <!-- jQuery 로드 구문 -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -46,5 +47,6 @@
 			
 		</div>
 	</div>
+	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
 </html>

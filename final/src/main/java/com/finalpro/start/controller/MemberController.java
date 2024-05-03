@@ -105,11 +105,23 @@ public class MemberController {
 		return "redirect:/signin"; // 로그아웃 후 "/signin"으로 리다이렉트
 	}
 
-	// 마이페이지
 	@GetMapping("mypage")
-	public String mypage() {
-		return "mypage";
+	public String mypage(HttpSession session, Model model, RedirectAttributes rttr) {
+	    // 세션에서 로그인한 사용자 정보를 가져옴
+	    MemberDTO signedInUser = (MemberDTO) session.getAttribute("signedInUser");
+
+	    // 만약 로그인한 사용자가 없다면 로그인 페이지로 리다이렉트 또는 예외 처리
+	    if (signedInUser == null) {
+	        return "redirect:/";
+	    }
+	    // 가져온 사용자 정보를 모델에 추가
+	    log.info("signedInUser :{}", signedInUser);
+	    model.addAttribute("currentUser", signedInUser);
+	    model.addAttribute("msg", signedInUser.getM_name()+"님 환영합니다.");
+
+	    return "mypage";
 	}
+
 	
 	// 비밀번호 변경 
 	@PostMapping("changePassword")
@@ -120,4 +132,7 @@ public class MemberController {
 		String view = memberServ.changePassword(m_pw, changePwEmail, rttr);
 		return view;
 	}
+	
+	
+	
 }
