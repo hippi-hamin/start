@@ -25,7 +25,7 @@ body {
     text-align: center;
     height: 100%;
     width: 50%;
-    position: fixed; /* 고정 위치 설정 */
+    position: relative; /* 고정 위치 설정 */
     top: 50%; /* 화면 상단으로부터의 거리를 50%로 설정 */
     left: 50%; /* 화면 좌측으로부터의 거리를 50%로 설정 */
     transform: translate(-50%, -50%); /* 요소를 수평 및 수직으로 중앙으로 이동 */

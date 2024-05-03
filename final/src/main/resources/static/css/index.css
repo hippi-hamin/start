@@ -9,13 +9,13 @@ body {
    display: flex;
    flex-direction: column;
 }
-
+/* 슬라이드 바탕 */
 .slider-background {
 	width: 100%;
 	height: 585px;
 	background-color: black;
 }
-
+/* 슬라이드 크기 */
 .slider {
 	display: flex;
 	position: relative;
@@ -25,7 +25,7 @@ body {
 	height: 575px;
 	top: 10px;
 }
-
+/* 슬라이드 될 박스 */
 .slide {
   position: absolute;
   top: 0;
@@ -36,12 +36,12 @@ body {
   background-position: center;
   animation: slider 15s infinite linear;
 }
-
+/* 슬라이드 이미지 */
 .slide img {
 width: 100%; 
 height: 575px;
 }
-
+/* 슬라이드의 이동할 시간 */ 
 .slide:nth-child(1) {
 
   animation-delay: 0;
@@ -54,7 +54,7 @@ height: 575px;
 
   animation-delay: -10s;
 }
-
+/* 슬라이드 모션 */
 @keyframes slider {
   0% {
     transform: translateX(0);
@@ -75,20 +75,22 @@ height: 575px;
     transform: translateX(0);
   }
 }
-
+/* 버튼 정렬 */
 .btn-center {
-  display: flex;
-  justify-content: center;
+  	display: flex;
 	position: relative;
 	justify-content: center; /* 수평 가운데 정렬 */
   	align-items: center; /* 수직 가운데 정렬 */
+  	position: sticky;
+  	top: 0;
+  	z-index: 1;
 }
-
+/* 버튼 그룹화 */
 .btn-group {
 	width: 100%;
   display: flex;
 }
-
+/* 버튼 디자인 */
 .custom-btn {
   width: 20%;
   height: 50px;
@@ -102,17 +104,17 @@ height: 575px;
   padding-top: 5px; 
   cursor : pointer;
 }
-
+/* Make Plan 위치 */
 .container {
   width: 100%;
 }
-
+/* 버튼 클릭시 이동할 위치의 텍스트 */
 #h1_container {
 	margin-left: 10%;
 	font-size : 24px;
 	font-weight: bold;
 }
-
+/* Make Plan */
 .make-box {
   width: 80%;
   height: 200px;
@@ -188,9 +190,9 @@ select:focus{
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  margin-top: 58px;
+  margin-top: 30px;
   color: black;
-  font-size: 16px;
+  font-size: 14px;
   text-shadow: 0.1px 0.5px 0 black;
   text-align: center; /* 가운데 정렬 */
 }
