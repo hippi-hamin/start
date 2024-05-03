@@ -3,6 +3,7 @@ package com.finalpro.start.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.finalpro.start.dto.MemberDTO;
 
@@ -25,5 +26,7 @@ public interface MemberDAO {
 	String selectEmail(int m_id);
 	// 비밀번호 변경 
 	boolean changePassword(@Param("encodePassword") String encodePassword, @Param("changePwEmail") String changePwEmail);
+	// 회원 정보 변경 
+	boolean updateUserInfo(String m_name, String m_phone, String m_email);
 	
 }

@@ -152,9 +152,9 @@ input::placeholder {
 /* 성별 선택 박스 */
 .gender-box {
 	position: absolute; 
-	top: 85%;
+   	top: 85%;
     left: 50%; 
-    transform: translate(-50%, -50%); 	
+    transform: translate(-50%, -50%);    
     width: 25%;
     height: 30px;
     border-top: none;

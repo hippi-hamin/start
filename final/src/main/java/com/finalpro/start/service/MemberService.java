@@ -133,7 +133,16 @@ public class MemberService {
 			msg = "다시 시도해주세요.";
 			view = "redirect:changePassword";
 		}
-		rttr.addFlashAttribute("msg",msg);
+		rttr.addFlashAttribute("msg", msg);
 		return view;
+	}
+
+	// 정보 변경
+	public String updateUserInfo(String m_name, String m_phone, String m_email) {
+	    if (memberDAO.updateUserInfo(m_name, m_phone, m_email)) {
+	        return "success";
+	    } else {
+	        return "failure";
+	    }
 	}
 }

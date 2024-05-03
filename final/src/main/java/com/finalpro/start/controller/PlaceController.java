@@ -59,17 +59,18 @@ public class PlaceController {
 
 	// 장소 리스트 페이지 이동
 	@GetMapping("placeList")
-	public String placeList(Model model, @RequestParam(value="p_location", required=false, defaultValue="defaultLocation") String p_location,
-	        @RequestParam(value="p_thema", required=false, defaultValue="defaultThema") String p_thema) {
-	    log.info("placeList()");
-	    List<PlaceDTO> placeList = placeService.getPlaceList(p_location, p_thema);
-	    model.addAttribute("placeList", placeList);
-	    return "placeList";
+	public String placeList(Model model,
+			@RequestParam(value = "p_location", required = false, defaultValue = "defaultLocation") String p_location,
+			@RequestParam(value = "p_thema", required = false, defaultValue = "defaultThema") String p_thema) {
+		log.info("placeList()");
+		List<PlaceDTO> placeList = placeService.getPlaceList(p_location, p_thema);
+		model.addAttribute("placeList", placeList);
+		return "placeList";
 	}
 
-
+	// 지역별 리스트
 	@GetMapping("placeListByLocation")
-	public String placeListByLocation(@RequestParam(value="p_location") String p_location, Model model) {
+	public String placeListByLocation(@RequestParam(value = "p_location") String p_location, Model model) {
 		String view = null;
 		List<PlaceDTO> place = placeService.placeListByLocation(p_location);
 		if (place != null) {
@@ -84,7 +85,7 @@ public class PlaceController {
 
 	// 테마별 리스트
 	@GetMapping("placeListByTheme")
-	public String placeByTheme(@RequestParam(value="p_thema") String p_thema, Model model) {
+	public String placeByTheme(@RequestParam(value = "p_thema") String p_thema, Model model) {
 		String view = null;
 		List<PlaceDTO> place = placeService.placeListByTheme(p_thema);
 		if (place != null) {

@@ -49,11 +49,15 @@ $(function () {
 	<!-- 위치변경 버튼 -->
 	<div class="btn-center">
 		<div class="btn-group" role="group" aria-label="Basic example">
-			<a class="btn btn-secondary custom-btn" onclick="goToScroll('make_place')">MAKE PLAN</a> 
-			<a class="btn btn-secondary custom-btn" onclick="goToScroll('location')">LOCATION</a> 
-			<a class="btn btn-secondary custom-btn" onclick="goToScroll('theme2')">THEME</a>
-			<a class="btn btn-secondary custom-btn" onclick="goToScroll('with_who')">WITH WHO</a> 
-			<a class="btn btn-secondary custom-btn" onclick="goToScroll('recommend')">RECOMMEND</a>
+			<a class="btn btn-secondary custom-btn"
+				onclick="goToScroll('make_place')">MAKE PLAN</a> <a
+				class="btn btn-secondary custom-btn"
+				onclick="goToScroll('location')">LOCATION</a> <a
+				class="btn btn-secondary custom-btn" onclick="goToScroll('theme2')">THEME</a>
+			<a class="btn btn-secondary custom-btn"
+				onclick="goToScroll('with_who')">WITH WHO</a> <a
+				class="btn btn-secondary custom-btn"
+				onclick="goToScroll('recommend')">RECOMMEND</a>
 		</div>
 	</div>
 	<br>
@@ -90,7 +94,7 @@ $(function () {
 					<option value="충청도">충청도</option>
 					<option value="제주도">제주도</option>
 
-				</select> 
+				</select>
 				<!-- 테마 드롭다운 -->
 				<select name="p_thema" id="p_thema">
 
@@ -103,7 +107,7 @@ $(function () {
 					<option value="가족">가족</option>
 					<option value="데이트">데이트</option>
 					<option value="친구">친구</option>
-					<option value="나홀로">나홀로 집</option>
+					<option value="나홀로">나홀로</option>
 
 				</select>
 				<!-- 검색 버튼 -->
@@ -174,6 +178,7 @@ $(function () {
 	<br>
 
 	<!-- Theme 위치 -->
+
 
 	<div id="h1_container">
 		<h1 id="theme2">THEME</h1>
@@ -247,12 +252,10 @@ $(function () {
 	<br>
 	<br>
 	<br>
-	<!-- Recommend 위치 -->
 	<div id="h1_container">
 		<h1 id="recommend">RECOMMEND</h1>
 	</div>
 	<div class="text-line"></div>
-	<!-- 이미지 정렬 -->
 	<div class="image-container">
 		<div class="image-wrapper">
 			<a href="seoul.html"> <img src="/images/seoul.jpg" alt="Image 1"
@@ -284,10 +287,9 @@ $(function () {
 	<br>
 	<br>
 	<br>
-	<!-- 푸터 -->
 	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 	<script>
-  // 이미지 클릭 시 처리할 함수
+
     function imageClicked(p_location) {
         // 파라미터와 함께 URL 생성
         var url = "placeListByLocation?p_location=" + p_location;
