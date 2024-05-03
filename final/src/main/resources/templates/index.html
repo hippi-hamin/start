@@ -26,80 +26,84 @@ $(function () {
         window.scrollTo({ top: scrollToPosition, behavior: 'smooth' });
     }
 }
-
 </script>
-
-
-<title>START</title>
 </head>
 <body>
-<th:block th:replace="~{fragments/header :: header}"></th:block>
-   <div class="slider-background">
-   <div class="slider">
-      <div class="slide">
-         <img src="/images/1 (1).jpg">
-      </div>
-      <div class="slide">
-         <img src="/images/1 (2).jpg">
-      </div>
-      <div class="slide">
-         <img src="/images/1 (3).jpg">
-      </div>
-   </div>
-</div>
-    <div class="btn-center">
-      <div class="btn-group" role="group" aria-label="Basic example">
-        <a class="btn btn-secondary custom-btn" onclick="goToScroll('make_place')">MAKE PLAN</a>
-        <a class="btn btn-secondary custom-btn" onclick="goToScroll('location')">LOCATION</a>
-        <a class="btn btn-secondary custom-btn" onclick="goToScroll('theme2')">THEME</a>
-        <a class="btn btn-secondary custom-btn" onclick="goToScroll('with_who')">WITH WHO</a>
-        <a class="btn btn-secondary custom-btn" onclick="goToScroll('recommend')">RECOMMEND</a>
-      </div>
-    </div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<div id="h1_container">
-  <h1 id="make_place">MAKE PLAN</h1>
-  	</div>
-  	<div class="text-line"></div>
-    <div class="container">
-      <div class="make-box">
-	        <form id="searchForm" action="placeList" method="GET">
-			    <select name="p_location" id="p_location">
-			        <option value="" disabled selected hidden>장소</option>
-			        <option value="서울">서울</option>
-                        <option value="인천">인천</option>
-                        <option value="대구">대구</option>
-                        <option value="대전">대전</option>
-                        <option value="울산">울산</option>
-                        <option value="부산">부산</option>
-                        <option value="광주">광주</option>
-                        <option value="경기도">경기도</option>
-                        <option value="강원도">강원도</option>
-                        <option value="경상도">경상도</option>
-                        <option value="전라도">전라도</option>
-                        <option value="충청도">충청도</option>
-                        <option value="제주도">제주도</option>
-			    </select>
-			    <select name="p_thema" id="p_thema">
-			        <option value="" disabled selected hidden>테마</option>
-			        <option value="놀이공원">놀이공원</option>
-                        <option value="맛집탐방">맛집탐방</option>
-                        <option value="효도여행">효도여행</option>
-                        <option value="역사여행">역사여행</option>
-                        <option value="반려동물과 함께하는 여행">반려동물과 함께하는 여행</option>
-                        <option value="가족">가족</option>
-                        <option value="데이트">데이트</option>
-                        <option value="친구">친구</option>
-                        <option value="나홀로">나홀로 집</option>
-			    </select>
-			    </select>
-			    <button id="submitBtn" type="button">
-			        <img src="/images/2946467-200.png" width="50" height="50" alt="Search Icon">
-			    </button>
+	<!-- 헤더 -->
+	<th:block th:replace="~{fragments/header :: header}"></th:block>
+	<!-- 슬라이드 배너 -->
+	<div class="slider-background">
+		<div class="slider">
+			<div class="slide">
+				<img src="/images/1 (1).jpg">
+			</div>
+			<div class="slide">
+				<img src="/images/1 (2).jpg">
+			</div>
+			<div class="slide">
+				<img src="/images/1 (3).jpg">
+			</div>
+		</div>
+	</div>
+	<!-- 위치변경 버튼 -->
+	<div class="btn-center">
+		<div class="btn-group" role="group" aria-label="Basic example">
+			<a class="btn btn-secondary custom-btn" onclick="goToScroll('make_place')">MAKE PLAN</a> 
+			<a class="btn btn-secondary custom-btn" onclick="goToScroll('location')">LOCATION</a> 
+			<a class="btn btn-secondary custom-btn" onclick="goToScroll('theme2')">THEME</a>
+			<a class="btn btn-secondary custom-btn" onclick="goToScroll('with_who')">WITH WHO</a> 
+			<a class="btn btn-secondary custom-btn" onclick="goToScroll('recommend')">RECOMMEND</a>
+		</div>
+	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<!-- Make Plan 위치 -->
+	<div id="h1_container">
+		<h1 id="make_place">MAKE PLAN</h1>
+	</div>
+	<div class="text-line"></div>
+	<!-- 필터 박스 정렬 -->
+	<div class="container">
+		<div class="make-box">
+			<form id="searchForm" action="placeList" method="GET">
+				<!-- 장소 드롭다운 -->
+				<select name="p_location" id="p_location">
+					<option value="" disabled selected hidden>장소</option>
+					<option value="서울">서울</option>
+					<option value="인천">인천</option>
+					<option value="대구">대구</option>
+					<option value="대전">대전</option>
+					<option value="울산">울산</option>
+					<option value="부산">부산</option>
+					<option value="광주">광주</option>
+					<option value="경기도">경기도</option>
+					<option value="강원도">강원도</option>
+					<option value="경상도">경상도</option>
+					<option value="전라도">전라도</option>
+					<option value="충청도">충청도</option>
+					<option value="제주도">제주도</option>
+				</select> 
+				<!-- 테마 드롭다운 -->
+				<select name="p_thema" id="p_thema">
+					<option value="" disabled selected hidden>테마</option>
+					<option value="놀이공원">놀이공원</option>
+					<option value="맛집탐방">맛집탐방</option>
+					<option value="효도여행">효도여행</option>
+					<option value="역사여행">역사여행</option>
+					<option value="반려동물과 함께하는 여행">반려동물과 함께하는 여행</option>
+					<option value="가족">가족</option>
+					<option value="데이트">데이트</option>
+					<option value="친구">친구</option>
+					<option value="나홀로">나홀로 집</option>
+				</select>
+				<!-- 검색 버튼 -->
+				<button id="submitBtn" type="button">
+					<img src="/images/2946467-200.png" width="50" height="50"
+						alt="Search Icon">
+				</button>
 			</form>
 			<script>
 			    document.getElementById("submitBtn").addEventListener("click", function() {
@@ -107,22 +111,24 @@ $(function () {
 			        form.submit(); // 폼 제출
 			    });
 			</script>
+		</div>
 	</div>
-    </div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-    <div id="h1_container">
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<!-- Location 위치 -->
+	<div id="h1_container">
 		<h1 id="location">LOCATION</h1>
 	</div>
 	<div class="text-line"></div>
+	<!-- 이미지 정렬 -->
 	<div class="image-container">
 		<div class="image-wrapper">
 			<a href="#" onclick="imageClicked('서울')"> <img
@@ -131,71 +137,75 @@ $(function () {
 			</a>
 		</div>
 		<div class="image-wrapper">
-			<a href="#" onclick="imageClicked('부산')"> <img src="/images/busan.jpg" alt="Image 2"
-				width="238" height="238">
+			<a href="#" onclick="imageClicked('부산')"> <img
+				src="/images/busan.jpg" alt="Image 2" width="238" height="238">
 				<div class="caption">부산</div>
 			</a>
 		</div>
 		<div class="image-wrapper">
-			<a href="#" onclick="imageClicked('인천')"> <img src="/images/incheon.jpg"
-				alt="Image 3" width="238" height="238">
+			<a href="#" onclick="imageClicked('인천')"> <img
+				src="/images/incheon.jpg" alt="Image 3" width="238" height="238">
 				<div class="caption">인천</div>
 			</a>
 		</div>
 		<div class="image-wrapper">
-			<a href="#" > <img src="/images/2.jpg" alt="Image 4"
-				width="238" height="238">
+			<a href="#"> <img src="/images/2.jpg" alt="Image 4" width="238"
+				height="238">
 				<div class="caption">더보기</div>
 			</a>
 		</div>
 	</div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<div id="h1_container">
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<!-- Theme 위치 -->
+	<div id="h1_container">
 		<h1 id="theme2">THEME</h1>
 	</div>
 	<div class="text-line"></div>
+	<!-- 이미지 정렬 -->
 	<div class="image-container">
 		<div class="image-wrapper">
-			<a href="#" onclick="imageClickedTheme('효도여행')"> <img src="/images/theme1.jpg" alt="Image 1"
-				width="238" height="238">
+			<a href="#" onclick="imageClickedTheme('효도여행')"> <img
+				src="/images/theme1.jpg" alt="Image 1" width="238" height="238">
 				<div class="caption">효도</div>
 			</a>
 		</div>
 		<div class="image-wrapper">
-			<a href="#" onclick="imageClickedTheme('맛집탐방')"> <img src="/images/theme2.jpg" alt="Image 2"
-				width="238" height="238">
+			<a href="#" onclick="imageClickedTheme('맛집탐방')"> <img
+				src="/images/theme2.jpg" alt="Image 2" width="238" height="238">
 				<div class="caption">맛집</div>
 			</a>
 		</div>
 		<div class="image-wrapper">
-			<a href="#" onclick="imageClickedTheme('효도여행')"> <img src="images/js1.jpg" alt="Image 3"
-				width="238" height="238">
+			<a href="#" onclick="imageClickedTheme('효도여행')"> <img
+				src="images/js1.jpg" alt="Image 3" width="238" height="238">
 				<div class="caption">효도</div>
 			</a>
 		</div>
 		<div class="image-wrapper">
-			<a href="#"> <img src="/images/2.jpg" alt="Image 4"
-				width="238" height="238">
+			<a href="#"> <img src="/images/2.jpg" alt="Image 4" width="238"
+				height="238">
 				<div class="caption">더보기</div>
 			</a>
 		</div>
 	</div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<div id="h1_container">
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<!-- With who 위치 -->
+	<div id="h1_container">
 		<h1 id="with_who">WITH WHO</h1>
 	</div>
 	<div class="text-line"></div>
+	<!-- 이미지 정렬 -->
 	<div class="image-container">
 		<div class="image-wrapper">
 			<a href="seoul.html"> <img src="/images/fam1.jpg" alt="Image 1"
@@ -216,49 +226,52 @@ $(function () {
 			</a>
 		</div>
 	</div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<div id="h1_container">
-  <h1 id="recommend">RECOMMEND</h1>
-</div>
-<div class="text-line"></div>
-<div class="image-container">
-  <div class="image-wrapper">
-    <a href="seoul.html">
-      <img src="/images/seoul.jpg" alt="Image 1" width="317" height="317">
-      <div class="caption">엄빠 힘내세요!</div>
-      <div class="caption2">예상 비용 : 70,000원</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="busan.html">
-      <img src="/images/busan.jpg" alt="Image 2" width="317" height="317">
-      <div class="caption">부산 커플 여행</div>
-      <div class="caption2">예상 비용 : 60,000원</div>
-    </a>
-  </div>
-  <div class="image-wrapper">
-    <a href="incheon.html">
-      <img src="/images/incheon.jpg" alt="Image 3" width="317" height="317">
-      <div class="caption">북한산 코스</div>
-      <div class="caption2">예상 비용 : 45,000원</div>
-    </a>
-  </div>
-</div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<th:block th:replace="~{fragments/footer :: footer}"></th:block>
- <script>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<!-- Recommend 위치 -->
+	<div id="h1_container">
+		<h1 id="recommend">RECOMMEND</h1>
+	</div>
+	<div class="text-line"></div>
+	<!-- 이미지 정렬 -->
+	<div class="image-container">
+		<div class="image-wrapper">
+			<a href="seoul.html"> <img src="/images/seoul.jpg" alt="Image 1"
+				width="317" height="317">
+				<div class="caption">엄빠 힘내세요!</div>
+				<div class="caption2">예상 비용 : 70,000원</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="busan.html"> <img src="/images/busan.jpg" alt="Image 2"
+				width="317" height="317">
+				<div class="caption">부산 커플 여행</div>
+				<div class="caption2">예상 비용 : 60,000원</div>
+			</a>
+		</div>
+		<div class="image-wrapper">
+			<a href="incheon.html"> <img src="/images/incheon.jpg"
+				alt="Image 3" width="317" height="317">
+				<div class="caption">북한산 코스</div>
+				<div class="caption2">예상 비용 : 45,000원</div>
+			</a>
+		</div>
+	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<!-- 푸터 -->
+	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+	<script>
   // 이미지 클릭 시 처리할 함수
     function imageClicked(p_location) {
         // 파라미터와 함께 URL 생성

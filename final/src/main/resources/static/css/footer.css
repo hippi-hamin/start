@@ -1,12 +1,15 @@
 @charset "UTF-8";
 
 footer {
-  background-color: #000000;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap; 
+      background-color: #000000;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
+    top: 280%;
+    height: 100%;
 }
 
 .footer-left, .footer-right {
