@@ -1,0 +1,40 @@
+@charset "UTF-8";
+* {
+   box-sizing: border-box;
+}
+
+html {
+   height: 100%;
+}
+
+body {
+   margin: 0;
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+}
+/* 머릿글 영문 텍스트 */
+.center-eng-text {
+    text-align: center;
+    color: black;
+    position: relative;
+    top: 5%; /* 부모 요소 상단에서의 거리를 50%로 설정 */
+    font-size: 24px;
+    font-weight: bold;
+}
+/* 머릿글 한글 텍스트 */
+.center-ko-text {
+    text-align: center;
+    color: black;
+    position: relative;
+    top: 7%; /* 부모 요소 상단에서의 거리를 50%로 설정 */
+    font-size: 16px;
+}
+/* 텍스트 종료 라인 */
+.write-line {
+	width: 15%;
+	border-top: 1px solid gray;
+	margin: 0 auto;
+	position: relative;
+	top: 10%;
+}

@@ -1,12 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/signup.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/footer.css}">
 </head>
 <body>
+	<!-- 헤더 -->
+	<th:block th:replace="~{fragments/header :: header}"></th:block>
+	<!-- 이메일 찾기 텍스트 -->
+	<div class="center-eng-text">F i n d E m a i l</div>
+	<div class="center-ko-text">이메일 찾기</div>
+	<div class="write-line"></div>
 	<!-- foundEmail 모델이 비어 있지 않은 경우에만 출력 -->
-    <p th:if="${not #strings.isEmpty(foundEmail)}" th:text="${foundEmail}"></p>
-
+	<p th:if="${not #strings.isEmpty(foundEmail)}" th:text="${foundEmail}"></p>
+	<!-- 푸터 -->
+	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
 </html>

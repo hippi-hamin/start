@@ -104,13 +104,13 @@ input::placeholder {
 /* 생년월일 정렬 박스 */
 .YY {
     position: absolute;
-    top: 75%;
+    top: 85%;
     width: 100%;
 }
 /* 생년월일 선택 박스 */
 .yy-write-box {
     position: absolute; 
-	top: 75%;
+	top: 85%;
     left: 50%; 
     transform: translate(-50%, -50%); 	
     width: 25%;
@@ -152,7 +152,7 @@ input::placeholder {
 /* 성별 선택 박스 */
 .gender-box {
 	position: absolute; 
-   	top: 85%;
+   	top: 75%;
     left: 50%; 
     transform: translate(-50%, -50%);    
     width: 25%;
