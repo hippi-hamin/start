@@ -61,7 +61,7 @@ public class PlaceService {
 		log.info("fileUpLoad()");
 
 		// 파일 저장 경로 설정
-		String uploadDirectory = session.getServletContext().getRealPath("/");;
+		String uploadDirectory = session.getServletContext().getRealPath("/");
 
 		log.info(uploadDirectory);
 		File folder = new File(uploadDirectory);
