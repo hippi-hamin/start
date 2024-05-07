@@ -10,116 +10,134 @@ html {
 body {
    margin: 0;
    height: 100%;
-   background-color: #dbdffd;
    display: flex;
    flex-direction: column;
 }
-
-.center-background {
-    background-color: black;
-    opacity: 50%;
+/* SignUp 영문 텍스트 */
+.center-eng-text {
     text-align: center;
-    height: 100%;
-    width: 50%;
-    position: fixed; /* 고정 위치 설정 */
-    top: 50%; /* 화면 상단으로부터의 거리를 50%로 설정 */
-    left: 50%; /* 화면 좌측으로부터의 거리를 50%로 설정 */
-    transform: translate(-50%, -50%); /* 요소를 수평 및 수직으로 중앙으로 이동 */
-}
-
-.center-text {
-    text-align: center;
-    color: white;
+    color: black;
     position: relative;
-    top: 20%; /* 부모 요소 상단에서의 거리를 50%로 설정 */
-    font-size: 36px;
-    font-weight: bold; 
-}
-.name-write-box {
-    position: absolute; /* 절대 위치 설정 */
-    top: 40%; /* 부모 요소 상단에서의 거리를 50%로 설정 */
-    left: 50%; /* 부모 요소 좌측에서의 거리를 50%로 설정 */
-    transform: translate(-50%, -50%); /* 요소를 수평 및 수직으로 중앙으로 이동 */
-    width: 70%;
-    height: 50px;
-    background-color: transparent;
-    border: 2px solid blue;
-   color: white;
+    top: 5%; 
     font-size: 24px;
-    text-align: center;
-}
-
-.phone-write-box {
-    position: absolute; /* 절대 위치 설정 */
-    top: 50%; /* 부모 요소 상단에서의 거리를 50%로 설정 */
-    left: 50%; /* 부모 요소 좌측에서의 거리를 50%로 설정 */
-    transform: translate(-50%, -50%); /* 요소를 수평 및 수직으로 중앙으로 이동 */
-    width: 70%;
-    height: 50px;
-    background-color: transparent;
-    border: 2px solid blue;
-    color: white;
-    font-size: 24px;
-    text-align: center;
-}
-
-.write:focus {
-    outline: none; /* 포커스 테두리 없애기 */
-}
-
-.center-button {
-    background-color: white;
-    color: black;
-    font-weight: bold; 
-    width: 30%;
-    height: 35px;
-    position: absolute;
-    top: 90%; /* 상단에서 50% 위치에 배치 */
-    transform: translate(-50%, -50%); /* 가운데 정렬을 위한 이동 */
-    line-height: 35px;
-    text-decoration-line: none;
-}
-
-.gender-write-box select{
-    width: 100%;
-    height: 50px;
-    text-align: center;
-    color: black;
     font-weight: bold;
-    font-size: 25px;
 }
-
+/* 회원가입 한글 텍스트 */
+.center-ko-text {
+    text-align: center;
+    color: black;
+    position: relative;
+    top: 7%; 
+    font-size: 16px;
+}
+/* 텍스트 종료 라인 */
+.write-line {
+	width: 15%;
+	border-top: 1px solid gray;
+	margin: 0 auto;
+	position: relative;
+	top: 10%;
+}
+/* 이름 작성 박스 */
+.name-write-box {
+    position: absolute; 
+	top: 45%;
+    left: 50%; 
+    transform: translate(-50%, -50%); 	
+    width: 25%;
+    height: 30px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid gray;
+    color: black;
+    font-size: 14px;
+}
+/* 전화번호 작성 박스 */
+.phone-write-box {
+    position: absolute; 
+	top: 55%;
+    left: 50%; 
+    transform: translate(-50%, -50%); 	
+    width: 25%;
+    height: 30px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid gray;
+    color: black;
+    font-size: 14px;
+}
+/* 인풋 미리보기 텍스트 */
 input::placeholder {
-   font-size: 24px;
-   text-align: center;
+   font-size: 14px;
+   text-align: left;
 }
-
-.gender-male {
+/* 성별 선택 박스 */
+.gender-box {
+	position: absolute; 
+   	top: 65%;
+    left: 50%; 
+    transform: translate(-50%, -50%);    
+    width: 25%;
+    height: 30px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid gray;
+    color: gray;
+    font-size: 14px;
+    display: flex;
+}
+/* 성별 선택 박스 텍스트 */
+.gender-text {
+	position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10px;
+}
+/* 남성 체크 박스 */
+.male-array {
     position: absolute;
-    left: 30%;
-    top: 60%;
+    bottom: 25%;
+    right: 25%;
 }
-
-.gender-female {
-    position: absolute;
-    right: 30%;
-    top: 60%;
+/* 여성 체크 박스 */
+.female-array {
+   position: absolute;
+    bottom: 25%;
+    right: 0;
 }
-
+/* 남성 체크 박스 텍스트 */
 .gender-male-text {
-    color: white;
-    position: absolute;
-    top: 65%;
-    font-size: 18px;
-    left: 30%
+    position: relative;
+	font-size: 14px;
+	font-weight: bold;
+	top: 1px;
 }
-
+/* 여성 체크 박스 텍스트 */
 .gender-female-text {
+    position: relative;
+	font-size: 14px;
+	font-weight: bold;
+	top: 1px;
+}
+/* 가입 버튼 */
+.center-button {
+    background-color: black;
     color: white;
+    font-weight: bold; 
+    width: 25%;
+    height: 30px;
     position: absolute;
-    top: 65%;
-    font-size: 18px;
-    right: 30%
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    line-height: 30px;
+    text-decoration-line: none;
+    border-radius: 3px;
+    font-size: 10px;
 }
 
 [type="radio"], span {
@@ -166,8 +184,8 @@ input::placeholder {
 }
 
 .name-write-box:focus {
-    outline: none; /* 포커스 테두리 없애기 */
+    outline: none; 
 }
 .phone-write-box:focus {
-    outline: none; /* 포커스 테두리 없애기 */
+    outline: none; 
 }
