@@ -22,8 +22,9 @@
 		<input class="email-write-box" type="email" id="m_email"
 			name="m_email" required placeholder="이메일을 작성해주세요.">
 		<!-- 이메일 중복 체크 -->
-		<button class="email-check" type="button" id="checkEmail">이메일
-			중복 확인</button>
+		<button class="email-check" type="button" id="checkEmail">
+			이메일 중복 확인
+		</button>
 		<!-- 비밀번호 작성 박스 -->
 		<input class="password-write-box" type="password" id="m_pw"
 			name="m_pw" required placeholder="비밀번호를 작성해주세요."> 
@@ -36,8 +37,7 @@
 		<!-- 생년월일 선택 박스 -->
 		<div class="YY">
 			<div class="yy-write-box">
-				<input type="date" id="m_birthday" name="m_birthday"
-					value="2020-02-22" min="1950-01-01" max="2050-01-01" />
+    			<input type="date" id="m_birthday" name="m_birthday" min="1950-01-01" max="2050-01-01">
 			</div>
 		</div>
 		<!-- 성별 선택 박스 -->
@@ -59,27 +59,53 @@
 	<!-- 푸터 -->
 	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 	<script>
-		$(document).ready(function() {
-			$('#checkEmail').click(function() {
-				var m_email = $('#m_email').val();
-				$.ajax({
-					type : 'POST',
-					url : 'checkEmail', // 이메일 중복 확인을 처리할 서버 측 URL
-					data : {
-						m_email : m_email
-					},
-					success : function(response) {
-						if (response == 'available') {
-							alert('사용 가능한 이메일입니다.');
-						} else if (response == 'exists') {
-							alert('이미 등록된 이메일입니다.');
-						} else {
-							alert('이메일 중복 확인에 실패했습니다.');
-						}
-					}
-				});
-			});
-		});
-	</script>
+    $(document).ready(function() {
+        // 현재 날짜를 가져오는 함수
+        function getCurrentDate() {
+            var today = new Date();
+            var year = today.getFullYear();
+            var month = ('0' + (today.getMonth() + 1)).slice(-2);
+            var day = ('0' + today.getDate()).slice(-2);
+            return year + '-' + month + '-' + day;
+        }
+
+        // 오늘 날짜를 가져와서 입력란의 value로 설정
+        var today = getCurrentDate();
+        $('#m_birthday').val(today);
+
+        $('#checkEmail').click(function() {
+            var m_email = $('#m_email').val();
+            if (!m_email) {
+                alert('이메일을 입력해주세요.');
+                return;
+            }
+            if (!validateEmail(m_email)) {
+                alert('유효한 이메일 형식이 아닙니다.');
+                return;
+            }
+            $.ajax({
+                type : 'POST',
+                url : 'checkEmail', // 이메일 중복 확인을 처리할 서버 측 URL
+                data : {
+                    m_email : m_email
+                },
+                success : function(response) {
+                    if (response == 'available') {
+                        alert('사용 가능한 이메일입니다.');
+                    } else if (response == 'exists') {
+                        alert('이미 등록된 이메일입니다.');
+                    } else {
+                        alert('이메일 중복 확인에 실패했습니다.');
+                    }
+                }
+            });
+        });
+    });
+
+    function validateEmail(email) {
+        var re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    }
+</script>
 </body>
 </html>
