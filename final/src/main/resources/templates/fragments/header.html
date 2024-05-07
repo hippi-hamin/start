@@ -8,17 +8,17 @@
       </div>
       <div class="header-right">
             <!-- 로그인 상태일 때 -->
-            <th:block th:if="${session.signedInUser != null}">
+            <th:block th:if="${session.signedInUserEmail != null}">
                 <!-- 로그인한 사용자를 위한 다른 UI 표시 -->
                 <a href="/mypage">My Page</a>
                 <a href="/logout">Log Out</a>
                 <!-- 세션에 저장된 사용자 정보가 "admin@admin"인 경우 -->
-                <th:block th:if="${session.signedInUser == 'admin@admin'}">
+                <th:block th:if="${session.signedInUserEmail == 'ajm0111@naver.com'}">
                     <a href="upLoadPlace">장소 등록</a>
                 </th:block>
             </th:block>
             <!-- 비로그인 상태일 때 -->
-            <th:block th:if="${session.signedInUser == null}">
+            <th:block th:if="${session.signedInUserEmail == null}">
                 <a href="signup">Sign Up</a>
                 <a href="/signin">Sign In</a>
             </th:block>
