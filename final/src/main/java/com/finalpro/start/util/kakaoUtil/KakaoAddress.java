@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class KakaoAddress {
-//		@Autowired
+	
 		private List<Document> documents;
 		
 		public List<Document> getDocuments(){
