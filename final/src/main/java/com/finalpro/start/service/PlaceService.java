@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -22,6 +21,8 @@ public class PlaceService {
 
 	@Autowired
 	private PlaceDAO placeDAO;
+	@Autowired
+	private PlatformService platformService;
 
 	public String upLoadPlaceProc(List<MultipartFile> files, HttpSession session, PlaceDTO placeDTO,
 			RedirectAttributes rttr) {
@@ -60,8 +61,16 @@ public class PlaceService {
 			throws IOException {
 		log.info("fileUpLoad()");
 
+		String getOs = platformService.detectPlatform();
+		String uploadDirectory = null;
+		log.info(getOs);
+		if(getOs.equals("Windows")) {
+			uploadDirectory = "upLoad/";
+		} else {
+		
 		// 파일 저장 경로 설정
-		String uploadDirectory = session.getServletContext().getRealPath("/");
+			uploadDirectory = session.getServletContext().getRealPath("/");
+		}
 
 		log.info(uploadDirectory);
 		File folder = new File(uploadDirectory);
