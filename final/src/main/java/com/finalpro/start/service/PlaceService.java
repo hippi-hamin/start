@@ -23,8 +23,6 @@ public class PlaceService {
 	@Autowired
 	private PlaceDAO placeDAO;
 
-	@Autowired
-	private Environment env;
 	public String upLoadPlaceProc(List<MultipartFile> files, HttpSession session, PlaceDTO placeDTO,
 			RedirectAttributes rttr) {
 
@@ -35,7 +33,7 @@ public class PlaceService {
 		log.info("PlaceDTO {}", placeDTO);
 		try {
 
-//			placeDAO.upLoadPlaceProc(placeDTO);
+			// placeDAO.upLoadPlaceProc(placeDTO);
 
 			if (!files.get(0).isEmpty()) {
 				fileUpLoad(files, session, placeDTO, placeDTO.getP_id());
@@ -63,7 +61,7 @@ public class PlaceService {
 		log.info("fileUpLoad()");
 
 		// 파일 저장 경로 설정
-		String uploadDirectory = "/Users/yed0/Development/start/final/src/main/resources/static/upLoad/";
+		String uploadDirectory = session.getServletContext().getRealPath("/");;
 
 		log.info(uploadDirectory);
 		File folder = new File(uploadDirectory);

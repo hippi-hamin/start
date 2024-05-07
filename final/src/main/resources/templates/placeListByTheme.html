@@ -15,7 +15,7 @@
                         <span th:text="${place.p_name}"></span><br />
                         지역 : <span th:text="${place.p_location}"></span><br />
                         별점: <span th:text="${place.p_stScore}"></span><br />
-                        <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
+                        <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지" width="100px">
                     </a>
                 </li>
             </th:block>
