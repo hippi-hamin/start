@@ -13,7 +13,7 @@ body {
    display: flex;
    flex-direction: column;
 }
-/* SignUp 영문 텍스트 */
+/* 머릿글 영문 텍스트 */
 .center-eng-text {
     text-align: center;
     color: black;
@@ -22,7 +22,7 @@ body {
     font-size: 24px;
     font-weight: bold;
 }
-/* 회원가입 한글 텍스트 */
+/* 머릿글 한글 텍스트 */
 .center-ko-text {
     text-align: center;
     color: black;
