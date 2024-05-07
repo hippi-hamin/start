@@ -1,0 +1,107 @@
+@charset "UTF-8";
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.start-line {
+	width: 80%;
+    border-top: gray 1px solid;
+    margin-left: 10%;
+    margin-top: 15%;
+}
+
+.list-line {
+	width: 100%;
+    border-top: gray 1px solid;
+    position: relative;
+    top: 45%;
+}
+
+.image-container {
+	display: flex;
+	justify-content: space-between;
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 5%;
+	flex-wrap: wrap; /* 자식 요소들을 여러 줄로 나열하도록 설정 */
+}
+
+.image-item {
+	width: calc(33.33% - 7.5%);
+    margin-bottom: 15%;
+}
+
+.image-wrapper {
+	position: relative;
+	text-align: center; /* 이미지를 가운데 정렬 */
+	height: 275px;
+	background-color: black;
+}
+
+.place-text {
+	position: absolute;
+	left: 50%;
+	bottom: -15%;
+	transform: translateX(-50%);
+	color: black;
+	font-size: 20px;
+	text-align: center; 
+}
+
+.location-text {
+	position: absolute;
+	left: 10%;
+	bottom: -25%;
+	transform: translateX(-50%);
+	color: black;
+	font-size: 14px;
+	text-align: center; 
+}
+
+.stScore-text {
+	position: absolute;
+	left: 90%;
+	bottom: -25%;
+	transform: translateX(-50%);
+	color: black;
+	font-size: 14px;
+	text-align: center; 
+}
+
+.p-img {
+	width: 100%; 
+	height: 275px;
+	transition: transform 0.3s ease;
+}
+
+.p-img:hover {
+	transform: scale(1.05); 
+}
+
+.st-img {
+	height: 20px;
+	width: 20px;
+	position: absolute;
+    left: 70%;
+    bottom: -25%;
+}
+
+.comment-text {
+	position: absolute;
+	left: 50%;
+    bottom: -35%;
+	transform: translateX(-50%);
+	color: black;
+	font-size: 14px;
+	text-align: center; 
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
