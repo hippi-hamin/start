@@ -1,15 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Email Verification</title>
+<link rel="stylesheet" th:href="@{/css/emailVerificationPage.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/footer.css}">
 </head>
 <body>
-    <h2>Email Verification</h2>
-    <form action="verifyCode" method="post">
-        <label for="verification_code">Enter verification code:</label><br>
-        <input type="text" id="v_code" name="v_code"><br>
-        <input type="submit" value="Submit">
-    </form>
+	<!-- 헤더 -->
+	<th:block th:replace="~{fragments/header :: header}"></th:block>
+	<!-- 이메일 찾기 텍스트 -->
+	<div class="center-eng-text">F i n d E m a i l</div>
+	<div class="center-ko-text">이메일 찾기</div>
+	<div class="write-line"></div>
+	<div class="code-send-text">전송받은 코드를 입력해주세요.</div>
+	<!-- 인증 코드 입력 폼 태그 -->
+	<form action="verifyCode" method="post">
+		<!-- 인증 코드 입력 박스 -->
+		<input type="text" id="v_code" name="v_code">
+		<!-- 확인 버튼 -->
+		<input class="center-button" type="submit" value="확인하기">
+	</form>
+	<!-- 푸터 -->
+	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
 </html>
