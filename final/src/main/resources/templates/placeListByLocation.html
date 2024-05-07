@@ -17,13 +17,15 @@
             	 <th:block th:each="place : ${placeListByLocation}">
                     <a class="image-item" th:href="@{'/placeDetail/' + ${place.p_id}}">
                     	<div class="image-wrapper">
-                    	<img class="p-img" th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
-                        <span class="place-text" th:text="${place.p_name}"></span>
-                        <span class="location-text" th:text="${place.p_location}"></span>
-                        <img class="st-img" src="/images/heart.png" alt="" >
-                        <span class="stScore-text" th:text="${place.p_stScore}"></span>
-                        <div class="comment-text" th:text="${place.p_description}"></div>
-                        </div>
+	                    	<img class="p-img" th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
+	                        <span class="place-text" th:text="${place.p_name}"></span>
+	                        <span class="location-text" th:text="${place.p_location}"></span>
+	                        <img class="st-img" src="/images/heart.png" alt="" >
+	                        <span class="stScore-text" th:text="${place.p_stScore}"></span>
+                        <!-- <div class="comment-text" th:text="${place.p_description}"></div> -->
+                        	
+						</div>
+						<!-- <button class="save-btn">리스트에 담기</button> -->
                         <div class="list-line"></div>	
                     </a>
             	</th:block>
@@ -34,5 +36,32 @@
         </th:block>
 	<!-- 푸터 -->
 	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+	<script>
+		$(document).ready(function() {
+			$('.save-btn').click(function() {
+				var placeName = $(this).siblings('.place-text').text();
+				var location = $(this).siblings('.location-text').text();
+				
+
+				// Ajax 요청을 보냄
+				$.ajax({
+					url : '/savePlace',
+					method : 'POST',
+					data : {
+						placeName : placeName,
+						location : location,
+					},
+					success : function(response) {
+						// 성공적으로 저장되면 할 일
+						console.log('저장되었습니다.');
+					},
+					error : function(xhr, status, error) {
+						// 저장 중 오류가 발생하면 할 일
+						console.error('저장 중 오류가 발생했습니다:', error);
+					}
+				});
+			});
+		});
+	</script>
 </body>
 </html>

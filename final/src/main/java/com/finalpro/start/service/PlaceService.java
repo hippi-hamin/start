@@ -64,12 +64,12 @@ public class PlaceService {
 		String getOs = platformService.detectPlatform();
 		String uploadDirectory = null;
 		log.info(getOs);
-		if(getOs.equals("Windows")) {
+		if (getOs.equals("Windows")) {
 			uploadDirectory = "upLoad/";
-		} else {
-		
-		// 파일 저장 경로 설정
-			uploadDirectory = session.getServletContext().getRealPath("/");
+		} else if (getOs.equals("MacOS")) {
+			// 파일 저장 경로 설정
+//			uploadDirectory = session.getServletContext().getRealPath("/");
+			uploadDirectory = "/Users/yed0/upLoad/";
 		}
 
 		log.info(uploadDirectory);
@@ -116,6 +116,11 @@ public class PlaceService {
 		return placeDAO.getPlaceList(p_location, p_thema);
 	}
 
+	// 파라미터x시 리스트
+	public List<PlaceDTO> getPlaceList() {
+		return placeDAO.getPlaceList(null, null);
+	}
+
 	// 장소 정보
 	public PlaceDTO findById(int p_id) {
 
@@ -139,5 +144,11 @@ public class PlaceService {
 		List<PlaceDTO> place = placeDAO.placeListByTheme(p_thema);
 
 		return place;
+	}
+
+	// 선택한 장소 디비에 저장
+	public void savePlace(PlaceDTO place) {
+		placeDAO.savePlace(place);
+
 	}
 }
