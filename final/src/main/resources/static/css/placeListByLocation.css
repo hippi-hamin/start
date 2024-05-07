@@ -3,13 +3,16 @@
 * {
 	box-sizing: border-box;
 }
-
-body {
-	margin: 0;
-	display: flex;
-	flex-direction: column;
+html {
+   height: 100%;
 }
 
+body {
+   margin: 0;
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+}
 .start-line {
 	width: 80%;
     border-top: gray 1px solid;
@@ -30,7 +33,7 @@ body {
 	margin-left: 10%;
 	margin-right: 10%;
 	margin-top: 5%;
-	flex-wrap: wrap; /* 자식 요소들을 여러 줄로 나열하도록 설정 */
+	flex-wrap: wrap; 
 }
 
 .image-item {
@@ -40,7 +43,7 @@ body {
 
 .image-wrapper {
 	position: relative;
-	text-align: center; /* 이미지를 가운데 정렬 */
+	text-align: center;
 	height: 275px;
 	background-color: black;
 }
@@ -104,4 +107,12 @@ body {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+}
+
+.non-content-text {
+	text-align: center;
+    color: black;
+    position: relative;
+    top: 25%; 
+    font-size: 16px;
 }
