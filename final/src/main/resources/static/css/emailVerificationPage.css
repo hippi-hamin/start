@@ -38,10 +38,18 @@ body {
 	position: relative;
 	top: 10%;
 }
-/* 이메일 작성 박스 */
-.email-write-box {
-    position: absolute; 
-	top: 45%;
+/* 메인글 */
+.code-send-text {
+	text-align: center;
+    color: black;
+    position: relative;
+    top: 25%; /* 부모 요소 상단에서의 거리를 50%로 설정 */
+    font-size: 16px;
+}
+/* 인증 코드 입력 박스 */
+#v_code {
+	position: absolute; 
+	top: 55%;
     left: 50%; 
     transform: translate(-50%, -50%); 	
     width: 25%;
@@ -53,7 +61,7 @@ body {
     color: black;
     font-size: 14px;
 }
-/* 인증 코드 발송 버튼 */
+/* 확인 버튼 */
 .center-button {
     background-color: black;
     color: white;
@@ -61,9 +69,9 @@ body {
     width: 25%;
     height: 30px;
     position: absolute;
-    top: 65%; 
+    top: 65%; /* 상단에서 50% 위치에 배치 */
     left: 50%;
-    transform: translate(-50%, -50%); 
+    transform: translate(-50%, -50%); /* 가운데 정렬을 위한 이동 */
     line-height: 30px;
     text-decoration-line: none;
     border-radius: 3px;

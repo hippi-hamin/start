@@ -5,28 +5,32 @@
 <head>
 <meta charset="UTF-8">
 <title>장소 리스트</title>
+<link rel="stylesheet" th:href="@{/css/placeList.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/footer.css}">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+
 	<h1>장소 리스트</h1>
-	
-	
-<a href="mapPaths">변환</a>
 	<ul>
+
+	<!-- 헤더 -->
+	<th:block th:replace="~{fragments/header :: header}"></th:block>
+
 		<!-- 장소 리스트를 반복하여 표시 -->
 		<th:block th:each="place : ${placeList}">
 			<li><a th:href="@{'/placeDetail/' + ${place.p_id}}"> <span
 					th:text="${place.p_name}"></span><br /> 지역 : <span
 					th:text="${place.p_location}"></span><br /> 별점: <span
-					th:text="${place.p_stScore}"></span><br /> <!-- <img th:src="@{'/uploads/' + ${place.p_iname}}" alt="이미지" width="100px"> -->
-					<!-- <img th:src="@{'/upLoad/' + ${place.p_iname}}" /> --> <img
-					th:src="@{'/upLoad/' + ${place.p_iname}}" />
-					<img src="/upLoad/1714620213399.PNG" alt="이미지">
+					th:text="${place.p_stScore}"></span><br /> 
+					<img th:src="@{'/upLoad/' + ${place.p_iname}}" />
 		</a></li>
 			<br />
 		</th:block>
-	</ul>
-
+    <a href="mapPaths">변환</a>
+<!-- 푸터 -->
+	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
 </html>
