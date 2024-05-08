@@ -80,7 +80,6 @@ public class PlaceController {
 	    return view;
 	}
 
-
 	// placeDetail
 	@GetMapping("/placeDetail/{p_id}")
 	public String showPlaceDetail(@PathVariable("p_id") int p_id, Model model) {
@@ -100,6 +99,7 @@ public class PlaceController {
 		try {
 			// 이미지 파일의 경로를 설정합니다.
 			String uploadDirectory = "/Users/yed0/upLoad/"; // 업로드된 이미지 파일이 있는 경로
+
 			Path imagePath = Paths.get(uploadDirectory, imageName);
 
 			// 이미지 파일을 읽어와 byte 배열로 변환합니다.

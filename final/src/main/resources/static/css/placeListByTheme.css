@@ -33,7 +33,7 @@ body {
 	margin-left: 10%;
 	margin-right: 10%;
 	margin-top: 5%;
-	flex-wrap: wrap; 
+	flex-wrap: wrap; /* 자식 요소들을 여러 줄로 나열하도록 설정 */
 }
 
 .image-item {
@@ -43,7 +43,7 @@ body {
 
 .image-wrapper {
 	position: relative;
-	text-align: center;
+	text-align: center; /* 이미지를 가운데 정렬 */
 	height: 275px;
 	background-color: black;
 }
