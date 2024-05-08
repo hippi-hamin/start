@@ -73,7 +73,10 @@ public class MemberService {
 			if (passwordEncoder.matches(m_pw, userInfo.getM_pw())) {
 				// 로그인 성공
 				session.setAttribute("signedInUser", userInfo);
-
+				session.setAttribute("signedInUserEmail", userInfo.getM_email());
+				String signedInUserEmail = (String) session.getAttribute("signedInUserEmail");
+				msg = signedInUserEmail + "님, 환영합니다.";
+				rttr.addFlashAttribute("msg", msg);
 				view = "redirect:/"; // 로그인 성공 후 이동할 페이지 (홈으로 리다이렉트)
 			} else {
 				// 비밀번호 일치하지 않을 시
@@ -87,7 +90,7 @@ public class MemberService {
 			rttr.addFlashAttribute("msg", msg); // 메세지 전달
 			view = "redirect:signin"; // 로그인 페이지로 리다이렉트
 		}
-
+		
 		return view;
 	}
 

@@ -19,7 +19,7 @@
 	<select id="getPlaceList" resultType="place">
 		SELECT * FROM
 		place.placetbl
-		
+
 
 	</select>
 	<select id="findById" parameterType="int" resultType="place">
@@ -42,6 +42,11 @@
 		SELECT * FROM place.placetbl
 		WHERE p_thema=#{p_thema}
 	</select>
+	<insert id="insertPlace" parameterType="Place">
+		INSERT INTO place.selectPlacetbl (s_name, s_location)
+		VALUES (#{s_name}, #{s_location})
+	</insert>
+
 
 
 </mapper>

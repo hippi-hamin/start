@@ -10,6 +10,7 @@
 <body>
 	<!-- 헤더 -->
 	<th:block th:replace="~{fragments/header :: header}"></th:block>
+
 	<!-- 장소 리스트를 반복하여 표시 -->
 	<div class="start-line"></div>
 	<th:block th:if="${placeListByLocation != null and placeListByLocation.size() > 0}">
@@ -36,5 +37,32 @@
 	</th:block>
 	<!-- 푸터 -->
 	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+	<script>
+		$(document).ready(function() {
+			$('.save-btn').click(function() {
+				var placeName = $(this).siblings('.place-text').text();
+				var location = $(this).siblings('.location-text').text();
+				
+
+				// Ajax 요청을 보냄
+				$.ajax({
+					url : '/savePlace',
+					method : 'POST',
+					data : {
+						placeName : placeName,
+						location : location,
+					},
+					success : function(response) {
+						// 성공적으로 저장되면 할 일
+						console.log('저장되었습니다.');
+					},
+					error : function(xhr, status, error) {
+						// 저장 중 오류가 발생하면 할 일
+						console.error('저장 중 오류가 발생했습니다:', error);
+					}
+				});
+			});
+		});
+	</script>
 </body>
 </html>

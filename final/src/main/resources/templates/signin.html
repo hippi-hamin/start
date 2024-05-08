@@ -10,17 +10,27 @@
 <!-- jQuery 로드 구문 -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-	function findEmail() {
-		// 이메일 찾기 페이지로 이동
-		window.location.href = "findEmail";
-	}
+<script th:inline="javascript">
+    $(document).ready(function() {
+        // 페이지가 로드될 때 메시지를 가져와서 표시
+        var message = [[${msg}]];
 
-	function resetPassword() {
-		// 비밀번호 재설정 페이지로 이동
-		window.location.href = "resetPassword";
-	}
+        if (message.trim() !== "") {
+            alert(message);
+        }
+    });
+
+    function findEmail() {
+        // 이메일 찾기 페이지로 이동
+        window.location.href = "findEmail";
+    }
+
+    function resetPassword() {
+        // 비밀번호 재설정 페이지로 이동
+        window.location.href = "resetPassword";
+    }
 </script>
+
 </head>
 <body>
 	<!-- 헤더 -->
@@ -45,7 +55,6 @@
 		<button class="password-find-button" onclick="resetPassword()">비밀번호
 			찾기</button>
 	</form>
-	<div th:if="${msg}" class="flash-message" th:text="${msg}"></div>
 	<!-- 푸터 -->
 	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 </body>

@@ -46,33 +46,38 @@ public class PlaceController {
 		return "placeList";
 	}
 
-	// 지역별 리스트
 	@GetMapping("placeListByLocation")
-	public String placeListByLocation(@RequestParam(value = "p_location") String p_location, Model model) {
-		String view = null;
-		List<PlaceDTO> place = placeService.placeListByLocation(p_location);
-		if (place != null) {
-			model.addAttribute("placeListByLocation", place);
-			view = "placeListByLocation";
-		} else {
-			view = "placeListByLocation";
-		}
+	public String placeListByLocation(@RequestParam(value = "p_location", required = false) String p_location, Model model) {
+	    String view = null;
+	    List<PlaceDTO> place;
 
-		return view;
+	    if (p_location != null && !p_location.isEmpty()) {
+	        place = placeService.placeListByLocation(p_location);
+	    } else {
+	        place = placeService.getPlaceList();
+	    }
+
+	    model.addAttribute("placeListByLocation", place);
+	    view = "placeListByLocation";
+
+	    return view;
 	}
 
-	// 테마별 리스트
 	@GetMapping("placeListByTheme")
-	public String placeByTheme(@RequestParam(value = "p_thema") String p_thema, Model model) {
-		String view = null;
-		List<PlaceDTO> place = placeService.placeListByTheme(p_thema);
-		if (place != null) {
-			model.addAttribute("placeListByTheme", place);
-			view = "placeListByTheme";
-		} else {
-			view = "placeListByTheme";
-		}
-		return view;
+	public String placeByTheme(@RequestParam(value = "p_thema", required = false) String p_thema, Model model) {
+	    String view = null;
+	    List<PlaceDTO> place;
+
+	    if (p_thema != null && !p_thema.isEmpty()) {
+	        place = placeService.placeListByTheme(p_thema);
+	    } else {
+	        place = placeService.getPlaceList();
+	    }
+
+	    model.addAttribute("placeListByTheme", place);
+	    view = "placeListByTheme";
+
+	    return view;
 	}
 
 	// placeDetail
@@ -93,7 +98,8 @@ public class PlaceController {
 	public ResponseEntity<byte[]> getImage(@PathVariable String imageName, HttpSession session) {
 		try {
 			// 이미지 파일의 경로를 설정합니다.
-			String uploadDirectory = session.getServletContext().getRealPath("/"); // 업로드된 이미지 파일이 있는 경로
+			String uploadDirectory = "/Users/yed0/upLoad/"; // 업로드된 이미지 파일이 있는 경로
+
 			Path imagePath = Paths.get(uploadDirectory, imageName);
 
 			// 이미지 파일을 읽어와 byte 배열로 변환합니다.

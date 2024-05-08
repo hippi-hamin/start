@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +9,15 @@
 <link rel="stylesheet" th:href="@{/css/index.css}">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-$(function () {
-    let m = "[[${msg}]]"; // 변수를 문자열로 변환하고 큰 따옴표로 둘러싸기
-    if (m !== null && m !== '') { // null이나 빈 문자열이 아닌지 확인
-        alert(m);
-    }
-});
+<script th:inline="javascript">
+    $(document).ready(function() {
+        // 페이지가 로드될 때 메시지를 가져와서 표시
+        var message = [[${msg}]];
+
+        if (message.trim() !== "") {
+            alert(message);
+        }
+    });
   
   function goToScroll(targetId) {
     var target = document.getElementById(targetId);
@@ -163,7 +166,7 @@ $(function () {
 			</a>
 		</div>
 		<div class="image-wrapper">
-			<a href="#"> <img src="/images/2.jpg" alt="Image 4" width="238"
+			<a href="#" onclick="imageClicked('')"> <img src="/images/2.jpg" alt="Image 4" width="238"
 				height="238">
 				<div class="caption">더보기</div>
 			</a>
@@ -199,13 +202,17 @@ $(function () {
 			</a>
 		</div>
 		<div class="image-wrapper">
-			<a href="#" onclick="imageClickedTheme('효도여행')"> <img
+			<a href="#" onclick="imageClickedTheme('우정여행')"> <img
 				src="images/js1.jpg" alt="Image 3" width="238" height="238">
+
 				<div class="caption">효도여행</div>
+
+
+
 			</a>
 		</div>
 		<div class="image-wrapper">
-			<a href="#"> <img src="/images/2.jpg" alt="Image 4" width="238"
+			<a href="#" onclick="imageClickedTheme('')"> <img src="/images/2.jpg" alt="Image 4" width="238"
 				height="238">
 				<div class="caption">더보기</div>
 			</a>

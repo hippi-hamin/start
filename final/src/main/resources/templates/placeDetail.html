@@ -20,18 +20,18 @@
          <div class="preview-img-array-box">
          <!-- 대표 이미지 -->
             <div class="preview-img">
-               <img src="/images/JerryHi.gif" alt="">
+               <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
             </div>
             <!-- 부가 이미지들 -->
             <div class="preview-imgs">
                <div class="preview-img-lt">
-                  <img src="/images/JerryHi.gif" alt="">
+                  <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
                </div>
                <div class="preview-img-rt">
-                  <img src="/images/JerryHi.gif" alt="">
+                  <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
                </div>
                <div class="preview-img-lb">
-                  <img src="/images/JerryHi.gif" alt="">
+                  <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
                </div>
                <!-- 더보기 클릭 이미지 -->
                <div class="preview-img-rb">
@@ -39,7 +39,7 @@
                      <img src="/images/scrollArrow.png" alt="">
                   </div>
                   <div class="preview-img-page">
-                     <img src="/images/JerryHi.gif" alt="">
+                     <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
                   </div>
                </div>
             </div>
@@ -54,7 +54,9 @@
                th:text="${place.p_description}"></div>
          </div>
          <!-- 세부 이미지 이미지 출력 -->
-         <div class="place-detail-description-img"></div>
+         <div class="place-detail-description-img">
+         	
+         </div>
          <!-- 세부 디테일 끝맺음 -->
          <div class="detail-img-end"></div>
       </div>

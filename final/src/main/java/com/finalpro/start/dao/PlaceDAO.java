@@ -28,5 +28,7 @@ public interface PlaceDAO {
 
 	// 테마별 리스트 
 	List<PlaceDTO> placeListByTheme(@Param("p_thema") String p_thema);
+	// 선택한 장소 저장 
+	void savePlace(PlaceDTO place);
 	
 }
