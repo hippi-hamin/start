@@ -87,12 +87,14 @@ body {
 }
 
 .filter2-header-location {
+	background-color: black;
 	color: white;
 	font-size: 14px;
 	position: relative;
 }
 
 .filter2-header-theme {
+	background-color: black;
 	color: white;
 	font-size: 14px;
 	position: relative;
