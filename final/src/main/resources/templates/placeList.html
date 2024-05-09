@@ -21,47 +21,24 @@
 	</div>
 	<div class="filter2-array">
 		<div class="filter2-header-background">
-<<<<<<< HEAD
 			<div class="filter2-header-location">지역</div>
 			<div class="filter2-header-theme">테마</div>
 			<div>
-
 	  <input type='button' value='버튼' id='btn1'/>
-
 	</div>
-
 	<div>
-
-	  <input 
-
-	         type='button' 
-
-	         value='이 버튼을 클릭하세요' 
-
-	         id='btn2'
-
-	         onclick='toggleBtn1()'/>
-
+	  <input type='button' value='이 버튼을 클릭하세요' id='btn2' onclick='toggleBtn1()'/>
 	</div>
 			<div class="filter2-checkbox">
 				<div id='result'>
 					<input type="checkbox" id="구월" name="구월"> <label for="구월">구월</label>
 					<input type="checkbox" id="서구" name="서구"> <label for="서구">서구</label>
 					<input type="checkbox" id="남동" name="남동"> <label for="남동">남동</label>
-					<input type="checkbox" id="미추홀" name="미추홀"> <label
-=======
+					<input type="checkbox" id="미추홀" name="미추홀"> <label for="미추홀">미추홀</label>
 			<input class="filter2-header-location" type='button' value='지역'
 				id='btn2' onclick='toggleBtn1()' /> <input
 				class="filter2-header-theme" type='button' value='테마' id='btn2'
 				onclick='toggleBtn1()' />
-			<div class="filter2-checkbox">
-				<div id='result'>
-					<input type="checkbox" id='btn1' name="구월"> <label for="구월">구월</label>
-					<input type="checkbox" id='btn1' name="서구"> <label for="서구">서구</label>
-					<input type="checkbox" id='btn1' name="남동"> <label for="남동">남동</label>
-					<input type="checkbox" id='btn1' name="미추홀"> <label
->>>>>>> f0c075ff9e5f4ef672e80e86c44920cf5b3ded6d
-						for="미추홀">미추홀</label>
 				</div>
 			</div>
 		</div>
@@ -97,38 +74,17 @@
 
 			document.getElementById('result').innerText = result;
 		}
-<<<<<<< HEAD
-		
-		function toggleBtn1() {
-
-			  
-
-			  // 토글 할 버튼 선택 (btn1)
-
-			  const btn1 = document.getElementById('btn1');
-
-			  
-
-			  // btn1 숨기기 (visibility: hidden)
-
-			  if(btn1.style.visibility !== 'hidden') {
-
-			    btn1.style.visibility = 'hidden';
-
-			  }
-
-			  // btn` 보이기 (visibility: visible)
-
-			  else {
-
-			    btn1.style.visibility = 'visible';
-
-			  }
-
-			  
-
+		function toggleBtn1() { // 토글 할 버튼 선택 (btn1)
+		const btn1 = document.getElementById('btn1'); 
+		// btn1 숨기기 (visibility: hidden)
+		if(btn1.style.visibility !== 'hidden') {
+			btn1.style.visibility = 'hidden';
 			}
-=======
+		// btn` 보이기 (visibility: visible)
+		else {
+			btn1.style.visibility = 'visible';
+			}
+		}
 
 		function toggleBtn1() {
 
@@ -153,7 +109,6 @@
 			}
 
 		}
->>>>>>> f0c075ff9e5f4ef672e80e86c44920cf5b3ded6d
 	</script>
 </body>
 </html>

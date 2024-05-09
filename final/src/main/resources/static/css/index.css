@@ -78,7 +78,6 @@ height: 575px;
 /* 버튼 정렬 */
 .btn-center {
   	display: flex;
-	position: relative;
 	justify-content: center; /* 수평 가운데 정렬 */
   	align-items: center; /* 수직 가운데 정렬 */
   	position: sticky;
@@ -217,3 +216,10 @@ select:focus{
 	margin-bottom: 2%;
 }
 
+.home-retrun {
+	display: flex;
+	justify-content: right;
+  	align-items: center; 
+  	position: sticky;
+  	top: 50px; 
+}
