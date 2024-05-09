@@ -24,27 +24,34 @@
 <body>
 	<!-- 헤더 -->
 	<th:block th:replace="~{fragments/header :: header}"></th:block>
-	<!-- 회원가입 텍스트 -->
+	<!-- 사용자 이미지 -->
 	<img class="user-img" alt="" src="/images/user.png">
+	<!-- 내 정보 텍스트 -->
 	<div class="center-eng-text">M y P a g e</div>
 	<div class="center-ko-text">내 정보</div>
 	<div class="write-line"></div>
-	<label for="username">사용자 이름:</label>
+	<!-- 사용자 이름 -->
+	<div class="name-text">사용자 이름</div>
 	<input class="name-write-box" type="text" id="username" name="m_name"
 		th:value="${currentUser.m_name}">
+	<!-- 이메일 -->
 	<div class="email-text">이메일</div>
 	<input class="email-write-box" type="text" id="email" name="m_email"
 		th:value="${currentUser.m_email}" readonly>
-	<label for="gender">성별:</label>
-	<input class="gender-box" type="text" id="gender" name="m_gender"
+	<!-- 성별 -->
+	<div class="gender-text">성별</div>
+	<input class="gender-write-box" type="text" id="gender" name="m_gender"
 		th:value="${currentUser.m_gender}" readonly>
-	<label for="age">나이:</label>
-	<input class="yy-write-box" type="text" id="age" name="m_age"
+	<!-- 나이 -->
+	<div class="year-text">나이</div>
+	<input class="year-write-box" type="text" id="age" name="m_age"
 		th:value="${currentUser.m_age}" readonly>
-	<label for="phone">전화번호:</label>
+	<!-- 전화번호 -->
+	<div class="phone-text">전화번호</div>
 	<input class="phone-write-box" type="text" id="phone" name="m_phone"
 		th:value="${currentUser.m_phone}">
-	<label for="point">포인트:</label>
+	<!-- 포인트 -->
+	<div class="point-text">포인트</div>
 	<input class="point-write-box" type="text" id="point" name="m_point"
 		th:value="${currentUser.m_point}" readonly>
 	<!-- 기타 사용자 정보를 표시할 input 요소 추가 -->
@@ -58,7 +65,6 @@
 					document.getElementById('userInfoForm').submit(); // 폼 서브밋
 				});
 	</script>
-
 </body>
 <script>
 	$(document).ready(function() {
