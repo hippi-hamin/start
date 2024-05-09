@@ -15,25 +15,31 @@ body {
 	flex-direction: column;
 }
 
-.start-line {
-	width: 80%;
-    border-top: gray 1px solid;
-    position: absolute;
-    top: 30%;
-    left: 10%;
+.location-array {
+	position: absolute;
+	top: 7%;
+	border: 1px solid gray;
+	height: 17%;
+	width: 100%;
+}
+
+.filter2-checkbox {
+	position: absolute;
+	top: 20%;
+	left: 1%;
 }
 
 /* 검색창 전체네모 */
 .search-background {
 	background-color: black;
-	width: 70%;
+	width: 75%;
 	min-height: 35px;
-	position: relative;
-	top: 25%;
-	left: 6%;
+	position: absolute;
+	top: 30%;
+	margin-left: 2%;
+	display: flex; /* Flexbox 사용 */
 	justify-content: center; /* 수평 가운데 정렬 */
-	align-items: center;
-	display: flex; /* 수직 가운데 정렬 */
+	align-items: center; /* 수직 가운데 정렬 */
 }
 /* 검색창 텍스트를 적는 인풋 네모 */
 .search-write-box {
@@ -42,7 +48,7 @@ body {
 	height: 30px;
 	border: white 1px solid;
 	display: flex; /* 내부 요소들을 정렬하기 위해 Flexbox 사용 */
-	position: relative;
+	align-items: center; /* 수직 가운데 정렬 */
 	font-size: 14px;
 }
 /* 검색창 활성화 테두리 삭제 */
@@ -53,7 +59,7 @@ body {
 .search-button {
 	background-color: black;
 	color: white;
-	position: absolute;
+	width: 10%;
 	height: 30px;
 	float: right;
 	display: flex; /* Flexbox 사용 */
@@ -62,27 +68,87 @@ body {
 	font-size: 14px;
 	border: white 1px solid;
 	cursor: pointer;
-	width: 10%;
-	right: 20%;
 }
 
-.image-container {
-	display: flex;
-	justify-content: space-between;
-	margin-left: 10%;
-	margin-right: 10%;
-	margin-top: 5%;
-	flex-wrap: wrap;
+.filter2-array {
+	width: 75%;
+	min-height: 200px;
+	border: 1px solid gray;
+	margin-left: 2%;
+	position: absolute;
+	top: 35.5%;
 }
 
-.image-item {
-	width: calc(33.33% - 7.5%);
-	margin-bottom: 15%;
-}
-
-.image-wrapper {
-	position: relative;
-	text-align: center;
-	height: 275px;
+.filter2-header-background {
 	background-color: black;
+	height: 35px;
+	align-items: center;
+	display: flex;
+}
+
+.filter2-header-location {
+	color: white;
+	font-size: 14px;
+	position: relative;
+}
+
+.filter2-header-theme {
+	color: white;
+	font-size: 14px;
+	position: relative;
+}
+
+.select-list-array {
+	position: absolute;
+	top: 30%;
+	left: 78%;
+	width: 20%;
+	height: 80%;
+	border: 1px solid gray;
+}
+
+.select-list-header {
+	background-color: black;
+	color: white;
+	font-size: 14px;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	height: 35px;
+}
+
+.select-list-footer {
+	background-color: black;
+	color: white;
+	font-size: 14px;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	height: 35px;
+	position: relative;
+	top: 95%;
+	width: 100%;
+}
+
+.route {
+	color: white;
+	font-size: 14px;
+	text-decoration: none;
+}
+
+.place-list-array {
+	border: 1px solid gray;
+	position: relative;
+	top: 60%;
+	margin-left: 2%;
+	width: 75%;
+	height: 20%;
+}
+
+.start-line {
+	width: 90%;
+	border-top: gray 1px solid;
+	position: absolute;
+	top: 25%;
+	left: 5%;
 }
