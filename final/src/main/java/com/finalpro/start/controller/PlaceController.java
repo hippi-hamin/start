@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finalpro.start.dto.PlaceDTO;
 import com.finalpro.start.service.PlaceService;
+import com.finalpro.start.service.PlatformService;
 import com.finalpro.start.util.KakaoApiUtil;
 
 import jakarta.servlet.http.HttpSession;
@@ -35,6 +36,8 @@ public class PlaceController {
 	@Autowired
 	private PlaceService placeService;
 
+	@Autowired
+	private PlatformService platformService;
 	// 장소 리스트 페이지 이동
 	@GetMapping("placeList")
 	public String placeList(Model model,
@@ -97,8 +100,16 @@ public class PlaceController {
 	@GetMapping("/getImage/{imageName}")
 	public ResponseEntity<byte[]> getImage(@PathVariable String imageName, HttpSession session) {
 		try {
-			// 이미지 파일의 경로를 설정합니다.
-			String uploadDirectory = "/Users/yed0/upLoad/"; // 업로드된 이미지 파일이 있는 경로
+//			String getOs = platformService.detectPlatform();
+//			String uploadDirectory = null;
+//			log.info(getOs);
+//			if (getOs.equals("Windows")) {
+				String uploadDirectory = "C:\\Development\\upLoad";// 업로드된 이미지 파일이 있는 경로
+//			} else if (getOs.equals("MacOS")) {
+//				// 파일 저장 경로 설정
+//				uploadDirectory = "/Users/upLoad";
+//			}
+			
 
 			Path imagePath = Paths.get(uploadDirectory, imageName);
 

@@ -65,11 +65,12 @@ public class PlaceService {
 		String uploadDirectory = null;
 		log.info(getOs);
 		if (getOs.equals("Windows")) {
-			uploadDirectory = "upLoad/";
+			
+			uploadDirectory = "C:\\Development\\upLoad";
 		} else if (getOs.equals("MacOS")) {
 			// 파일 저장 경로 설정
 //			uploadDirectory = session.getServletContext().getRealPath("/");
-			uploadDirectory = "/Users/yed0/upLoad/";
+			uploadDirectory = "/Users/upLoad";
 		}
 
 		log.info(uploadDirectory);
