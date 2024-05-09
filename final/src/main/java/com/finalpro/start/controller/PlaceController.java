@@ -100,16 +100,18 @@ public class PlaceController {
 	@GetMapping("/getImage/{imageName}")
 	public ResponseEntity<byte[]> getImage(@PathVariable String imageName, HttpSession session) {
 		try {
-//			String getOs = platformService.detectPlatform();
-//			String uploadDirectory = null;
-//			log.info(getOs);
-//			if (getOs.equals("Windows")) {
-				String uploadDirectory = "C:\\Development\\upLoad";// 업로드된 이미지 파일이 있는 경로
-//			} else if (getOs.equals("MacOS")) {
-//				// 파일 저장 경로 설정
-//				uploadDirectory = "/Users/upLoad";
-//			}
+
+			  String getOs = platformService.detectPlatform();
+			  String uploadDirectory = null;
+			  log.info(getOs);
+			  if (getOs.equals("Windows")) {
+				  String uploadDirectory = "C:\\Development\\upLoad";// 업로드된 이미지 파일이 있는 경로
+			  } else if (getOs.equals("MacOS")) {
+				  // 파일 저장 경로 설정
+				  uploadDirectory = "/Users/upLoad";
+			  }
 			
+
 
 			Path imagePath = Paths.get(uploadDirectory, imageName);
 
@@ -147,7 +149,49 @@ public class PlaceController {
 			return "redirect:upLoadPlace";
 		}
 	}
+	// 장소 수정 
+	@GetMapping("/updatePlace/{p_id}")
+	public String updatePlace(@PathVariable("p_id") int p_id, Model model) {
+	    log.info("updatePlace()");
 
+	    // p_id에 해당하는 장소 정보 가져오기 (예시로 service 메서드 사용)
+	    PlaceDTO placeDTO = placeService.findById(p_id);
+	    
+	    // 모델에 장소 정보 추가
+	    model.addAttribute("place", placeDTO);
+	    
+	    return "updatePlace";
+	}
+
+	@PostMapping("/updatePlaceProc")
+	public String updatePlaceProc(@RequestParam("files") List<MultipartFile> files,
+	                                HttpSession session, 
+	                                @RequestParam("p_id") int p_id,
+	                                @RequestParam("p_location") String p_location,
+	                                @RequestParam("p_name") String p_name,
+	                                @RequestParam("p_thema") String p_thema,
+	                                @RequestParam("p_description") String p_description,
+	                                RedirectAttributes rttr) {
+	    String view = null;
+	                
+	    log.info("updatePlaceProc(), controller");
+	    try {
+	        PlaceDTO placeDTO = new PlaceDTO();
+	        placeDTO.setP_id(p_id);
+	        placeDTO.setP_location(p_location);
+	        placeDTO.setP_name(p_name);
+	        placeDTO.setP_thema(p_thema);
+	        placeDTO.setP_description(p_description);
+	        
+	        view = placeService.updatePlaceProc(files, session, placeDTO, rttr);
+	        return view;
+	    } catch(Exception e) {
+	        e.printStackTrace();
+	        return "redirect:updatePlace";
+	    }
+	}
+
+	
 	@GetMapping("searchRoad")
 	public String getPlacePath(@RequestParam(name = "x", required = false) Double x,
 			@RequestParam(name = "y", required = false) Double y,

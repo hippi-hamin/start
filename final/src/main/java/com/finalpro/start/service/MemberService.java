@@ -75,7 +75,11 @@ public class MemberService {
 				session.setAttribute("signedInUser", userInfo);
 				session.setAttribute("signedInUserEmail", userInfo.getM_email());
 				String signedInUserEmail = (String) session.getAttribute("signedInUserEmail");
-				msg = signedInUserEmail + "님, 환영합니다.";
+				if(signedInUserEmail.equals("ajm0111@naver.com")) {
+					msg = "관리자님, 환영합니다.";
+				} else {
+					msg = signedInUserEmail + " 님 환영합니다.";
+				}
 				rttr.addFlashAttribute("msg", msg);
 				view = "redirect:/"; // 로그인 성공 후 이동할 페이지 (홈으로 리다이렉트)
 			} else {
