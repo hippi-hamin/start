@@ -87,12 +87,20 @@ body {
 }
 
 .filter2-header-location {
+<<<<<<< HEAD
+=======
+	background-color: black;
+>>>>>>> f0c075ff9e5f4ef672e80e86c44920cf5b3ded6d
 	color: white;
 	font-size: 14px;
 	position: relative;
 }
 
 .filter2-header-theme {
+<<<<<<< HEAD
+=======
+	background-color: black;
+>>>>>>> f0c075ff9e5f4ef672e80e86c44920cf5b3ded6d
 	color: white;
 	font-size: 14px;
 	position: relative;
