@@ -27,7 +27,7 @@ body {
     text-align: center;
     color: black;
     position: relative;
-    top: 7%; /* 부모 요소 상단에서의 거리를 50%로 설정 */
+    top: 7%; 
     font-size: 16px;
 }
 /* 텍스트 종료 라인 */
@@ -37,4 +37,56 @@ body {
 	margin: 0 auto;
 	position: relative;
 	top: 10%;
+}
+
+.email-result {
+	text-align: center;
+    color: black;
+    position: relative;
+    top: 20%;
+    font-size: 14px;
+}
+
+.email-result-text {
+	text-align: center;
+    color: black;
+    position: relative;
+    top: 30%;
+    font-size: 14px;
+}
+
+.email-result-text-line {
+	width: 25%;
+	border-top: 1px solid gray;
+	margin: 0 auto;
+	position: relative;
+	top: 32%;
+}
+/* 가입 버튼 */
+.login-button {
+    background-color: black;
+    color: white;
+    font-weight: bold; 
+    width: 25%;
+    height: 30px;
+    position: absolute;
+    top: 75%; 
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    line-height: 30px;
+    text-decoration-line: none;
+    border-radius: 3px;
+    font-size: 10px;
+}
+
+/* 비밀번호 찾기 버튼 */
+.password-find-button {
+    background-color: white;
+    width: 15%;
+    height: 35px;
+    position: relative;
+    top: 60%;
+    font-size: 12px;
+    border: none;
+    margin: 0 auto;
 }
