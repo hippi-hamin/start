@@ -1,15 +1,88 @@
 @charset "UTF-8";
+
 * {
-   box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 html {
-   height: 100%;
+	height: 100%;
 }
 
 body {
-   margin: 0;
-   height: 100%;
-   display: flex;
-   flex-direction: column;
+	margin: 0;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.start-line {
+	width: 80%;
+    border-top: gray 1px solid;
+    position: absolute;
+    top: 30%;
+    left: 10%;
+}
+
+/* 검색창 전체네모 */
+.search-background {
+	background-color: black;
+	width: 70%;
+	min-height: 35px;
+	position: relative;
+	top: 25%;
+	left: 6%;
+	justify-content: center; /* 수평 가운데 정렬 */
+	align-items: center;
+	display: flex; /* 수직 가운데 정렬 */
+}
+/* 검색창 텍스트를 적는 인풋 네모 */
+.search-write-box {
+	background-color: white;
+	width: 60%;
+	height: 30px;
+	border: white 1px solid;
+	display: flex; /* 내부 요소들을 정렬하기 위해 Flexbox 사용 */
+	position: relative;
+	font-size: 14px;
+}
+/* 검색창 활성화 테두리 삭제 */
+.search-write-box:focus {
+	outline: none;
+}
+/* 검색 클릭 버튼 */
+.search-button {
+	background-color: black;
+	color: white;
+	position: absolute;
+	height: 30px;
+	float: right;
+	display: flex; /* Flexbox 사용 */
+	justify-content: center; /* 가로 가운데 정렬 */
+	align-items: center; /* 세로 가운데 정렬 */
+	font-size: 14px;
+	border: white 1px solid;
+	cursor: pointer;
+	width: 10%;
+	right: 20%;
+}
+
+.image-container {
+	display: flex;
+	justify-content: space-between;
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 5%;
+	flex-wrap: wrap;
+}
+
+.image-item {
+	width: calc(33.33% - 7.5%);
+	margin-bottom: 15%;
+}
+
+.image-wrapper {
+	position: relative;
+	text-align: center;
+	height: 275px;
+	background-color: black;
 }
