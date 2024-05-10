@@ -152,4 +152,10 @@ public class MemberService {
 	        return "failure";
 	    }
 	}
+	// 사용자 정보 
+	public MemberDTO getUserInfo(int m_id) {
+		log.info("getUserInfo(), service");
+		MemberDTO userInfo = memberDAO.getUserInfo(m_id);
+		return userInfo;
+	}
 }
