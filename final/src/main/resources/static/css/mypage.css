@@ -64,7 +64,7 @@ input::placeholder {
 	border-left: none;
 	border-right: none;
 	border-bottom: 1px solid gray;
-	color: black;
+	color: gray;
 	font-size: 14px;
 }
 /* 이메일 출력 박스 */
@@ -124,7 +124,7 @@ input::placeholder {
 	border-left: none;
 	border-right: none;
 	border-bottom: 1px solid gray;
-	color: black;
+	color: gray;
 	font-size: 14px;
 }
 /* 포인트 출력 박스 */

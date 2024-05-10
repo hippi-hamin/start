@@ -34,6 +34,9 @@
 </head>
 <body>
 	<!-- 헤더 -->
+	<div id="h1_container">
+		<div id="home"></div>
+	</div>
 	<th:block th:replace="~{fragments/header :: header}"></th:block>
 	<!-- 슬라이드 배너 -->
 	<div class="slider-background">
@@ -64,7 +67,10 @@
 		</div>
 	</div>
 	<div class="home-retrun">
-		<div class="home-retrun-background"></div>
+		<a class="btn btn-secondary home-retrun-background"
+				onclick="goToScroll('home')">
+			<img class="white-arrow" alt="화살표 이미지" src="/images/whiteArrow.png">
+		</a>
 	</div>
 	<br>
 	<br>

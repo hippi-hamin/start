@@ -102,6 +102,7 @@ height: 575px;
   text-align: center;
   padding-top: 5px; 
   cursor : pointer;
+  overflow: hidden;
 }
 /* Make Plan 위치 */
 .container {
@@ -222,4 +223,22 @@ select:focus{
   	align-items: center; 
   	position: sticky;
   	top: 50px; 
+  	z-index: 1;
+}
+
+.home-retrun-background {
+	background-color: black;
+	width: 50px;
+	height: 50px;
+	margin-top: 1px;
+	z-index: 1;
+	border-radius: 3px;
+	cursor : pointer;
+}
+
+.white-arrow {
+	width: 50px;
+	height: 50px;
+	margin-top: 1px;
+	transform: rotate(180deg);
 }
