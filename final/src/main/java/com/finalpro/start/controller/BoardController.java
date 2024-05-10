@@ -49,7 +49,7 @@ public class BoardController {
 	public String writeBoard(@ModelAttribute BoardDTO boardDTO, HttpSession session) {
 		System.out.println("boardDTO = " + boardDTO);
 		boardService.writeBoard(boardDTO, session);
-		return "index2";
+		return "board";
 	}
 	
 }
