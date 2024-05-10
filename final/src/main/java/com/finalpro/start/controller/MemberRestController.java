@@ -44,6 +44,7 @@ public class MemberRestController {
 	
 	 @PostMapping("/updateUserInfo")
 	    public ResponseEntity<String> updateUserInfo(@RequestParam Map<String, String> userInfo, HttpSession session) {
+		 	log.info("updateUSerInfo()");
 	        // 세션에서 로그인한 사용자 정보를 가져옴
 	        MemberDTO signedInUser = (MemberDTO) session.getAttribute("signedInUser");
 	        
@@ -55,7 +56,7 @@ public class MemberRestController {
 	        String m_phone = userInfo.get("m_phone");
 
 	        // 사용자 정보 업데이트
-	        String result = memberServ .updateUserInfo(m_name, m_phone, signedInUser.getM_email());
+	        String result = memberServ.updateUserInfo(m_name, m_phone, signedInUser.getM_email());
 
 	        if (result.equals("success")) {
 	            return ResponseEntity.ok("사용자 정보가 성공적으로 업데이트되었습니다.");
