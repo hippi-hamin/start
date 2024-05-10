@@ -43,7 +43,7 @@ body {
 	text-align: center;
     color: black;
     position: relative;
-    top: 25%; /* 부모 요소 상단에서의 거리를 50%로 설정 */
+    top: 25%; 
     font-size: 16px;
 }
 /* 인증 코드 입력 박스 */

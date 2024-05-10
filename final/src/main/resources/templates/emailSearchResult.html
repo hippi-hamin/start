@@ -16,6 +16,9 @@
 	<div class="write-line"></div>
 	<!-- foundEmail 모델이 비어 있지 않은 경우에만 출력 -->
 	<p th:if="${not #strings.isEmpty(foundEmail)}" th:text="${foundEmail}"></p>
+	
+	<a href="/signin">로그인</a>
+	<a href="resetPassword">비밀번호 변경</a>
 	<!-- 푸터 -->
 	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
