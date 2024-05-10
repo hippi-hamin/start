@@ -105,10 +105,10 @@ public class PlaceController {
 			  String uploadDirectory = null;
 			  log.info(getOs);
 			  if (getOs.equals("Windows")) {
-				  String uploadDirectory = "C:\\Development\\upLoad";// 업로드된 이미지 파일이 있는 경로
+//				  String uploadDirectory = "C:\\Development\\upLoad";// 업로드된 이미지 파일이 있는 경로
 			  } else if (getOs.equals("MacOS")) {
 				  // 파일 저장 경로 설정
-				  uploadDirectory = "/Users/upLoad";
+				  uploadDirectory = "/Users/upLoad/";
 			  }
 			
 
