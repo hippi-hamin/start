@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.finalpro.start.dao.BoardDAO">
+  		<insert id="writeBoard" parameterType="board">
+			INSERT INTO board.boardtbl
+			(m_id, b_title, b_content, b_views, b_createdAt, b_updatedAt)
+			VALUES
+			(#{m_id}, #{b_title}, #{b_content}, #{b_views}, #{b_createdAt}, #{b_updatedAt});
+		</insert>
+  </mapper>

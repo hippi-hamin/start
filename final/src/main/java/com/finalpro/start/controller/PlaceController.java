@@ -100,6 +100,10 @@ public class PlaceController {
 	@GetMapping("/getImage/{imageName}")
 	public ResponseEntity<byte[]> getImage(@PathVariable String imageName, HttpSession session) {
 		try {
+<<<<<<< HEAD
+			// 이미지 파일의 경로를 설정합니다.
+			String uploadDirectory = "/Users/upLoad/"; // 업로드된 이미지 파일이 있는 경로
+=======
 
 			  String getOs = platformService.detectPlatform();
 			  String uploadDirectory = null;
@@ -112,6 +116,7 @@ public class PlaceController {
 			  }
 			
 
+>>>>>>> develop
 
 			Path imagePath = Paths.get(uploadDirectory, imageName);
 

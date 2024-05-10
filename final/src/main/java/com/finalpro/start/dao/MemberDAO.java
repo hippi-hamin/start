@@ -11,7 +11,7 @@ import com.finalpro.start.dto.MemberDTO;
 @Mapper
 public interface MemberDAO {
 	
-	// 회워가입
+	// 회원가입
     void signupProc(MemberDTO member);
     // 회원가입 성공 시 포인트 증가 
 	void updateM_point(MemberDTO member);
