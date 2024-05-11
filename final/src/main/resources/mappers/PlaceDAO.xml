@@ -40,10 +40,21 @@
 		WHERE p_thema=#{p_thema}
 	</select>
 	<insert id="insertPlace" parameterType="Place">
-		INSERT INTO place.selectPlacetbl (s_name, s_location)
-		VALUES (#{s_name}, #{s_location})
+		INSERT INTO
+		place.selectPlacetbl (s_name, s_location)
+		VALUES (#{s_name},
+		#{s_location})
 	</insert>
-
+	<update id="updatePlaceProc" parameterType="place">
+		UPDATE place.placetbl
+		SET
+		p_name=#{p_name},
+		p_location=#{p_location},
+		p_description=#{p_description},
+		p_thema=#{p_thema},
+		p_iname=#{p_iname}
+		WHERE p_id=#{p_id}
+	</update>
 
 
 </mapper>

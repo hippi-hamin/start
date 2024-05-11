@@ -61,6 +61,10 @@ body {
     color: black;
     font-size: 14px;
 }
+
+#v_code:focus {
+    outline: none;
+}
 /* 확인 버튼 */
 .center-button {
     background-color: black;

@@ -12,21 +12,103 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-
 	<!-- 헤더 -->
 	<th:block th:replace="~{fragments/header :: header}"></th:block>
+	<div class="location-array"></div>
+	<div class="search-background">
+		<input class="search-write-box" type="text" placeholder="검색어를 입력해주세요.">
+		<button class="search-button">검색</button>
+	</div>
+	<div class="filter2-array">
+		<div class="filter2-header-background">
+			<div class="filter2-header-location">지역</div>
+			<div class="filter2-header-theme">테마</div>
+			<div>
+	  <input type='button' value='버튼' id='btn1'/>
+	</div>
+	<div>
+	  <input type='button' value='이 버튼을 클릭하세요' id='btn2' onclick='toggleBtn1()'/>
+	</div>
+			<div class="filter2-checkbox">
+				<div id='result'>
+					<input type="checkbox" id="구월" name="구월"> <label for="구월">구월</label>
+					<input type="checkbox" id="서구" name="서구"> <label for="서구">서구</label>
+					<input type="checkbox" id="남동" name="남동"> <label for="남동">남동</label>
+					<input type="checkbox" id="미추홀" name="미추홀"> <label for="미추홀">미추홀</label>
+			<input class="filter2-header-location" type='button' value='지역'
+				id='btn2' onclick='toggleBtn1()' /> <input
+				class="filter2-header-theme" type='button' value='테마' id='btn2'
+				onclick='toggleBtn1()' />
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- 장소 리스트를 반복하여 표시 -->
+	<div class="start-line"></div>
 	<th:block th:each="place : ${placeList}">
-		<li><a th:href="@{'/placeDetail/' + ${place.p_id}}"> <span
+		<div class="place-list-array">
+			<a th:href="@{'/placeDetail/' + ${place.p_id}}"> <span
 				th:text="${place.p_name}"></span><br /> 지역 : <span
 				th:text="${place.p_location}"></span><br /> 별점: <span
 				th:text="${place.p_stScore}"></span><br /> <img
 				th:src="@{'/upLoad/' + ${place.p_iname}}" />
-		</a></li>
-		<br />
+			</a>
+		</div>
 	</th:block>
-	<a href="mapPaths">변환</a>
+	<div class="select-list-array">
+		<div class="select-list-header">선택하신 리스트 입니다.</div>
+		<div class="select-list-footer">
+			<a class="route" href="mapPaths">경로 확인</a>
+		</div>
+	</div>
 	<!-- 푸터 -->
 	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+	<script type="text/javascript">
+		function getCheckboxValue(event) {
+			let result = '';
+			if (event.target.checked) {
+				result = event.target.value;
+			} else {
+				result = '';
+			}
+
+			document.getElementById('result').innerText = result;
+		}
+		function toggleBtn1() { // 토글 할 버튼 선택 (btn1)
+		const btn1 = document.getElementById('btn1'); 
+		// btn1 숨기기 (visibility: hidden)
+		if(btn1.style.visibility !== 'hidden') {
+			btn1.style.visibility = 'hidden';
+			}
+		// btn` 보이기 (visibility: visible)
+		else {
+			btn1.style.visibility = 'visible';
+			}
+		}
+
+		function toggleBtn1() {
+
+			// 토글 할 버튼 선택 (btn1)
+
+			const btn1 = document.getElementById('btn1');
+
+			// btn1 숨기기 (visibility: hidden)
+
+			if (btn1.style.visibility !== 'hidden') {
+
+				btn1.style.visibility = 'hidden';
+
+			}
+
+			// btn` 보이기 (visibility: visible)
+
+			else {
+
+				btn1.style.visibility = 'visible';
+
+			}
+
+		}
+	</script>
 </body>
 </html>

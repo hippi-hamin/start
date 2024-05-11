@@ -11,7 +11,7 @@ import com.finalpro.start.dto.MemberDTO;
 @Mapper
 public interface MemberDAO {
 	
-	// 회워가입
+	// 회원가입
     void signupProc(MemberDTO member);
     // 회원가입 성공 시 포인트 증가 
 	void updateM_point(MemberDTO member);
@@ -28,5 +28,7 @@ public interface MemberDAO {
 	boolean changePassword(@Param("encodePassword") String encodePassword, @Param("changePwEmail") String changePwEmail);
 	// 회원 정보 변경 
 	boolean updateUserInfo(String m_name, String m_phone, String m_email);
+	// 사용자 정보 
+	MemberDTO getUserInfo(int m_id);
 	
 }
