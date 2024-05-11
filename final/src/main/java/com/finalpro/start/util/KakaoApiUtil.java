@@ -56,14 +56,14 @@ public class KakaoApiUtil {
 		return placeList;
 	}
 
-	public static List<PlaceDTO> getVehiclePaths(PlaceDTO from, PlaceDTO to, PlaceDTO waypoint)
+	public static List<PlaceDTO> getVehiclePaths(PlaceDTO from, PlaceDTO to, PlaceDTO waypoint, String priority)
 	        throws IOException, InterruptedException {
 
 	    HttpClient client = HttpClient.newHttpClient();
 	    String url = "https://apis-navi.kakaomobility.com/v1/directions";
 
 	    url += "?origin=" + from.getX() + "," + from.getY();
-	    
+	    url += "priority=" + "DISTANCE";
 	    if(waypoint != null) {
 	        url += "&waypoints=" + waypoint.getX() + "," + waypoint.getY();
 	    }
@@ -122,7 +122,9 @@ public class KakaoApiUtil {
 			return null;
 		}
 		Document document = documents.get(0);
-		return new PlaceDTO(document.getX(), document.getY());
+		PlaceDTO placeDTO = new PlaceDTO();
+	    placeDTO.setX(document.getX());
+	    placeDTO.setY(document.getY());
+	    return placeDTO;
 	}
-
 }

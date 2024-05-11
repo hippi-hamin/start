@@ -38,53 +38,59 @@
 </head>
 
 <body>
-	<!-- 헤더 -->
-	<th:block th:replace="~{fragments/header :: header}"></th:block>
-	<!-- 회원가입 텍스트 -->
-	<div class="center-eng-text">U p L o a d P l a c e</div>
-	<div class="center-ko-text">장소등록</div>
-	<div class="write-line"></div>
-	<!-- 업로드 폼 태그 -->
-	<form id="uploadForm" action="upLoadPlaceProc" method="post"
-		enctype="multipart/form-data">
-		<div class="formtag">
-			<!-- 지역 선택 -->
-			<input class="img-file" type="file" name="files" id="file" multiple>
-			<select class="location-button" name="p_location" id="location">
-				<option value="서울">서울</option>
-				<option value="인천">인천</option>
-				<option value="대구">대구</option>
-				<option value="대전">대전</option>
-				<option value="울산">울산</option>
-				<option value="부산">부산</option>
-				<option value="광주">광주</option>
-				<option value="경기도">경기도</option>
-				<option value="강원도">강원도</option>
-				<option value="경상도">경상도</option>
-				<option value="전라도">전라도</option>
-				<option value="충청도">충청도</option>
-				<option value="제주도">제주도</option>
-			</select>
-			<!-- 장소명 적기 -->
-			<input class="place-name-write" type="text" name="p_name"
-				placeholder="장소명"> 
-				<!-- 테마 선택 -->
-				<select name="p_thema" id="thema">
-				<option value="놀이공원">놀이공원</option>
-				<option value="맛집탐방">먹방여행</option>
-				<option value="효도여행">효도여행</option>
-				<option value="역사여행">역사여행</option>
-				<option value="반려동물과 함께하는 여행">반려동물과 함께하는 여행</option>
-				<option value="가족">가족</option>
-				<option value="데이트">데이트</option>
-				<option value="친구">친구</option>
-				<option value="나홀로">나홀로 집</option>
-			</select>
-			<!-- 상세 정보 창 -->
-			<textarea class="write-input" name="p_description" placeholder="상세정보"></textarea>
-			<!-- 업로드 버튼 -->
-			<input type="submit" class="btn-upLoad" value="업로드">
-			<!-- <input type="reset" class="btn-delbtn" value="지우기"> 
+
+<th:block th:replace="~{fragments/header :: header}"></th:block>
+   <div class="center-background">
+   <div class="center-text">장소등록</div>
+      <div class="container">
+         <div class="content">
+            <form id="uploadForm" action="upLoadPlaceProc" method="post"
+               enctype="multipart/form-data">
+               <div class="filebox">
+                  <div class="formtag">
+                     <!-- 파일 입력 처리 영역 -->
+                     <input class="img-file" type="file" name="files"
+                        id="file" multiple> 
+                        <br>
+                        
+                        <select class="location-button" name="p_location" id="location">
+                        <option value="서울">서울</option>
+                        <option value="인천">인천</option>
+                        <option value="대구">대구</option>
+                        <option value="대전">대전</option>
+                        <option value="울산">울산</option>
+                        <option value="부산">부산</option>
+                        <option value="광주">광주</option>
+                        <option value="경기도">경기도</option>
+                        <option value="강원도">강원도</option>
+                        <option value="경상도">경상도</option>
+                        <option value="전라도">전라도</option>
+                        <option value="충청도">충청도</option>
+                        <option value="제주도">제주도</option>   
+                     </select> <input class="place-name-write" type="text" name="p_name" placeholder="장소명"> 
+                     <br>
+                     <input type="text" name="address" placeholder="주소를 입력하세요">
+                     <br>
+                     <select name="p_thema" id="thema">
+                        <option value="놀이공원">놀이공원</option>
+                        <option value="맛집탐방">먹방여행</option>
+                        <option value="효도여행">효도여행</option>
+                        <option value="역사여행">역사여행</option>
+                        <option value="반려동물과 함께하는 여행">반려동물과 함께하는 여행</option>
+                        <option value="가족">가족</option>
+                        <option value="데이트">데이트</option>
+                        <option value="친구">친구</option>
+                        <option value="나홀로">나홀로 집</option>
+                     </select>
+                     <textarea rows="10" cols="50" class="write-input"
+                        name="p_description" placeholder="상세정보"></textarea>
+                        
+                     <div class="btn-array">
+                        <input type="submit" class="btn-upLoad" value="업로드"> 
+                        </div>
+                      <!-- <input type="reset" class="btn-delbtn" value="지우기"> 
+
+	
                         <input type="button" class="btn-backbtn" value="돌아가기" id="backbtn"> -->
 		</div>
 	</form>

@@ -9,7 +9,14 @@ html {
 }
 
 body {
-	margin: 0;
+
+   margin: 0;
+   display: flex;
+   flex-direction: column;
+}
+.center-background {
+	background-color: gray;
+	text-align: center;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
