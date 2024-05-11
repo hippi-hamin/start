@@ -2,6 +2,7 @@ package com.finalpro.start.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,89 +27,52 @@ public class PlaceService {
 
 	public String upLoadPlaceProc(List<MultipartFile> files, HttpSession session, PlaceDTO placeDTO,
 			RedirectAttributes rttr) {
-
-		log.info("upLoadPlaceProc()");
-
 		String view = null;
 		String msg = null;
-		log.info("PlaceDTO {}", placeDTO);
+
 		try {
+// 파일 업로드 처리
+			List<String> uploadedFileNames = uploadFiles(files, session);
+			placeDTO.setP_iname(String.join(", ", uploadedFileNames)); // 파일명을 PlaceDTO에 설정
 
-			// placeDAO.upLoadPlaceProc(placeDTO);
+// 데이터베이스에 저장
+			savePlaceDetails(placeDTO);
 
-			if (!files.get(0).isEmpty()) {
-				fileUpLoad(files, session, placeDTO, placeDTO.getP_id());
-				log.info("placeDTO {}", placeDTO);
-			}
-			placeDAO.upLoadPlaceProc(placeDTO);
 			view = "redirect:/";
 			msg = "장소 등록 성공";
-
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Error processing place upload: ", e);
 			view = "redirect:/upLoadPlace";
 			msg = "장소 등록 실패";
+			rttr.addFlashAttribute("errorMessage", msg);
 		}
-		log.info(msg);
 
 		rttr.addFlashAttribute("msg", msg);
-
 		return view;
-
 	}
 
-	private void fileUpLoad(List<MultipartFile> files, HttpSession session, PlaceDTO placeDTO, int p_id)
-			throws IOException {
-		log.info("fileUpLoad()");
-
-		String getOs = platformService.detectPlatform();
-		String uploadDirectory = null;
-		log.info(getOs);
-		if (getOs.equals("Windows")) {
-			uploadDirectory = "upLoad/";
-		} else if (getOs.equals("MacOS")) {
-			// 파일 저장 경로 설정
-//			uploadDirectory = session.getServletContext().getRealPath("/");
-			uploadDirectory = "/Users/yed0/upLoad/";
-		}
-
-		log.info(uploadDirectory);
+	private List<String> uploadFiles(List<MultipartFile> files, HttpSession session) throws IOException {
+		List<String> uploadedFileNames = new ArrayList<>();
+		String uploadDirectory = session.getServletContext().getRealPath("/uploads/");
 		File folder = new File(uploadDirectory);
-		if (!folder.exists()) {
-			// 폴더가 존재하지 않으면 생성
-			boolean createDir = folder.mkdir();
-			if (!createDir) {
-				throw new IOException("Failed to create directory: " + uploadDirectory);
-			}
+
+		if (!folder.exists() && !folder.mkdirs()) {
+			throw new IOException("Failed to create directory: " + uploadDirectory);
 		}
 
-		for (MultipartFile multiPartFile : files) {
-			// 파일명 추출
-			String oriname = multiPartFile.getOriginalFilename();
-			log.info("Original file name: {}", oriname);
-
-			// 파일 저장 이름 생성
-			String sysname = System.currentTimeMillis() + oriname.substring(oriname.lastIndexOf("."));
-			log.info("System file name: {}", sysname);
-
-			// 파일 저장 경로 설정
-			File file = new File(uploadDirectory, sysname); // 디렉토리 경로와 파일 이름을 지정하여 생성
-
-			// 파일 저장
-			try {
-				multiPartFile.transferTo(file);
-			} catch (IOException e) {
-				// 파일 저장 중에 예외 발생 시 처리
-				log.error("Failed to upload file: {}", e.getMessage());
-				throw e; // 예외 전파
-			}
-
-			// 파일 정보를 PlaceDTO에 설정 (필요한 경우)
-			placeDTO.setP_iname(sysname);
-			log.info(placeDTO.getP_iname());
-			placeDTO.setP_id(p_id);
-			log.info("PlaceDTO: {}", placeDTO);
+		for (MultipartFile file : files) {
+			String originalFilename = file.getOriginalFilename();
+			String storedFileName = System.currentTimeMillis() + "_" + originalFilename;
+			File targetFile = new File(folder, storedFileName);
+			file.transferTo(targetFile);
+			uploadedFileNames.add(storedFileName);
 		}
+
+		return uploadedFileNames;
+	}
+
+	private void savePlaceDetails(PlaceDTO placeDTO) {
+		placeDAO.upLoadPlaceProc(placeDTO);
 	}
 
 	public List<PlaceDTO> getPlaceList(String p_location, String p_thema) {

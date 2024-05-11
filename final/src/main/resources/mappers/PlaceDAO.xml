@@ -8,13 +8,10 @@
 	<insert id="upLoadPlaceProc" parameterType="place">
 		INSERT INTO
 		place.placetbl
-		(p_name, p_location, p_description, p_thema, p_iname,
-		p_views, p_stScore, p_price, p_people)
+		(p_name, p_location, p_description, p_thema, p_iname, p_views, p_stScore, p_price, x, y)
 		VALUES
-		(#{p_name}, #{p_location},
-		#{p_description}, #{p_thema}, #{p_iname}, #{p_views}, #{p_stScore},
-		#{p_price},
-		#{p_people})
+		(#{p_name}, #{p_location}, #{p_description},
+		#{p_thema}, #{p_iname}, #{p_views}, #{p_stScore}, #{p_price} , #{x}, #{y})
 	</insert>
 	<select id="getPlaceList" resultType="place">
 		SELECT * FROM
