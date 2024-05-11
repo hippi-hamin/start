@@ -38,8 +38,6 @@ public class PlaceController {
 	@Autowired
 	private PlaceService placeService;
 
-	@Autowired
-	private PlatformService platformService;
 	// 장소 리스트 페이지 이동
 	@GetMapping("placeList")
 	public String placeList(Model model,
@@ -98,29 +96,28 @@ public class PlaceController {
 		// 장소 세부 정보를 보여줄 템플릿의 이름을 반환
 		return "placeDetail";
 	}
-
 	@GetMapping("/getImage/{imageName}")
 	public ResponseEntity<byte[]> getImage(@PathVariable String imageName, HttpSession session) {
-		try {
+	    try {
+	        // 실제 이미지 파일이 저장된 디렉터리 경로 설정
+	        String uploadDirectory = "/Users/upLoad/";
 
-			// 이미지 파일의 경로를 설정합니다.
-			String uploadDirectory = "/Users/upLoad/"; // 업로드된 이미지 파일이 있는 경로
+	        // 이미지 파일의 경로 설정
+	        Path imagePath = Paths.get(uploadDirectory, imageName);
 
-			Path imagePath = Paths.get(uploadDirectory, imageName);
+	        // 이미지 파일을 읽어와 byte 배열로 변환합니다.
+	        byte[] imageBytes = Files.readAllBytes(imagePath);
 
-			// 이미지 파일을 읽어와 byte 배열로 변환합니다.
-			byte[] imageBytes = Files.readAllBytes(imagePath);
-
-			// HTTP 응답에 이미지와 적절한 Content-Type을 설정하여 반환합니다.
-			return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
-		} catch (IOException e) {
-			// 이미지 파일을 읽어오는 도중에 예외가 발생한 경우
-			e.printStackTrace();
-			// 이미지를 찾을 수 없을 때는 HTTP 상태 코드 404를 반환합니다.
-			return ResponseEntity.notFound().build();
-		}
-
+	        // HTTP 응답에 이미지와 적절한 Content-Type을 설정하여 반환합니다.
+	        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
+	    } catch (IOException e) {
+	        // 이미지 파일을 읽어오는 도중에 예외가 발생한 경우
+	        e.printStackTrace();
+	        // 이미지를 찾을 수 없을 때는 HTTP 상태 코드 404를 반환합니다.
+	        return ResponseEntity.notFound().build();
+	    }
 	}
+
 
 	@GetMapping("upLoadPlace")
 	public String upLoadPlace() {
@@ -208,25 +205,26 @@ public class PlaceController {
 	}
 
 
-	@GetMapping("searchRoad")
-	public String getPlacePath(@RequestParam(name = "x", required = false) Double x,
-			@RequestParam(name = "y", required = false) Double y,
-			@RequestParam(name = "keyword", required = false) String keyword, Model model)
-			throws IOException, InterruptedException {
-		if (x != null && y != null && keyword != null) {
-			List<PlaceDTO> keywordPlaceList = KakaoApiUtil.getPlaceByKeyWord(keyword, new PlaceDTO(x, y));
-			String keywordPlaceListJson = new ObjectMapper().writer().writeValueAsString(keywordPlaceList);
-			model.addAttribute("keywordPlacetList", keywordPlaceListJson);
-
-			List<PlaceDTO> pathPlaceList = new ArrayList<>();
-			for (int i = 1; i < keywordPlaceList.size(); i++) {
-				PlaceDTO prevPoint = keywordPlaceList.get(i - 1);
-				PlaceDTO nextPoint = keywordPlaceList.get(i);
-				pathPlaceList.addAll(KakaoApiUtil.getVehiclePaths(prevPoint, nextPoint, null));
-			}
-			String pathPlaceListJson = new ObjectMapper().writer().writeValueAsString(pathPlaceList);
-			model.addAttribute("pathPlaceList", pathPlaceListJson);
-		}
+//	@GetMapping("searchRoad")
+//	public String getPlacePath(@RequestParam(name = "x", required = false) Double x,
+//			@RequestParam(name = "y", required = false) Double y,
+//			@RequestParam(name = "keyword", required = false) String keyword, Model model)
+//			throws IOException, InterruptedException {
+//		if (x != null && y != null && keyword != null) {
+//			List<PlaceDTO> keywordPlaceList = KakaoApiUtil.getPlaceByKeyWord(keyword, new PlaceDTO(x, y));
+//			String keywordPlaceListJson = new ObjectMapper().writer().writeValueAsString(keywordPlaceList);
+//			model.addAttribute("keywordPlacetList", keywordPlaceListJson);
+//
+//			List<PlaceDTO> pathPlaceList = new ArrayList<>();
+//			for (int i = 1; i < keywordPlaceList.size(); i++) {
+//				PlaceDTO prevPoint = keywordPlaceList.get(i - 1);
+//				PlaceDTO nextPoint = keywordPlaceList.get(i);
+//				pathPlaceList.addAll(KakaoApiUtil.getVehiclePaths(prevPoint, nextPoint, null));
+//			}
+//			String pathPlaceListJson = new ObjectMapper().writer().writeValueAsString(pathPlaceList);
+//			model.addAttribute("pathPlaceList", pathPlaceListJson);
+//		}
+//	}
 
 
 
