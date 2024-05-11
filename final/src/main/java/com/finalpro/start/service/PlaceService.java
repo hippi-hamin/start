@@ -26,57 +26,61 @@ public class PlaceService {
 	@Autowired
 	private PlatformService platformService;
 
-	public String upLoadPlaceProc(List<MultipartFile> files, HttpSession session, PlaceDTO placeDTO, RedirectAttributes rttr) {
-	    String view = null;
-	    String msg = null;
+	public String upLoadPlaceProc(List<MultipartFile> files, HttpSession session, PlaceDTO placeDTO,
+            RedirectAttributes rttr) {
+        String view = null;
+        String msg = null;
 
-	    try {
-	        // 파일 업로드 처리
-	        List<String> uploadedFileNames = fileUpLoad(files, session);
-	        placeDTO.setP_iname(String.join(", ", uploadedFileNames)); // 파일명을 PlaceDTO에 설정
+        try {
+            // 파일 업로드 처리
+            List<String> uploadedFileNames = fileUpLoad(files, session);
+            placeDTO.setP_iname(String.join(", ", uploadedFileNames)); // 파일명을 PlaceDTO에 설정
 
-	        // 데이터베이스에 저장
-	        savePlaceDetails(placeDTO);
+            // 데이터베이스에 저장
+            savePlaceDetails(placeDTO);
 
-	        // 로그 출력
-	        log.info("placeDTO {}", placeDTO);
+            // 로그 출력
+            log.info("placeDTO {}", placeDTO);
 
-	        // DAO를 통해 장소 등록 처리
-	        placeDAO.upLoadPlaceProc(placeDTO);
+            // DAO를 통해 장소 등록 처리
+            // placeDAO.upLoadPlaceProc(placeDTO); // 이미 저장된 파일을 다시 업로드할 필요가 없습니다.
 
-	        view = "redirect:/";
-	        msg = "장소 등록 성공";
-	    } catch (Exception e) {
-	        log.error("Error processing place upload: ", e);
-	        view = "redirect:/upLoadPlace";
-	        msg = "장소 등록 실패";
-	        rttr.addFlashAttribute("errorMessage", msg);
-	    }
+            view = "redirect:/";
+            msg = "장소 등록 성공";
+        } catch (Exception e) {
+            log.error("Error processing place upload: ", e);
+            view = "redirect:/upLoadPlace";
+            msg = "장소 등록 실패";
+            rttr.addFlashAttribute("errorMessage", msg);
+        }
 
-	    rttr.addFlashAttribute("msg", msg);
-	    return view;
-	}
+        rttr.addFlashAttribute("msg", msg);
+        return view;
+    }
 
-	private List<String> fileUpLoad(List<MultipartFile> files, HttpSession session) throws IOException {
-	    List<String> uploadedFileNames = new ArrayList<>();
-	    String uploadDirectory = "/Users/upLoad/";
+    private List<String> fileUpLoad(List<MultipartFile> files, HttpSession session) throws IOException {
+        List<String> uploadedFileNames = new ArrayList<>();
+        String uploadDirectory = "/Users/upLoad/";
 
-	    File folder = new File(uploadDirectory);
+        File folder = new File(uploadDirectory);
 
-	    if (!folder.exists() && !folder.mkdirs()) {
-	        throw new IOException("Failed to create directory: " + uploadDirectory);
-	    }
+        if (!folder.exists() && !folder.mkdirs()) {
+            throw new IOException("Failed to create directory: " + uploadDirectory);
+        }
 
-	    for (MultipartFile file : files) {
-	        String originalFilename = file.getOriginalFilename();
-	        String storedFileName = System.currentTimeMillis() + "_" + originalFilename;
-	        File targetFile = new File(folder, storedFileName);
-	        file.transferTo(targetFile);
-	        uploadedFileNames.add(storedFileName);
-	    }
+        for (MultipartFile file : files) {
+            if (!file.isEmpty()) { // 파일이 비어있지 않을 때만 업로드 수행
+                String originalFilename = file.getOriginalFilename();
+                String storedFileName = System.currentTimeMillis() + "_" + originalFilename;
+                File targetFile = new File(folder, storedFileName);
+                file.transferTo(targetFile);
+                uploadedFileNames.add(storedFileName);
+            }
+        }
 
-	    return uploadedFileNames;
-	}
+        return uploadedFileNames;
+    }
+
 
 	private void savePlaceDetails(PlaceDTO placeDTO) {
 		placeDAO.upLoadPlaceProc(placeDTO);
