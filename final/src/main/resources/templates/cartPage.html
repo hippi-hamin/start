@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Cart</title>
+</head>
+<body>
+    <h1>Your Cart</h1>
+    <ul>
+        <th:block th:each="place : ${cart}">
+            <li th:text="${place.p_name}">Place name</li>
+        </th:block>
+    </ul>
+</body>
+</html>

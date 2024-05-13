@@ -1,32 +1,64 @@
-<!-- placeList.html -->
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-<meta charset="UTF-8">
-<title>장소 리스트</title>
-<link rel="stylesheet" th:href="@{/css/placeList.css}">
-<link rel="stylesheet" th:href="@{/css/header.css}">
-<link rel="stylesheet" th:href="@{/css/footer.css}">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<meta charset="UTF-8">
+	<title>장소 리스트</title>
+	<link rel="stylesheet" th:href="@{/css/placeList.css}">
+	<link rel="stylesheet" th:href="@{/css/header.css}">
+	<link rel="stylesheet" th:href="@{/css/footer.css}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+	function addToCart(p_id) {
+    var id = parseInt(p_id, 10); // 정수 변환
+    console.log(id); // Debug: 변환된 값 확인
+
+    if (!Number.isInteger(id)) {
+        alert("잘못된 상품 ID입니다.");
+        return;
+    }
+
+    $.post("/addPlaceToCart", { p_id: id })
+        .done(function (response) {
+            alert("장소가 장바구니에 추가되었습니다.");
+        })
+        .fail(function () {
+            alert("장소를 추가하는데 문제가 발생했습니다.");
+        });
+}
+
+		/*]]>*/
+	</script>
 </head>
+
 <body>
 
 	<!-- 헤더 -->
 	<th:block th:replace="~{fragments/header :: header}"></th:block>
+
 	<!-- 장소 리스트를 반복하여 표시 -->
-	<th:block th:each="place : ${placeList}">
-		<li><a th:href="@{'/placeDetail/' + ${place.p_id}}"> <span
-				th:text="${place.p_name}"></span><br /> 지역 : <span
-				th:text="${place.p_location}"></span><br /> 별점: <span
-				th:text="${place.p_stScore}"></span><br /> <img
-				th:src="@{'/upLoad/' + ${place.p_iname}}" />
-		</a></li>
-		<br />
-	</th:block>
+	<ul>
+		<th:block th:each="place : ${placeList}">
+			<li>
+				<a th:href="@{'/placeDetail/' + ${place.p_id}}">
+					<span th:text="${place.p_name}"></span><br />
+					지역 : <span th:text="${place.p_location}"></span><br />
+					별점: <span th:text="${place.p_stScore}"></span><br />
+					<img th:src="@{'/upLoad/' + ${place.p_iname}}" alt="Image of ${place.p_name}" />
+				</a>
+				<button type="button" th:attr="data-pid=${place.p_id}" onclick="addToCart(this.getAttribute('data-pid'))">장바구니에 추가</button>
+
+
+				<br />
+			</li>
+		</th:block>
+	</ul>
+
 	<a href="mapPaths">변환</a>
+
 	<!-- 푸터 -->
 	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
+
 </html>

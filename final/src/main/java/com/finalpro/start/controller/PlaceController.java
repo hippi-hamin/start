@@ -49,37 +49,38 @@ public class PlaceController {
 	}
 
 	@GetMapping("placeListByLocation")
-	public String placeListByLocation(@RequestParam(value = "p_location", required = false) String p_location, Model model) {
-	    String view = null;
-	    List<PlaceDTO> place;
+	public String placeListByLocation(@RequestParam(value = "p_location", required = false) String p_location,
+			Model model) {
+		String view = null;
+		List<PlaceDTO> place;
 
-	    if (p_location != null && !p_location.isEmpty()) {
-	        place = placeService.placeListByLocation(p_location);
-	    } else {
-	        place = placeService.getPlaceList();
-	    }
+		if (p_location != null && !p_location.isEmpty()) {
+			place = placeService.placeListByLocation(p_location);
+		} else {
+			place = placeService.getPlaceList();
+		}
 
-	    model.addAttribute("placeListByLocation", place);
-	    view = "placeListByLocation";
+		model.addAttribute("placeListByLocation", place);
+		view = "placeListByLocation";
 
-	    return view;
+		return view;
 	}
 
 	@GetMapping("placeListByTheme")
 	public String placeByTheme(@RequestParam(value = "p_thema", required = false) String p_thema, Model model) {
-	    String view = null;
-	    List<PlaceDTO> place;
+		String view = null;
+		List<PlaceDTO> place;
 
-	    if (p_thema != null && !p_thema.isEmpty()) {
-	        place = placeService.placeListByTheme(p_thema);
-	    } else {
-	        place = placeService.getPlaceList();
-	    }
+		if (p_thema != null && !p_thema.isEmpty()) {
+			place = placeService.placeListByTheme(p_thema);
+		} else {
+			place = placeService.getPlaceList();
+		}
 
-	    model.addAttribute("placeListByTheme", place);
-	    view = "placeListByTheme";
+		model.addAttribute("placeListByTheme", place);
+		view = "placeListByTheme";
 
-	    return view;
+		return view;
 	}
 
 	// placeDetail
@@ -126,78 +127,82 @@ public class PlaceController {
 
 	@PostMapping("upLoadPlaceProc")
 	public String upLoadPlaceProc(@RequestParam("files") List<MultipartFile> files,
-	                              @RequestParam("address") String address, // 주소 파라미터 추가
-	                              HttpSession session,
-	                              @Validated @ModelAttribute("PlaceDTO") PlaceDTO placeDTO,
-	                              BindingResult bindingResult,
-	                              RedirectAttributes rttr) {
+			@RequestParam("address") String address, // 주소 파라미터 추가
+			HttpSession session, @Validated @ModelAttribute("PlaceDTO") PlaceDTO placeDTO, BindingResult bindingResult,
+			RedirectAttributes rttr) {
 
-	    log.info("upLoadPlaceProc()");
-	    log.info("PlaceDTO {}:", placeDTO);
+		log.info("upLoadPlaceProc()");
+		log.info("PlaceDTO {}:", placeDTO);
 
-	    if (bindingResult.hasErrors()) {
-	        bindingResult.getAllErrors().forEach(error -> log.error(error.getDefaultMessage()));
-	        rttr.addFlashAttribute("errors", bindingResult.getAllErrors());
-	        return "redirect:upLoadPlace";
-	    }
+		if (bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(error -> log.error(error.getDefaultMessage()));
+			rttr.addFlashAttribute("errors", bindingResult.getAllErrors());
+			return "redirect:upLoadPlace";
+		}
 
-	    try {
-	        // 주소로부터 좌표 추출
-	        PlaceDTO optionalCoords = KakaoApiUtil.getPointByAddress(address);
-	        if (optionalCoords != null) {
-	            placeDTO.setX(optionalCoords.getX()); // 좌표 설정
-	            placeDTO.setY(optionalCoords.getY());
-	        } else {
-	            rttr.addFlashAttribute("errorMessage", "주소로부터 좌표를 찾을 수 없습니다.");
-	            return "redirect:upLoadPlace";
+		try {
+			// 주소로부터 좌표 추출
+			PlaceDTO optionalCoords = KakaoApiUtil.getPointByAddress(address);
+			if (optionalCoords != null) {
+				placeDTO.setX(optionalCoords.getX()); // 좌표 설정
+				placeDTO.setY(optionalCoords.getY());
+			} else {
+				rttr.addFlashAttribute("errorMessage", "주소로부터 좌표를 찾을 수 없습니다.");
+				return "redirect:upLoadPlace";
+			}
+
+			// 파일 업로드 및 장소 정보 저장
+			String view = placeService.upLoadPlaceProc(files, session, placeDTO, rttr);
+			return view;
+		} catch (Exception e) {
+			log.error("Error processing upload: ", e);
+			rttr.addFlashAttribute("errorMessage",
+					"Error processing your upload. Please try again or contact support.");
+			return "redirect:upLoadPlace";
+		}
+	}
+
+	@PostMapping("/addPlaceToCart")
+	public String addPlaceToCart(@RequestParam("p_id") String p_idStr, HttpSession session) {
+		 log.info("Received p_id: {}", p_idStr); // 로그 추가
+		try {
+	        int p_id = Integer.parseInt(p_idStr);
+	        List<PlaceDTO> cart = (List<PlaceDTO>) session.getAttribute("cart");
+
+	        if (cart == null) {
+	            cart = new ArrayList<>();
+	            session.setAttribute("cart", cart);
 	        }
 
-	        // 파일 업로드 및 장소 정보 저장
-	        String view = placeService.upLoadPlaceProc(files, session, placeDTO, rttr);
-	        return view;
-	    } catch (Exception e) {
-	        log.error("Error processing upload: ", e);
-	        rttr.addFlashAttribute("errorMessage", "Error processing your upload. Please try again or contact support.");
-	        return "redirect:upLoadPlace";
+	        PlaceDTO place = placeService.findById(p_id);
+	        if (place != null && !cart.contains(place)) {
+	            cart.add(place);
+	            return "redirect:/placeList";
+	        } else {
+	            return "redirect:/error";
+	        }
+	    } catch (NumberFormatException e) {
+	        return "redirect:/error";
 	    }
 	}
 
 
-
-
-//	@GetMapping("searchRoad")
-//	public String getPlacePath(@RequestParam(name = "x", required = false) Double x,
-//			@RequestParam(name = "y", required = false) Double y,
-//			@RequestParam(name = "keyword", required = false) String keyword, Model model)
-//			throws IOException, InterruptedException {
-//		if (x != null && y != null && keyword != null) {
-//			List<PlaceDTO> keywordPlaceList = KakaoApiUtil.getPlaceByKeyWord(keyword, new PlaceDTO(x, y));
-//			String keywordPlaceListJson = new ObjectMapper().writer().writeValueAsString(keywordPlaceList);
-//			model.addAttribute("keywordPlacetList", keywordPlaceListJson);
-//
-//			List<PlaceDTO> pathPlaceList = new ArrayList<>();
-//			for (int i = 1; i < keywordPlaceList.size(); i++) {
-//				PlaceDTO prevPoint = keywordPlaceList.get(i - 1);
-//				PlaceDTO nextPoint = keywordPlaceList.get(i);
-//				pathPlaceList.addAll(KakaoApiUtil.getVehiclePaths(prevPoint, nextPoint, null));
-//			}
-//			String pathPlaceListJson = new ObjectMapper().writer().writeValueAsString(pathPlaceList);
-//			model.addAttribute("pathPlaceList", pathPlaceListJson);
-//		}
-//
-//		return "searchRoad";
-//	}
+	@GetMapping("/showCart")
+	public String showCart(Model model, HttpSession session) {
+		List<PlaceDTO> cart = (List<PlaceDTO>) session.getAttribute("cart");
+		model.addAttribute("cart", cart);
+		return "cartPage"; // 장바구니 페이지
+	}
 
 	@GetMapping("mapPaths") // url : /map/paths
 	public String getMapPaths(@RequestParam(name = "fromAddress", required = false) String fromAddress,
 			@RequestParam(name = "wayAddress", required = false) String wayAddress,
-			@RequestParam(name = "priority", required = false) String priority,//
+			@RequestParam(name = "priority", required = false) String priority, //
 			@RequestParam(name = "toAddress", required = false) String toAddress, Model model)
 			throws IOException, InterruptedException {
 		PlaceDTO fromPoint = null;
 		PlaceDTO wayPoint = null;
 		PlaceDTO toPoint = null;
-//		PlaceDTO wayPoint = null;
 		if (fromAddress != null && !fromAddress.isEmpty()) {
 			fromPoint = KakaoApiUtil.getPointByAddress(fromAddress);
 			model.addAttribute("fromPoint", fromPoint);
@@ -222,20 +227,6 @@ public class PlaceController {
 
 		}
 		return "mapPaths";
-	}
-
-	@GetMapping("addressToPoint")
-	public String getPointByAddress(@RequestParam(value = "address", required = false) String address, Model model)
-			throws IOException, InterruptedException {
-
-		if (address != null && !address.isEmpty()) {
-
-			PlaceDTO placePoint = KakaoApiUtil.getPointByAddress(address);
-			model.addAttribute("placePoint", placePoint);
-
-		}
-
-		return "addressToPoint";
 	}
 
 	@GetMapping("map")

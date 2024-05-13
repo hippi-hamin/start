@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Places List</title>
+</head>
+<body>
+    <h1>Places</h1>
+    <ul>
+        <th:block th:each="place : ${places}">
+            <li th:text="${place.p_name}">Place name</li>
+            <button th:onclick="'location.href=\'/addPlaceToCart?placeId=\'' + ${place.p_id}">Add to Cart</button>
+        </th:block>
+    </ul>
+    <button onclick="location.href='/showCart'">View Cart</button>
+</body>
+</html>
