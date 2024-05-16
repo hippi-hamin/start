@@ -2,6 +2,7 @@ package com.finalpro.start.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,93 +27,63 @@ public class PlaceService {
 	private PlatformService platformService;
 
 	public String upLoadPlaceProc(List<MultipartFile> files, HttpSession session, PlaceDTO placeDTO,
-			RedirectAttributes rttr) {
+            RedirectAttributes rttr) {
+        String view = null;
+        String msg = null;
 
-		log.info("upLoadPlaceProc()");
+        try {
+            // 파일 업로드 처리
+            List<String> uploadedFileNames = fileUpLoad(files, session);
+            placeDTO.setP_iname(String.join(", ", uploadedFileNames)); // 파일명을 PlaceDTO에 설정
 
-		String view = null;
-		String msg = null;
-		log.info("PlaceDTO {}", placeDTO);
-		try {
+            // 데이터베이스에 저장
+            savePlaceDetails(placeDTO);
 
-			// placeDAO.upLoadPlaceProc(placeDTO);
+            // 로그 출력
+            log.info("placeDTO {}", placeDTO);
 
-			if (!files.get(0).isEmpty()) {
-				fileUpLoad(files, session, placeDTO);
-				log.info("placeDTO {}", placeDTO);
-			}
-			placeDAO.upLoadPlaceProc(placeDTO);
-			view = "redirect:/";
-			msg = "장소 등록 성공";
+            // DAO를 통해 장소 등록 처리
+            // placeDAO.upLoadPlaceProc(placeDTO); // 이미 저장된 파일을 다시 업로드할 필요가 없습니다.
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			view = "redirect:/upLoadPlace";
-			msg = "장소 등록 실패";
-		}
-		log.info(msg);
+            view = "redirect:/";
+            msg = "장소 등록 성공";
+        } catch (Exception e) {
+            log.error("Error processing place upload: ", e);
+            view = "redirect:/upLoadPlace";
+            msg = "장소 등록 실패";
+            rttr.addFlashAttribute("errorMessage", msg);
+        }
 
-		rttr.addFlashAttribute("msg", msg);
+        rttr.addFlashAttribute("msg", msg);
+        return view;
+    }
 
-		return view;
+    private List<String> fileUpLoad(List<MultipartFile> files, HttpSession session) throws IOException {
+        List<String> uploadedFileNames = new ArrayList<>();
+        String uploadDirectory = "/Users/upLoad/";
 
-	}
+        File folder = new File(uploadDirectory);
 
-	private void fileUpLoad(List<MultipartFile> files, HttpSession session, PlaceDTO placeDTO)
-			throws IOException {
-		log.info("fileUpLoad()");
+        if (!folder.exists() && !folder.mkdirs()) {
+            throw new IOException("Failed to create directory: " + uploadDirectory);
+        }
 
-		String getOs = platformService.detectPlatform();
-		String uploadDirectory = null;
-		log.info(getOs);
-		if (getOs.equals("Windows")) {
-			
-			uploadDirectory = "C:\\Development\\upLoad";
-		} else if (getOs.equals("MacOS")) {
-			// 파일 저장 경로 설정
-//			uploadDirectory = session.getServletContext().getRealPath("/");
+        for (MultipartFile file : files) {
+            if (!file.isEmpty()) { // 파일이 비어있지 않을 때만 업로드 수행
+                String originalFilename = file.getOriginalFilename();
+                String storedFileName = System.currentTimeMillis() + "_" + originalFilename;
+                File targetFile = new File(folder, storedFileName);
+                file.transferTo(targetFile);
+                uploadedFileNames.add(storedFileName);
+            }
+        }
 
-			uploadDirectory = "/Users/upLoad/";
+        return uploadedFileNames;
+    }
 
-		}
 
-		log.info(uploadDirectory);
-		File folder = new File(uploadDirectory);
-		if (!folder.exists()) {
-			// 폴더가 존재하지 않으면 생성
-			boolean createDir = folder.mkdir();
-			if (!createDir) {
-				throw new IOException("Failed to create directory: " + uploadDirectory);
-			}
-		}
-
-		for (MultipartFile multiPartFile : files) {
-			// 파일명 추출
-			String oriname = multiPartFile.getOriginalFilename();
-			log.info("Original file name: {}", oriname);
-
-			// 파일 저장 이름 생성
-			String sysname = System.currentTimeMillis() + oriname.substring(oriname.lastIndexOf("."));
-			log.info("System file name: {}", sysname);
-
-			// 파일 저장 경로 설정
-			File file = new File(uploadDirectory, sysname); // 디렉토리 경로와 파일 이름을 지정하여 생성
-
-			// 파일 저장
-			try {
-				multiPartFile.transferTo(file);
-			} catch (IOException e) {
-				// 파일 저장 중에 예외 발생 시 처리
-				log.error("Failed to upload file: {}", e.getMessage());
-				throw e; // 예외 전파
-			}
-
-			// 파일 정보를 PlaceDTO에 설정 (필요한 경우)
-			placeDTO.setP_iname(sysname);
-			log.info(placeDTO.getP_iname());
-//			placeDTO.setP_id(p_id);
-			log.info("PlaceDTO: {}", placeDTO);
-		}
+	private void savePlaceDetails(PlaceDTO placeDTO) {
+		placeDAO.upLoadPlaceProc(placeDTO);
 	}
 
 	public List<PlaceDTO> getPlaceList(String p_location, String p_thema) {
@@ -155,54 +126,54 @@ public class PlaceService {
 		placeDAO.savePlace(place);
 
 	}
+
 	public String updatePlaceProc(List<MultipartFile> files, HttpSession session, PlaceDTO placeDTO,
-	        RedirectAttributes rttr) {
-	    log.info("updatePlaceProc(), service");
-	    String view = null;
-	    String msg = null;
-	    log.info("PlaceDTO {}", placeDTO);
-	    try {
-	        if (!files.isEmpty()) {
-	            // 기존 이미지 삭제
-	            deleteOldImage(placeDTO, session);
-	            // 새로운 이미지 업로드
-	            fileUpLoad(files, session, placeDTO);
-	            log.info("placeDTO {}", placeDTO);
-	        }
-	        
-	        // 파일 업로드 이후에 장소 정보 업데이트
-	        placeDAO.updatePlaceProc(placeDTO);
-	        
-	        view = "redirect:/";
-	        msg = "장소 수정 성공";
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        view = "redirect:/updatePlace";
-	        msg = "장소 수정 실패";
-	    }
-	    log.info(msg);
-	    rttr.addFlashAttribute("msg", msg);
-	    return view;
+			RedirectAttributes rttr) {
+		log.info("updatePlaceProc(), service");
+		String view = null;
+		String msg = null;
+		log.info("PlaceDTO {}", placeDTO);
+		try {
+			if (!files.isEmpty()) {
+				// 기존 이미지 삭제
+				deleteOldImage(placeDTO, session);
+				// 새로운 이미지 업로드
+				fileUpLoad(files, session);
+				log.info("placeDTO {}", placeDTO);
+			}
+
+			// 파일 업로드 이후에 장소 정보 업데이트
+			placeDAO.updatePlaceProc(placeDTO);
+
+			view = "redirect:/";
+			msg = "장소 수정 성공";
+		} catch (Exception e) {
+			e.printStackTrace();
+			view = "redirect:/updatePlace";
+			msg = "장소 수정 실패";
+		}
+		log.info(msg);
+		rttr.addFlashAttribute("msg", msg);
+		return view;
 	}
 
 	private void deleteOldImage(PlaceDTO placeDTO, HttpSession session) throws Exception {
-	    log.info("deleteOldImage()");
-	    log.info("placeDTO {}:", placeDTO);
-	    String uploadDirectory = "/Users/upLoad/"; // 이미지 업로드 디렉토리
-	    String imagePath = uploadDirectory + placeDTO.getP_iname(); // 이미지 경로
-	    log.info(imagePath);
-	    File file = new File(imagePath);
-	    if (file.exists()) {
-	        if (file.delete()) {
-	            log.info("기존 이미지 삭제 성공: {}", imagePath);
-	        } else {
-	            log.error("기존 이미지 삭제 실패: {}", imagePath);
-	            throw new Exception("기존 이미지 삭제 실패");
-	        }
-	    } else {
-	        log.warn("삭제할 이미지가 존재하지 않습니다: {}", imagePath);
-	    }
+		log.info("deleteOldImage()");
+		log.info("placeDTO {}:", placeDTO);
+		String uploadDirectory = "/Users/upLoad/"; // 이미지 업로드 디렉토리
+		String imagePath = uploadDirectory + placeDTO.getP_iname(); // 이미지 경로
+		log.info(imagePath);
+		File file = new File(imagePath);
+		if (file.exists()) {
+			if (file.delete()) {
+				log.info("기존 이미지 삭제 성공: {}", imagePath);
+			} else {
+				log.error("기존 이미지 삭제 실패: {}", imagePath);
+				throw new Exception("기존 이미지 삭제 실패");
+			}
+		} else {
+			log.warn("삭제할 이미지가 존재하지 않습니다: {}", imagePath);
+		}
 	}
-
 
 }

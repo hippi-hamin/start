@@ -21,7 +21,6 @@ public class PlaceDTO {
 	private int p_views;
 	private int p_stScore;
 	private int p_price;
-	private String p_people;
 	private Double x;
 	private Double y;
 	// 기본 생성자

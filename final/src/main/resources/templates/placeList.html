@@ -1,16 +1,37 @@
-<!-- placeList.html -->
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-<meta charset="UTF-8">
-<title>장소 리스트</title>
-<link rel="stylesheet" th:href="@{/css/placeList.css}">
-<link rel="stylesheet" th:href="@{/css/header.css}">
-<link rel="stylesheet" th:href="@{/css/footer.css}">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<meta charset="UTF-8">
+	<title>장소 리스트</title>
+	<link rel="stylesheet" th:href="@{/css/placeList.css}">
+	<link rel="stylesheet" th:href="@{/css/header.css}">
+	<link rel="stylesheet" th:href="@{/css/footer.css}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+	function addToCart(p_id) {
+    var id = parseInt(p_id, 10); // 정수 변환
+    console.log(id); // Debug: 변환된 값 확인
+
+    if (!Number.isInteger(id)) {
+        alert("잘못된 상품 ID입니다.");
+        return;
+    }
+
+    $.post("/addPlaceToCart", { p_id: id })
+        .done(function (response) {
+            alert("장소가 장바구니에 추가되었습니다.");
+        })
+        .fail(function () {
+            alert("장소를 추가하는데 문제가 발생했습니다.");
+        });
+}
+
+		/*]]>*/
+	</script>
 </head>
+
 <body>
 	<!-- 헤더 -->
 	<th:block th:replace="~{fragments/header :: header}"></th:block>
@@ -33,7 +54,6 @@
     		<button class="circle-button" onclick="showCategory('제주')">제주</button>
     	</div>
     </div>
-    <!-- 검색창 바탕 -->
 	<div class="search-background">
 		<!-- 검색 적는 박스 -->
 		<input class="search-write-box" type="text" placeholder="검색어를 입력해주세요.">
@@ -154,6 +174,16 @@
 			</div>
 		</th:block>
 	<!-- 장바구니 위치 -->
+	<th:block th:each="place : ${placeList}">
+		<div class="place-list-array">
+			<a th:href="@{'/placeDetail/' + ${place.p_id}}"> 
+				<span th:text="${place.p_name}"></span><br /> 
+				지역 : <span th:text="${place.p_location}"></span><br /> 
+				별점: <span th:text="${place.p_stScore}"></span><br /> 
+				<img th:src="@{'/getImage/' + ${place.p_iname}}" width="150px"/>
+			</a>
+		</div>
+	</th:block>
 	<div class="select-list-array">
 		<!-- 장바구니 헤더 -->
 		<div class="select-list-header">선택하신 리스트 입니다.</div>
@@ -179,4 +209,5 @@
     }
 	</script>
 </body>
+
 </html>

@@ -11,7 +11,7 @@ import com.finalpro.start.dto.PlaceDTO;
 @Repository
 @Mapper
 public interface PlaceDAO {
-	// 장소 등로
+	// 장소 등록
 	void upLoadPlaceProc(PlaceDTO placeDTO);
 
 	// 장소 리스트
