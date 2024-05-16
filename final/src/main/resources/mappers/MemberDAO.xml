@@ -55,5 +55,9 @@
 		SELECT * FROM membertbl
 		WHERE m_id=#{m_id}
 	</select>
+	<delete id="withdrawMember" parameterType="String">
+		DELETE FROM membertbl
+		WHERE m_email=#{memberId};
+	</delete>
 
 </mapper>

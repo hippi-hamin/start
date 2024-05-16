@@ -30,5 +30,7 @@ public interface MemberDAO {
 	boolean updateUserInfo(String m_name, String m_phone, String m_email);
 	// 사용자 정보 
 	MemberDTO getUserInfo(int m_id);
+	// 탈퇴 
+	void withdrawMember(String memberId);
 	
 }

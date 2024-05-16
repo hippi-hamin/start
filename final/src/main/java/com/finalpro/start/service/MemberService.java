@@ -158,4 +158,10 @@ public class MemberService {
 		MemberDTO userInfo = memberDAO.getUserInfo(m_id);
 		return userInfo;
 	}
+
+	public void withdrawMember(String memberId) {
+		log.info("wtihdrawMember(), service");
+		memberDAO.withdrawMember(memberId);
+	}
+
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.finalpro.start.dto.MemberDTO;
 import com.finalpro.start.service.MemberService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
@@ -70,4 +71,19 @@ public class MemberRestController {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("사용자 정보 업데이트에 실패했습니다.");
 	    }
 	}
+	// 회원 탈퇴 
+	@PostMapping("/withdrawMember")
+    public ResponseEntity<String> withdrawMember(String memberId, HttpServletRequest request) {
+		log.info(memberId);
+		memberServ.withdrawMember(memberId);
+        // 로그아웃과 메인 화면으로의 리다이렉트를 클라이언트에게 알리기 위해 적절한 응답을 반환합니다.
+		
+		// 세션 무효화로 로그아웃 처리
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return ResponseEntity.status(HttpStatus.OK)
+                             .body("회원 탈퇴가 성공적으로 처리되었습니다. 로그아웃되었습니다.");
+    }
 }
