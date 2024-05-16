@@ -35,6 +35,15 @@
 		th:unless="${placeListByLocation != null and placeListByLocation.size() > 0}">
 		<div class="non-content-text">장소 리스트가 존재하지 않습니다.</div>
 	</th:block>
+	<div class="select-list-array">
+		<!-- 장바구니 헤더 -->
+		<div class="select-list-header">선택하신 리스트 입니다.</div>
+			<!-- 장바구니 푸터 -->
+			<div class="select-list-footer">
+				<!-- 경로 확인 -->
+				<a class="route" href="mapPaths">경로 확인</a>
+			</div>
+		</div>
 	<!-- 푸터 -->
 	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 	<script>

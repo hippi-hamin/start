@@ -182,7 +182,7 @@ body {
 	top: 60%;
 	margin-left: 2%;
 	width: 75%;
-	height: 20%;
+	min-height: 150px;
 }
 /* 지역 카테고리 아랫 라인 */
 .start-line {
