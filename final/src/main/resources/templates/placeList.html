@@ -70,11 +70,11 @@
 	<div class="start-line"></div>
 	<th:block th:each="place : ${placeList}">
 		<div class="place-list-array">
-			<a th:href="@{'/placeDetail/' + ${place.p_id}}"> <span
-				th:text="${place.p_name}"></span><br /> 지역 : <span
-				th:text="${place.p_location}"></span><br /> 별점: <span
-				th:text="${place.p_stScore}"></span><br /> <img
-				th:src="@{'/upLoad/' + ${place.p_iname}}" />
+			<a th:href="@{'/placeDetail/' + ${place.p_id}}"> 
+				<span th:text="${place.p_name}"></span><br /> 
+				지역 : <span th:text="${place.p_location}"></span><br /> 
+				별점: <span th:text="${place.p_stScore}"></span><br /> 
+				<img th:src="@{'/getImage/' + ${place.p_iname}}" width="150px"/>
 			</a>
 		</div>
 	</th:block>
