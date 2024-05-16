@@ -62,11 +62,13 @@
 		th:value="${currentUser.m_point} + point" readonly>
 	<!-- 기타 사용자 정보를 표시할 input 요소 추가 -->
 	<button class="center-button" type="button" id="updateButton">정보 변경</button>
+	<!--  회원 탈퇴  -->
+	<button class="center-button1" type="button" id="deleteButton">회원 탈퇴</button>
 	<!-- 푸터 -->
 	</form>
 	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 
-	<script>
+	<script th:inline="javascript">
 		$(document).ready(function() {
 			$('#updateButton').click(function(event) {
 				// 폼 데이터 구성
@@ -102,6 +104,31 @@
 
 			});
 		});
+		$(document).ready(function() {
+		    $('#deleteButton').click(function(event) {
+		        var confirmDelete = confirm("정말로 회원 탈퇴하시겠습니까?");
+		        
+		        if (confirmDelete) {
+		            var memberId = [[${currentUser.m_email}]];
+
+
+		            $.ajax({
+		                type: 'POST',
+		                url: '/withdrawMember', // 회원 탈퇴를 처리하는 엔드포인트 주소
+		                data: { memberId: memberId },
+		                success: function(response) {
+		                    alert(response); // 회원 탈퇴가 성공적으로 처리된 경우 서버에서 반환한 메시지를 출력
+		                    window.location.href = '/';
+		                },
+		                error: function(xhr, status, error) {
+		                    alert("회원 탈퇴에 실패했습니다. 다시 시도해주세요."); // 회원 탈퇴 요청이 실패한 경우 메시지 출력
+		                    console.error(xhr.responseText);
+		                }
+		            });
+		        }
+		    });
+		});
+
 	</script>
 </html>
 
