@@ -14,151 +14,168 @@
 <body>
 	<!-- 헤더 -->
 	<th:block th:replace="~{fragments/header :: header}"></th:block>
+	<!-- 지역 정렬 -->
 	<div class="location-array">
+	<!-- 지역 정렬 박스 -->
 		<div class="container">
-	<button class="circle-button" onclick="showCity('서울')">서울</button>
-    <button class="circle-button" onclick="showCity('부산')">부산</button>
-    <button class="circle-button" onclick="showCity('인천')">인천</button>
-    <button class="circle-button" onclick="showCity('대구')">대구</button>
-    <button class="circle-button" onclick="showCity('대전')">대전</button>
-    <button class="circle-button" onclick="showCity('울산')">울산</button>
-    <button class="circle-button" onclick="showCity('광주')">광주</button>
-    <button class="circle-button" onclick="showCity('경기')">경기</button>
-    <button class="circle-button" onclick="showCity('강원')">강원</button>
-    <button class="circle-button" onclick="showCity('경상')">경상</button>
-    <button class="circle-button" onclick="showCity('전라')">전라</button>
-    <button class="circle-button" onclick="showCity('충청')">충청</button>
-    <button class="circle-button" onclick="showCity('제주')">제주</button>
+			<button class="circle-button" onclick="showCategory('서울')">서울</button>
+    		<button class="circle-button" onclick="showCategory('부산')">부산</button>
+    		<button class="circle-button" onclick="showCategory('인천')">인천</button>
+    		<button class="circle-button" onclick="showCategory('대구')">대구</button>
+    		<button class="circle-button" onclick="showCategory('대전')">대전</button>
+    		<button class="circle-button" onclick="showCategory('울산')">울산</button>
+    		<button class="circle-button" onclick="showCategory('광주')">광주</button>
+    		<button class="circle-button" onclick="showCategory('경기')">경기</button>
+    		<button class="circle-button" onclick="showCategory('강원')">강원</button>
+    		<button class="circle-button" onclick="showCategory('경상')">경상</button>
+    		<button class="circle-button" onclick="showCategory('전라')">전라</button>
+    		<button class="circle-button" onclick="showCategory('충청')">충청</button>
+    		<button class="circle-button" onclick="showCategory('제주')">제주</button>
+    	</div>
     </div>
-    </div>
+    <!-- 검색창 바탕 -->
 	<div class="search-background">
+		<!-- 검색 적는 박스 -->
 		<input class="search-write-box" type="text" placeholder="검색어를 입력해주세요.">
+		<!-- 검색 버튼 -->
 		<button class="search-button">검색</button>
 	</div>
+	<!-- 지역, 테마 필터 박스 -->
 	<div class="filter2-array">
+		<!-- 카테고리 필터 배경색 -->
 		<div class="filter2-header-background">
-			<!-- 데이터 필터 타입을 * 로 주게되면 전체가 출력됨 ㅇㅇ 까먹으면 맞는다 data-filter="*" -->
-			<input class="filter2-header-location" type='button' value='지역'
-				data-filter="location" /> <input class="filter2-header-theme" type='button' value='테마' onclick="showThemeOptions()" />
-		<div class="filter2-checkbox">		
-			<div id="themeOptions" style="display: none;">
-    <input type="checkbox" id="맛집탐방" name="맛집탐방" value="맛집탐방">
-    <label for="맛집탐방">맛집탐방</label>
-    <input type="checkbox" id="효도여행" name="효도여행" value="효도여행">
-    <label for="효도여행">효도여행</label>
-    <input type="checkbox" id="역사여행" name="역사여행" value="역사여행">
-    <label for="역사여행">역사여행</label>
-    <input type="checkbox" id="놀이공원" name="놀이공원" value="놀이공원">
-    <label for="놀이공원">놀이공원</label>
-    <input type="checkbox" id="가족" name="가족" value="가족">
-    <label for="가족">가족</label>
-    <input type="checkbox" id="데이트" name="데이트" value="데이트">
-    <label for="데이트">데이트</label>
-    <input type="checkbox" id="친구" name="친구" value="친구">
-    <label for="친구">친구</label>
-    <input type="checkbox" id="나홀로" name="나홀로" value="나홀로">
-    <label for="나홀로">나홀로</label>
-		</div>
+			<!-- 지역 선택 버튼 -->
+			<input class="filter2-header-location" type='button' value='지역'/>
+			<!-- 테마 선택 박스 --> 
+			<input class="filter2-header-theme" type='button' value='테마' onclick="showCategory('테마')" />
+			<!-- 체크박스 정렬 -->
+			<div class="filter2-checkbox">
+			<!-- 테마 출력 -->		
+			<div class="category" id="테마" style="display: none;">
+				<div class="filter-list1">
+    				<input type="checkbox" id="맛집탐방" name="맛집탐방" value="맛집탐방">
+        			<label for="맛집탐방">맛집탐방</label>
+        			<input type="checkbox" id="효도여행" name="효도여행" value="효도여행">
+        			<label for="효도여행">효도여행</label>
+        			<input type="checkbox" id="역사여행" name="역사여행" value="역사여행">
+        			<label for="역사여행">역사여행</label>
+        			<input type="checkbox" id="놀이공원" name="놀이공원" value="놀이공원">
+        			<label for="놀이공원">놀이공원</label>
+        			<input type="checkbox" id="가족" name="가족" value="가족">
+        			<label for="가족">가족</label>
+        			<input type="checkbox" id="데이트" name="데이트" value="데이트">
+        			<label for="데이트">데이트</label>
+        			<input type="checkbox" id="친구" name="친구" value="친구">
+        			<label for="친구">친구</label>
+        			<input type="checkbox" id="나홀로" name="나홀로" value="나홀로">
+        			<label for="나홀로">나홀로</label>
+				</div>
+			</div>
 		<div class="filter-list1">
-		<div class="city" id="서울" style="display: none;">
-    <input type="checkbox" id="강남구" name="강남구" value="강남구">
-    <label for="강남구">강남구</label>
-    <input type="checkbox" id="종로구" name="종로구" value="종로구">
-    <label for="종로구">종로구</label>
-    <input type="checkbox" id="용산구" name="용산구" value="용산구">
-    <label for="용산구">용산구</label>
-    <input type="checkbox" id="성동구" name="성동구" value="성동구">
-    <label for="성동구">성동구</label>
-    <input type="checkbox" id="광진구" name="광진구" value="광진구">
-    <label for="광진구">광진구</label>
-    <input type="checkbox" id="동대문구" name="동대문구" value="동대문구">
-    <label for="동대문구">동대문구</label>
-    <input type="checkbox" id="중랑구" name="중랑구" value="중랑구">
-    <label for="중랑구">중랑구</label>
-    <input type="checkbox" id="성북구" name="성북구" value="성북구">
-    <label for="성북구">성북구</label>
-    <input type="checkbox" id="노원구" name="노원구" value="노원구">
-    <label for="노원구">노원구</label>
-    <input type="checkbox" id="은평구" name="은평구" value="은평구">
-    <label for="은평구">은평구</label>
-    <input type="checkbox" id="서대문구" name="서대문구" value="서대문구">
-    <label for="서대문구">서대문구</label>
-    <input type="checkbox" id="마포구" name="마포구" value="마포구">
-    <label for="마포구">마포구</label>
-    <input type="checkbox" id="양천구" name="양천구" value="양천구">
-    <label for="양천구">양천구</label>
-    <input type="checkbox" id="강서구" name="강서구" value="강서구">
-    <label for="강서구">강서구</label>
-    <input type="checkbox" id="구로구" name="구로구" value="구로구">
-    <label for="구로구">구로구</label>
-    <input type="checkbox" id="금천구" name="금천구" value="금천구">
-    <label for="금천구">금천구</label>
-    <input type="checkbox" id="영등포구" name="영등포구" value="영등포구">
-    <label for="영등포구">영등포구</label>
-    <input type="checkbox" id="동작구" name="동작구" value="동작구">
-    <label for="동작구">동작구</label>
-    <input type="checkbox" id="관악구" name="관악구" value="관악구">
-    <label for="관악구">관악구</label>
-    <input type="checkbox" id="서초구" name="서초구" value="서초구">
-    <label for="서초구">서초구</label>
-    <input type="checkbox" id="송파구" name="송파구" value="송파구">
-    <label for="송파구">송파구</label>
-    <input type="checkbox" id="강동구" name="강동구" value="강동구">
-    <label for="강동구">강동구</label>
-</div>
+			<!-- 서울 -->
+			<div class="category" id="서울" style="display: none;">
+    			<input type="checkbox" id="강남구" name="강남구" value="강남구">
+    			<label for="강남구">강남구</label>
+    			<input type="checkbox" id="종로구" name="종로구" value="종로구">
+    			<label for="종로구">종로구</label>
+    			<input type="checkbox" id="용산구" name="용산구" value="용산구">
+    			<label for="용산구">용산구</label>
+    			<input type="checkbox" id="성동구" name="성동구" value="성동구">
+    			<label for="성동구">성동구</label>
+    			<input type="checkbox" id="광진구" name="광진구" value="광진구">
+    			<label for="광진구">광진구</label>
+    			<input type="checkbox" id="동대문구" name="동대문구" value="동대문구">
+    			<label for="동대문구">동대문구</label>
+    			<input type="checkbox" id="중랑구" name="중랑구" value="중랑구">
+    			<label for="중랑구">중랑구</label>
+    			<input type="checkbox" id="성북구" name="성북구" value="성북구">
+    			<label for="성북구">성북구</label>
+    			<input type="checkbox" id="노원구" name="노원구" value="노원구">
+    			<label for="노원구">노원구</label>
+    			<input type="checkbox" id="은평구" name="은평구" value="은평구">
+    			<label for="은평구">은평구</label>
+    			<input type="checkbox" id="서대문구" name="서대문구" value="서대문구">
+    			<label for="서대문구">서대문구</label>
+    			<input type="checkbox" id="마포구" name="마포구" value="마포구">
+    			<label for="마포구">마포구</label>
+    			<input type="checkbox" id="양천구" name="양천구" value="양천구">
+    			<label for="양천구">양천구</label>
+    			<input type="checkbox" id="강서구" name="강서구" value="강서구">
+    			<label for="강서구">강서구</label>
+    			<input type="checkbox" id="구로구" name="구로구" value="구로구">
+    			<label for="구로구">구로구</label>
+    			<input type="checkbox" id="금천구" name="금천구" value="금천구">
+    			<label for="금천구">금천구</label>
+    			<input type="checkbox" id="영등포구" name="영등포구" value="영등포구">
+    			<label for="영등포구">영등포구</label>
+    			<input type="checkbox" id="동작구" name="동작구" value="동작구">
+    			<label for="동작구">동작구</label>
+    			<input type="checkbox" id="관악구" name="관악구" value="관악구">
+    			<label for="관악구">관악구</label>
+    			<input type="checkbox" id="서초구" name="서초구" value="서초구">
+    			<label for="서초구">서초구</label>
+    			<input type="checkbox" id="송파구" name="송파구" value="송파구">
+    			<label for="송파구">송파구</label>
+    			<input type="checkbox" id="강동구" name="강동구" value="강동구">
+    			<label for="강동구">강동구</label>
+			</div>
+    	</div>
+    <!-- 부산 -->
+    <div class="category" id="부산" style="display: none;">
+		<div class="filter-list1">
+			<input type="checkbox" id="송파구" name="송파구" value="송파구">
+			<label for="송파구">송파구</label>
+			<input type="checkbox" id="강동구" name="강동구" value="강동구">
+			<label for="강동구">강동구</label>
+        </div>
     </div>
-    <div class="city" id="부산" style="display: none;">
-            <div class="filter-list1">
-            
-            </div>
-    </div>
-    <div class="city" id="인천" style="display: none;">
-            <div class="filter-list1">
-            
-            </div>
-    </div>
+    <!-- 인천 -->
+    <div class="category" id="인천" style="display: none;">
+		<div class="filter-list1">
+            <input type="checkbox" id="송파구" name="송파구" value="송파구">
+            <label for="송파구">송파구</label>
+            <input type="checkbox" id="강동구" name="강동구" value="강동구">
+            <label for="강동구">강동구</label>
 		</div>
-	</div>
-	</div>
+    </div>
+</div>
+</div>
+</div>
 	<!-- 장소 리스트를 반복하여 표시 -->
 	<div class="start-line"></div>
-	<th:block th:each="place : ${placeList}">
-		<div class="place-list-array">
-			<a th:href="@{'/placeDetail/' + ${place.p_id}}"> <span
-				th:text="${place.p_name}"></span><br/> 지역 : <span
-				th:text="${place.p_location}"></span><br/> 별점: <span
-				th:text="${place.p_stScore}"></span><br/> <img
-				th:src="@{'/upLoad/' + ${place.p_iname}}"/>
-			</a>
-		</div>
-	</th:block>
+		<th:block th:each="place : ${placeList}">
+			<div class="place-list-array">
+				<a th:href="@{'/placeDetail/' + ${place.p_id}}"> <span
+					th:text="${place.p_name}"></span><br/> 지역 : <span
+					th:text="${place.p_location}"></span><br/> 별점: <span
+					th:text="${place.p_stScore}"></span><br/> <img
+					th:src="@{'/upLoad/' + ${place.p_iname}}"/>
+				</a>
+			</div>
+		</th:block>
+	<!-- 장바구니 위치 -->
 	<div class="select-list-array">
+		<!-- 장바구니 헤더 -->
 		<div class="select-list-header">선택하신 리스트 입니다.</div>
-		<div class="select-list-footer">
-			<a class="route" href="mapPaths">경로 확인</a>
+			<!-- 장바구니 푸터 -->
+			<div class="select-list-footer">
+				<!-- 경로 확인 -->
+				<a class="route" href="mapPaths">경로 확인</a>
+			</div>
 		</div>
-	</div>
 	<!-- 푸터 -->
 	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 	<script type="text/javascript">
-	function showCity(city) {
-        var cities = document.getElementsByClassName("city");
+		function showCategory(category) {
+        	var categorys = document.getElementsByClassName("category");
 
-        for (var i = 0; i < cities.length; i++) {
-            cities[i].style.display = "none";
+        
+        
+        	for (var i = 0; i < categorys.length; i++) {
+        		categorys[i].style.display = "none";
         }
 
-        document.getElementById(city).style.display = "block";
-
-        // 테마 옵션을 숨김
-        document.getElementById("themeOptions").style.display = "none";
-    }
-
-    function showThemeOptions() {
-        var themeOptions = document.getElementById("themeOptions");
-
-        // 테마 옵션을 토글
-        themeOptions.style.display = themeOptions.style.display === "block" ? "none" : "block";
+        	document.getElementById(category).style.display = "block";
     }
 	</script>
 </body>
