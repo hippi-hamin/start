@@ -1,106 +1,153 @@
 @charset "UTF-8";
 
 * {
-	box-sizing: border-box;
+   box-sizing: border-box;
 }
+
 html {
    height: 100%;
 }
 
 body {
    margin: 0;
+   height: 105%;
    display: flex;
    flex-direction: column;
 }
-.center-background {
-	background-color: gray;
-	text-align: center;
-	height: 100%;
-	width: 50%;
-	position: fixed; /* 고정 위치 설정 */
-	top: 50%; /* 화면 상단으로부터의 거리를 50%로 설정 */
-	left: 50%; /* 화면 좌측으로부터의 거리를 50%로 설정 */
-	transform: translate(-50%, -50%); /* 요소를 수평 및 수직으로 중앙으로 이동 */
-	z-index: -1;
+/* 머릿글 영문 텍스트 */
+.center-eng-text {
+   text-align: center;
+   color: black;
+   position: relative;
+   top: 5%; /* 부모 요소 상단에서의 거리를 50%로 설정 */
+   font-size: 24px;
+   font-weight: bold;
+}
+/* 머릿글 한글 텍스트 */
+.center-ko-text {
+   text-align: center;
+   color: black;
+   position: relative;
+   top: 7%; /* 부모 요소 상단에서의 거리를 50%로 설정 */
+   font-size: 16px;
+}
+/* 텍스트 종료 라인 */
+.write-line {
+   width: 15%;
+   border-top: 1px solid gray;
+   margin: 0 auto;
+   position: relative;
+   top: 10%;
 }
 
-.center-text {
-	text-align: center;
-	color: white;
-	font-size: 50px;
-	font-weight: bold;
-	position: relative;
-	top: 10%;
-}
-
-.container {
-	position: relative;
-	top: 15%;
-}
-
-.write-input {
-	width: 80%;
-	height: 30%;
-	margin-top: 5%;
-}
-
+/* 이미지 선택 창 */
 .img-file {
-	width: 50%;
-	height: 30px;
-	background-color: white;
-	border: 1px solid blue;
+   position: absolute;
+   top: 35%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   width: 25%;
+   height: 30px;
+   border-top: none;
+   border-left: none;
+   border-right: none;
+   border-bottom: 1px solid gray;
+   color: black;
+   font-size: 14px;
 }
-
+/* 이미지 선택 버튼 */
 input[type=file]::file-selector-button {
-	width: 35%;
-	height: 35px;
-	color: white;
-	background: gray;
-	border: 2px solid white;
-	border-radius: 2px;
-	cursor: pointer;
+   width: 35%;
+   height: 30px;
+   border: 1px solid gray;
+   border-radius: 2px;
+   cursor: pointer;
+   background-color: black;
+   color: white;
+   font-size: 14px;
 }
-
+/* 지역 선택 버튼 */
 .location-button {
-	background-color: white;
-	font-weight: bold;
-	width: 25%;
-	height: 35px;
-	font-size: 14px;
-	margin-top: 5%;
-	text-align: center;
+   position: absolute;
+   top: 45%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   width: 25%;
+   height: 30px;
+   border-top: none;
+   border-left: none;
+   border-right: none;
+   border-bottom: 1px solid gray;
+   color: black;
+   font-size: 14px;
 }
-
-.place-name-write {
-	background-color: white;
-	font-weight: bold;
-	width: 25%;
-	height: 35px;
-	font-size: 14px;
-	margin-top: 5%;
-	text-align: center;
-	}
+/* 테마 선택 버튼 */
 #thema {
-	background-color: white;
-	font-weight: bold;
-	width: 50%;
-	height: 35px;
-	font-size: 14px;
-	margin-top: 5%;
-	text-align: center;
+   position: absolute; 
+   top: 55%;
+    left: 50%; 
+    transform: translate(-50%, -50%);    
+    width: 25%;
+    height: 30px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid gray;
+    color: black;
+    font-size: 14px;
 }
-
-.btn-array {
-	position: relative;
-	margin-top: 5%;
+/* 장소명 적는 창 */
+.place-name-write {
+   position: absolute; 
+   top: 65%;
+    left: 50%; 
+    transform: translate(-50%, -50%);    
+    width: 25%;
+    height: 30px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid gray;
+    color: black;
+    font-size: 14px;
+}
+/* 상세 정보 창 */
+.write-input {
+   position: absolute;
+   margin: 0 auto;
+   top: 95%;
+    left: 50%; 
+    transform: translate(-50%, -50%);    
+    width: 25%;
+    height: 25%;
 }
 /* 업로드 버튼 */
 .btn-upLoad {
-	background-color: white;
-	font-weight: bold;
-	width: 25%;
-	height: 35px;
-	font-size: 14px;
-	margin-top: 5%;
-	text-align: center;
+   position: absolute;
+   width: 25%;
+   height: 30px;
+   border: 1px solid gray;
+   border-radius: 2px;
+   cursor: pointer;
+   background-color: black;
+   color: white;
+   font-size: 14px;
+   top: 115%;
+    left: 50%; 
+    transform: translate(-50%, -50%);    
+}
+/* 주소 등록 창 */
+.address-write {
+   position: absolute; 
+   top: 75%;
+    left: 50%; 
+    transform: translate(-50%, -50%);    
+    width: 25%;
+    height: 30px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid gray;
+    color: black;
+    font-size: 14px;
 }

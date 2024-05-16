@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -63,11 +64,11 @@
    </div>
    <!-- 조회수, 별점 위치 -->
    <div class="views-stscore-view">
-      <div class="views">
-         조회수 : <span th:text="${place.p_views}"></span>
-      </div>
-      <!-- 좋아요 -->
-      <div class="st-score">
+     <div class="views" th:if="${place != null}">
+   		 조회수 : <span th:text="${place.p_views}"></span>
+	</div>
+	<!-- 좋아요 -->
+     <div class="st-score" th:if="${place != null}">
          별점 : <span th:text="${place.p_stScore}"></span>
       </div>
    </div>
@@ -75,15 +76,9 @@
    <div class="arrow-box">
       <img class="arrow-box-motion" src="/images/scrollArrow.png" alt="">
    </div>
-   <!-- 수정 버튼 -->
-<!-- <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-   <button>수정</button>
-</div>
-
-삭제 버튼
-<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-   <button>삭제</button>
-</div>
-    -->
+	<th:block th:if="${session.signedInUserEmail == 'ajm0111@naver.com'}">
+		<a th:href="@{'/updatePlace/' + ${place.p_id}}">수정</a>
+	</th:block>
 </body>
+
 </html>

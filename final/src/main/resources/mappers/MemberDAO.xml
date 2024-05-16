@@ -51,5 +51,9 @@
 		m_phone=#{m_phone}
 		WHERE m_email=#{m_email}
 	</update>
+	<select id="getUserInfo" parameterType="Integer">
+		SELECT * FROM membertbl
+		WHERE m_id=#{m_id}
+	</select>
 
 </mapper>

@@ -1,78 +1,107 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<meta http-equiv="Cache-Control"
+	content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" th:href="@{/css/header.css}">
-<link rel="stylesheet" th:href="@{/css/index.css}">
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-	crossorigin="anonymous"></script>
+<link rel="stylesheet" th:href="@{/css/mypage.css}">
+<link rel="stylesheet" th:href="@{/css/footer.css}">
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
-	<script th:inline="javascript">
-	    $(function() {
-	        var m = /*[[${msg}]]*/ ''; // 변수를 문자열로 변환하고 큰 따옴표로 둘러싸지 않음
-	        if (m !== null && m !== '') { // null이나 빈 문자열이 아닌지 확인
-	            alert(m);
-	        }
-	    });
-	</script> 
 
+<script th:inline="javascript">
+	$(function() {
+		var m = /*[[${msg}]]*/''; // 변수를 문자열로 변환하고 큰 따옴표로 둘러싸지 않음
+		if (m !== null && m !== '') { // null이나 빈 문자열이 아닌지 확인
+			alert(m);
+		}
+	});
+</script>
 <title>Mypage</title>
 </head>
 <body>
+	<!-- 헤더 -->
 	<th:block th:replace="~{fragments/header :: header}"></th:block>
-	<label for="username">사용자 이름:</label>
-	<input type="text" id="username" name="m_name" th:value="${currentUser.m_name}"> <br>
-	<label for="email">이메일:</label>
-	<input type="text" id="email" name="m_email" th:value="${currentUser.m_email}" readonly> <br>
-	<label for="gender">성별:</label>
-	<input type="text" id="gender" name="m_gender" th:value="${currentUser.m_gender}"readonly><br> 
-	<label for="age">나이:</label>
-	<input type="text" id="age" name="m_age" th:value="${currentUser.m_age}"readonly> <br>
-	<label for="phone">전화번호:</label>
-	<input type="text" id="phone" name="m_phone" th:value="${currentUser.m_phone}"> <br>
-	<label for="point">포인트:</label>
-	<input type="text" id="point" name="m_point" th:value="${currentUser.m_point}" readonly> <br>
+	<!-- 사용자 이미지 -->
+	<img class="user-img" alt="" src="/images/user.png">
+	<!-- 내 정보 텍스트 -->
+	<div class="center-eng-text">M y P a g e</div>
+	<div class="center-ko-text">내 정보</div>
+	<div class="write-line"></div>
+	<form id="userInfoForm" action="/updateUserInfo" method="post">
+	
+	<!-- 사용자 이름 -->
+	<div class="name-text">사용자 이름</div>
+	<input class="name-write-box" type="text" id="username" name="m_name"
+		th:value="${currentUser.m_name}">
+	<!-- 이메일 -->
+	<div class="email-text">이메일</div>
+	<input class="email-write-box" type="text" id="email" name="m_email"
+		th:value="${currentUser.m_email}" readonly>
+	<!-- 성별 -->
+	<div class="gender-text">성별</div>
+	<input class="gender-write-box" type="text" id="gender" name="m_gender"
+		th:value="${currentUser.m_gender}" readonly>
+	<!-- 나이 -->
+	<div class="year-text">나이</div>
+	<input class="year-write-box" type="text" id="age" name="m_age"
+		th:value="${currentUser.m_age}" readonly>
+	<!-- 전화번호 -->
+	<div class="phone-text">전화번호</div>
+	<input class="phone-write-box" type="text" id="phone" name="m_phone"
+		th:value="${currentUser.m_phone}">
+	<!-- 포인트 -->
+	<div class="point-text">포인트</div>
+	<input class="point-write-box" type="text" id="point" name="m_point"
+		th:value="${currentUser.m_point} + point" readonly>
 	<!-- 기타 사용자 정보를 표시할 input 요소 추가 -->
-	<button type="button" id="updateButton">정보 변경</button>
-	<script>
-	    // 폼 서브밋 이벤트 핸들러
-	    document.getElementById('updateButton').addEventListener('click', function() {
-	        document.getElementById('userInfoForm').submit(); // 폼 서브밋
-	    });
-	</script>
+	<button class="center-button" type="button" id="updateButton">정보 변경</button>
+	<!-- 푸터 -->
+	</form>
+	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 
-</body>
-<script>
-    $(document).ready(function() {
-        $('#updateButton').click(function(event) {
-            // 폼 데이터 구성
-            var formData = {
-                m_name: $('#username').val(),
-                m_phone: $('#phone').val()
-            };
-            
-            $.ajax({
-                type: 'POST',
-                url: '/updateUserInfo',
-                data: formData, // application/x-www-form-urlencoded 형식의 데이터
-                success: function(response) {
-                    // 업데이트 성공 시 메시지 출력
-                    alert('사용자 정보가 성공적으로 업데이트되었습니다.');
-                    // 변경된 정보를 화면에 반영
-                    $('#username').val(formData.m_name); // 클라이언트가 보낸 데이터로 업데이트
-                    $('#phone').val(formData.m_phone); // 클라이언트가 보낸 데이터로 업데이트
-                },
-                error: function(xhr, status, error) {
-                    // 업데이트 실패 시 에러 메시지 출력
-                    alert('사용자 정보 업데이트에 실패했습니다. 다시 시도해주세요.');
-                    console.error(xhr.responseText);
-                }
-            });
+	<script>
+		$(document).ready(function() {
+			$('#updateButton').click(function(event) {
+				// 폼 데이터 구성
+				var formData = {
+					m_name : $('#username').val(),
+					m_phone : $('#phone').val()
+				};
+
+				// 중복된 document.ready 함수 제거
+				// $(document).ready(function() { ...
+				// });
+
+				$.ajax({
+				    type : 'POST',
+				    url : '/updateUserInfo',
+				    data : formData,
+				    success : function(response) {
+				        alert('사용자 정보가 성공적으로 업데이트되었습니다.');
+				        // 새로운 사용자 정보를 서버에서 가져옴
+				        $.get('/getUserInfo', function(userInfo) {
+				            // 새로운 정보로 화면을 업데이트
+				            $('#username').val(userInfo.m_name);
+				            $('#phone').val(userInfo.m_phone);
+				            
+				            
+				        });
+				    },
+				    error : function(xhr, status, error) {
+				        alert('사용자 정보 업데이트에 실패했습니다. 다시 시도해주세요.');
+				        console.error(xhr.responseText);
+				    }
+				});
+
+			});
 		});
-    });
-</script>
+	</script>
 </html>
 
