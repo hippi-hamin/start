@@ -10,7 +10,6 @@
             <!-- 로그인 상태일 때 -->
             <th:block th:if="${session.signedInUserEmail != null}">
                 <!-- 로그인한 사용자를 위한 다른 UI 표시 -->
-               
                 <a href="/mypage">MyPage</a>
                 <a href="/logout">LogOut</a>
                 <!-- 세션에 저장된 사용자 정보가 "admin@admin"인 경우 -->

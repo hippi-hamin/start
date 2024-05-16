@@ -18,9 +18,44 @@ body {
 .location-array {
 	position: absolute;
 	top: 7%;
-	border: 1px solid gray;
 	height: 17%;
+	width: 96%;
+	display: flex;
+	justify-content: center;
+	margin-right: 2%;
+	margin-left: 2%;
+}
+
+.container {
 	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-right: 2%;
+	margin-left: 2%;
+}
+
+.circle-button {
+	width: 7%;
+	height: 70%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #fff;
+	border-radius: 50%;
+	border: 2px solid #3498db;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+.circle-button:active {
+	background-color: #3498db;
+	color: #fff;
+}
+
+.circle-button img {
+	width: 100px;
+	height: 100px;
 }
 
 .filter2-checkbox {
@@ -87,23 +122,21 @@ body {
 }
 
 .filter2-header-location {
-<<<<<<< HEAD
-=======
 	background-color: black;
->>>>>>> f0c075ff9e5f4ef672e80e86c44920cf5b3ded6d
 	color: white;
 	font-size: 14px;
 	position: relative;
+	border: none;
+	cursor: pointer;
 }
 
 .filter2-header-theme {
-<<<<<<< HEAD
-=======
 	background-color: black;
->>>>>>> f0c075ff9e5f4ef672e80e86c44920cf5b3ded6d
 	color: white;
 	font-size: 14px;
 	position: relative;
+	border: none;
+	cursor: pointer; 
 }
 
 .select-list-array {
@@ -159,4 +192,47 @@ body {
 	position: absolute;
 	top: 25%;
 	left: 5%;
+}
+
+.categoryFilter {
+	
+}
+
+.categoryFilter.invisible {
+	display: none;
+}
+
+.LcategoryFilter {
+	
+}
+
+.LcategoryFilter.invisible {
+	display: none;
+}
+
+.filter-list1 {
+    display: flex;
+    align-items: center; /* 자식 요소들을 수직 가운데 정렬 */
+    margin-bottom: 15px; /* 라벨과 라벨, 체크박스와 체크박스 사이의 간격을 늘립니다. */
+    flex-wrap: wrap; /* 요소들이 한 줄을 넘어가면 줄바꿈되도록 함 */
+    width: 100%; /* 부모 요소에 따라 전체 너비를 차지하도록 함 */
+    box-sizing: border-box; /* 내부 여백과 테두리를 포함한 요소의 전체 크기를 계산하도록 함 */
+}
+
+.filter-list1 label {
+    margin-right: 10px; /* 라벨 오른쪽 간격을 늘립니다. */
+    font-size: 14px;
+}
+
+.filter-list1 input[type="checkbox"] {
+    margin-right: 10px; /* 체크박스 오른쪽 간격을 늘립니다. */
+}
+
+.filter2-checkbox label {
+    margin-right: 10px; /* 라벨 오른쪽 간격을 늘립니다. */
+    font-size: 14px;
+}
+
+.filter2-checkbox input[type="checkbox"] {
+    margin-right: 10px; /* 체크박스 오른쪽 간격을 늘립니다. */
 }
