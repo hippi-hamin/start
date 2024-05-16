@@ -1,19 +1,41 @@
-<!-- placeList.html -->
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-<meta charset="UTF-8">
-<title>장소 리스트</title>
-<link rel="stylesheet" th:href="@{/css/placeList.css}">
-<link rel="stylesheet" th:href="@{/css/header.css}">
-<link rel="stylesheet" th:href="@{/css/footer.css}">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<meta charset="UTF-8">
+	<title>장소 리스트</title>
+	<link rel="stylesheet" th:href="@{/css/placeList.css}">
+	<link rel="stylesheet" th:href="@{/css/header.css}">
+	<link rel="stylesheet" th:href="@{/css/footer.css}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+	function addToCart(p_id) {
+    var id = parseInt(p_id, 10); // 정수 변환
+    console.log(id); // Debug: 변환된 값 확인
+
+    if (!Number.isInteger(id)) {
+        alert("잘못된 상품 ID입니다.");
+        return;
+    }
+
+    $.post("/addPlaceToCart", { p_id: id })
+        .done(function (response) {
+            alert("장소가 장바구니에 추가되었습니다.");
+        })
+        .fail(function () {
+            alert("장소를 추가하는데 문제가 발생했습니다.");
+        });
+}
+
+		/*]]>*/
+	</script>
 </head>
+
 <body>
 	<!-- 헤더 -->
 	<th:block th:replace="~{fragments/header :: header}"></th:block>
+
 	<div class="location-array"></div>
 	<div class="search-background">
 		<input class="search-write-box" type="text" placeholder="검색어를 입력해주세요.">
@@ -61,6 +83,7 @@
 			<a class="route" href="mapPaths">경로 확인</a>
 		</div>
 	</div>
+
 	<!-- 푸터 -->
 	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 	<script type="text/javascript">
@@ -111,4 +134,5 @@
 		}
 	</script>
 </body>
+
 </html>
