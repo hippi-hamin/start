@@ -44,8 +44,14 @@ public class PlaceController {
 			@RequestParam(value = "p_location", required = false, defaultValue = "defaultLocation") String p_location,
 			@RequestParam(value = "p_thema", required = false, defaultValue = "defaultThema") String p_thema) {
 		log.info("placeList()");
-		List<PlaceDTO> placeList = placeService.getPlaceList(p_location, p_thema);
-		model.addAttribute("placeList", placeList);
+		if(p_location.equals("defaultLocation") && p_thema.equals("defaultThema")) {
+			List<PlaceDTO> placeList = placeService.getPlaceList();
+			model.addAttribute("placeList", placeList);
+		} else {
+			List<PlaceDTO> placeList = placeService.getPlaceList(p_location, p_thema);
+			model.addAttribute("placeList", placeList);
+		}
+		
 		return "placeList";
 	}
 

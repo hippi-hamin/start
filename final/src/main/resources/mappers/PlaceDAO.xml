@@ -14,11 +14,24 @@
 		#{p_thema}, #{p_iname}, #{p_views}, #{p_stScore}, #{p_price} , #{x}, #{y})
 	</insert>
 	<select id="getPlaceList" resultType="place">
-		SELECT * FROM
-		place.placetbl
-
-
-	</select>
+    SELECT * FROM place.placetbl
+    <where>
+        <if test="p_location != null and p_location != 'defaultLocation'">
+            p_location = #{p_location}
+        </if>
+        <if test="p_thema != null and p_thema != 'defaultThema'">
+            <if test="p_location != null and p_location != 'defaultLocation'">
+                AND
+            </if>
+            p_thema = #{p_thema}
+        </if>
+        <!-- 추가된 부분: 파라미터가 null이면 모든 레코드 반환 -->
+        <if test="p_location == null and p_thema == null">
+            <!-- 아무런 조건 없이 모든 레코드를 반환하는 SQL -->
+            1=1
+        </if>
+    </where>
+</select>
 	<select id="findById" parameterType="int" resultType="place">
 		SELECT *
 		FROM place.placetbl
