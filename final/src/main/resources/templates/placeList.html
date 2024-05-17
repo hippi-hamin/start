@@ -1,40 +1,24 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
 <head>
-	<meta charset="UTF-8">
-	<title>장소 리스트</title>
-	<link rel="stylesheet" th:href="@{/css/placeList.css}">
-	<link rel="stylesheet" th:href="@{/css/header.css}">
-	<link rel="stylesheet" th:href="@{/css/footer.css}">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script th:inline="javascript">
-		/*<![CDATA[*/
-	function addToCart(p_id) {
-    var id = parseInt(p_id, 10); // 정수 변환
-    console.log(id); // Debug: 변환된 값 확인
-
-    if (!Number.isInteger(id)) {
-        alert("잘못된 상품 ID입니다.");
-        return;
-    }
-
-    $.post("/addPlaceToCart", { p_id: id })
-        .done(function (response) {
-            alert("장소가 장바구니에 추가되었습니다.");
-        })
-        .fail(function () {
-            alert("장소를 추가하는데 문제가 발생했습니다.");
-        });
-}
-
-		/*]]>*/
-	</script>
+    <meta charset="UTF-8">
+    <title>장소 리스트</title>
+    <link rel="stylesheet" th:href="@{/css/placeList.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3926d3c8dcc51df1b147cee756c64e7&libraries=services"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
 </head>
-
 <body>
-	<!-- 헤더 -->
-	<th:block th:replace="~{fragments/header :: header}"></th:block>
+    <!-- 헤더 -->
+    <th:block th:replace="~{fragments/header :: header}"></th:block>
 	<!-- 지역 정렬 -->
 	<div class="location-array">
 	<!-- 지역 정렬 박스 -->
@@ -54,7 +38,7 @@
     		<button class="circle-button" onclick="showCategory('제주')">제주</button>
     	</div>
     </div>
-	<div class="search-background">
+    <div class="search-background">
 		
        	 	<!-- 검색 적는 박스 -->
         	<input class="search-write-box" type="text" id="search-query" name="query" placeholder="검색어를 입력해주세요." th:value="${query}">
@@ -163,40 +147,261 @@
 </div>
 </div>
 </div>
-	<!-- 장소 리스트를 반복하여 표시 -->
-	<div class="start-line"></div>
-		<th:block th:each="place : ${placeList}">
-			<div class="place-list-array">
-				<a th:href="@{'/placeDetail/' + ${place.p_id}}"> <span
-					th:text="${place.p_name}"></span><br/> 지역 : <span
-					th:text="${place.p_location}"></span><br/> 별점: <span
-					th:text="${place.p_stScore}"></span><br/> <img
-					th:src="@{'/getImage/' + ${place.p_iname}}" width="150px"/>
-				</a>
-			</div>
-		</th:block>
-	<th:block th:each="place : ${placeList}">
-		<div class="place-list-array">
-			<a th:href="@{'/placeDetail/' + ${place.p_id}}"> 
-				<span th:text="${place.p_name}"></span><br /> 
-				지역 : <span th:text="${place.p_location}"></span><br /> 
-				별점: <span th:text="${place.p_stScore}"></span><br /> 
-				<img th:src="@{'/getImage/' + ${place.p_iname}}" width="150px"/>
-			</a>
-		</div>
-	</th:block>
-	<div class="select-list-array">
-		<!-- 장바구니 헤더 -->
-		<div class="select-list-header">선택하신 리스트 입니다.</div>
-			<!-- 장바구니 푸터 -->
-			<div class="select-list-footer">
-				<!-- 경로 확인 -->
-				<a class="route" href="mapPaths">경로 확인</a>
-			</div>
-		</div>
-	<!-- 푸터 -->
-	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
-	<script type="text/javascript">
+    <!-- 장소 리스트를 반복하여 표시 -->
+    <ul>
+        <th:block th:each="place : ${placeList}">
+            <li>
+                <a th:href="@{'/placeDetail/' + ${place.p_id}}">
+                    <span th:text="${place.p_name}"></span><br />
+                    지역 : <span th:text="${place.p_location}"></span><br />
+                    별점: <span th:text="${place.p_stScore}"></span><br />
+                    <img th:src="@{'/upLoad/' + ${place.p_iname}}" alt="Image of ${place.p_name}" />
+                </a>
+                <button type="button" th:attr="data-pid=${place.p_id}"
+                    onclick="addToCart(this.getAttribute('data-pid'))">장바구니에 추가</button>
+                <br />
+            </li>
+        </th:block>
+    </ul>
+    <div style="display: flex;">
+        <div style="flex: 1;">
+            <!-- 장소 리스트 -->
+            <ul>
+                <!-- 기존 리스트 아이템 -->
+            </ul>
+        </div>
+        <div id="cartSection" style="position: fixed; right: 20px; top: 70px; width: 300px;">
+            <!-- 장바구니 섹션 -->
+            <h1>Your Cart</h1>
+            <h2>출발지</h2>
+            <ul id="startPoint" class="sortable">
+                <!-- 출발지 아이템이 동적으로 추가됩니다 -->
+            </ul>
+            <h2>경유지</h2>
+            <ul id="wayPoints" class="sortable">
+                <!-- 경유지 아이템이 동적으로 추가됩니다 -->
+            </ul>
+            <h2>목적지</h2>
+            <ul id="endPoint" class="sortable">
+                <!-- 목적지 아이템이 동적으로 추가됩니다 -->
+            </ul>
+            <button id="clearCartButton">장바구니 비우기</button>
+            <button id="routeButton">길찾기</button>
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function addToCart(p_id) {
+            var id = parseInt(p_id, 10);
+            if (!Number.isInteger(id)) {
+                alert("잘못된 상품 ID입니다.");
+                return;
+            }
+
+            $.post("/addPlaceToCart", { p_id: id })
+                .done(function () {
+                    alert("장소가 장바구니에 추가되었습니다.");
+                    updateCart(); // 장바구니 업데이트
+                })
+                .fail(function () {
+                    alert("장소를 추가하는데 문제가 발생했습니다.");
+                });
+        }
+
+        function removeFromCart(pid) {
+            $.post("/removeItemFromCart", { p_id: pid })
+                .done(function () {
+                    alert("상품이 장바구니에서 제거되었습니다.");
+                    updateCart(); // 장바구니 UI 업데이트
+                })
+                .fail(function () {
+                    alert("상품을 제거하는데 문제가 발생했습니다.");
+                });
+        }
+
+        function updateCart() {
+            $.get("/showCart")
+                .done(function (response) {
+                    // 기존 내용을 지웁니다.
+                    $("#startPoint").empty();
+                    $("#wayPoints").empty();
+                    $("#endPoint").empty();
+
+                    if (response.length > 0) {
+                        // 출발지 추가
+                        $("#startPoint").append(`<li>${response[0].p_name} <button type="button" class="removeItem" data-pid="${response[0].p_id}">삭제</button></li>`);
+                        // 경유지 추가
+                        for (var i = 1; i < response.length - 1; i++) {
+                            $("#wayPoints").append(`<li>${response[i].p_name} <button type="button" class="removeItem" data-pid="${response[i].p_id}">삭제</button></li>`);
+                        }
+                        // 목적지 추가
+                        $("#endPoint").append(`<li>${response[response.length - 1].p_name} <button type="button" class="removeItem" data-pid="${response[response.length - 1].p_id}">삭제</button></li>`);
+                    }
+
+                    updateMap(response); // 지도 업데이트
+                });
+        }
+
+        function initMap() {
+            var mapContainer = document.getElementById('map'),
+                mapOption = {
+                    center: new kakao.maps.LatLng(37.5665, 126.9780), // 초기 지도의 중심 좌표
+                    level: 3 // 초기 지도의 확대 레벨
+                };
+
+            var map = new kakao.maps.Map(mapContainer, mapOption);
+            var bounds = new kakao.maps.LatLngBounds();
+            return { map, bounds };
+        }
+
+        function updateMap(locations) {
+            var { map, bounds } = initMap(); // 초기 지도를 설정
+
+            if (locations.length === 0) {
+                return;
+            }
+
+            // 출발지, 경유지, 목적지에만 마커 추가
+            if (locations.length > 0) {
+                var fromMarkerPosition = new kakao.maps.LatLng(locations[0].y, locations[0].x);
+                var fromMarker = new kakao.maps.Marker({
+                    position: fromMarkerPosition,
+                    title: '출발지'
+                });
+                fromMarker.setMap(map);
+                bounds.extend(fromMarkerPosition);
+            }
+
+            if (locations.length > 2) {
+                for (var i = 1; i < locations.length - 1; i++) {
+                    var wayMarkerPosition = new kakao.maps.LatLng(locations[i].y, locations[i].x);
+                    var wayMarker = new kakao.maps.Marker({
+                        position: wayMarkerPosition,
+                        title: '경유지'
+                    });
+                    wayMarker.setMap(map);
+                    bounds.extend(wayMarkerPosition);
+                }
+            }
+
+            if (locations.length > 1) {
+                var toMarkerPosition = new kakao.maps.LatLng(locations[locations.length - 1].y, locations[locations.length - 1].x);
+                var toMarker = new kakao.maps.Marker({
+                    position: toMarkerPosition,
+                    title: '목적지'
+                });
+                toMarker.setMap(map);
+                bounds.extend(toMarkerPosition);
+            }
+
+            // 선을 구성하는 좌표 배열입니다.
+            var linePath = [];
+            if (Array.isArray(locations) && locations.length > 0) {
+                locations.forEach(point => {
+                    linePath.push(new kakao.maps.LatLng(point.y, point.x));
+                });
+
+                // 디버깅 로그 추가
+                console.log('Line Path:', linePath);
+
+                // 선을 생성합니다.
+                var polyline = new kakao.maps.Polyline({
+                    path: linePath,
+                    strokeWeight: 5,
+                    strokeColor: 'blue',
+                    strokeOpacity: 0.7,
+                    strokeStyle: 'solid'
+                });
+
+                // 지도에 선을 표시합니다.
+                polyline.setMap(map);
+            }
+
+            map.setBounds(bounds); // 지도의 경계를 마커가 모두 보이도록 설정합니다
+        }
+ function startRoute() {
+    $.get("/showCart")
+        .done(function (response) {
+            if (response.length > 0) {
+                var fromPoint = response[0];
+                var toPoint = response[response.length - 1];
+                var wayPoints = response.slice(1, response.length - 1);
+               var params = {
+                    fromX: fromPoint.x,
+                    fromY: fromPoint.y,
+                    toX: toPoint.x,
+                    toY: toPoint.y,
+                };
+
+                if (wayPoints.length > 0) {
+                    params.wayPoints = wayPoints.map(point => `${point.x},${point.y}`).join('|');
+                }
+
+                var paramString = $.param(params);
+                window.location.href = "/mapPaths?" + paramString;
+            } else {
+                alert("장바구니에 장소가 없습니다.");
+            }
+        });
+}
+
+        $(document).ready(function () {
+            updateCart(); // 페이지 로드 시 장바구니 및 지도 업데이트
+
+            $('#clearCartButton').click(function () {
+                $.post("/clearCart")
+                    .done(function (response) {
+                        alert(response); // 성공 메시지 표시
+                        updateCart(); // 장바구니 UI 업데이트
+                    })
+                    .fail(function () {
+                        alert('장바구니를 비우는 데 실패했습니다.');
+                    });
+            });
+
+            $('#routeButton').click(function () {
+                console.log("길찾기 버튼 클릭됨"); // 디버깅 로그
+                startRoute(); // 길찾기 기능 실행
+            });
+
+            // 개별 삭제 버튼 클릭 시
+            $(document).on('click', '.removeItem', function () {
+                var pid = $(this).data('pid');
+                removeFromCart(pid); // 해당 상품을 장바구니에서 제거
+            });
+
+            // 드래그 앤 드롭을 설정합니다.
+            new Sortable(document.getElementById('startPoint'), {
+                group: 'shared',
+                draggable: 'li',
+                onEnd: function (evt) {
+                    // 출발지가 변경되면 처리할 코드
+                }
+            });
+
+            new Sortable(document.getElementById('wayPoints'), {
+                group: 'shared',
+                draggable: 'li',
+                onEnd: function (evt) {
+                    // 경유지가 변경되면 처리할 코드
+                }
+            });
+
+            new Sortable(document.getElementById('endPoint'), {
+                group: 'shared',
+                draggable: 'li',
+                onEnd: function (evt) {
+                    // 목적지가 변경되면 처리할 코드
+                }
+            });
+        });
+        
+        
 		function showCategory(category) {
 			var categorys = document.getElementsByClassName("category");
 
@@ -233,33 +438,11 @@
 				}
 			});
 		}
+        /*]]>*/
+    </script>
+<body>
+	
+	
 
-		function updatePlaceList(data) {
-			var placeList = $("#place-list");
-			placeList.empty();
-			if (data.length > 0) {
-				data
-						.forEach(function(place) {
-							var placeHtml = '<div class="place-list-array">'
-									+ '<a href="/placeDetail/' + place.id + '">'
-									+ '<span>'
-									+ place.name
-									+ '</span><br />'
-									+ '지역 : <span>'
-									+ place.location
-									+ '</span><br />'
-									+ '별점: <span>'
-									+ place.rating
-									+ '</span><br />'
-									+ '<img src="/upLoad/' + place.imageName + '" width="150px" />'
-									+ '</a>' + '</div>';
-							placeList.append(placeHtml);
-						});
-			} else {
-				placeList.append('<div>검색 결과가 없습니다.</div>');
-			}
-		}
-	</script>
 </body>
-
 </html>
