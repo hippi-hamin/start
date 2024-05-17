@@ -21,12 +21,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PlaceService {
 
-	@Autowired
-	private PlaceDAO placeDAO;
-	@Autowired
-	private PlatformService platformService;
+    @Autowired
+    private PlaceDAO placeDAO;
+    @Autowired
+    private PlatformService platformService;
 
 	public String upLoadPlaceProc(List<MultipartFile> files, HttpSession session, PlaceDTO placeDTO,
+
             RedirectAttributes rttr) {
         String view = null;
         String msg = null;
@@ -34,6 +35,7 @@ public class PlaceService {
         try {
             // 파일 업로드 처리
             List<String> uploadedFileNames = fileUpLoad(files, session);
+
             placeDTO.setP_iname(String.join(", ", uploadedFileNames)); // 파일명을 PlaceDTO에 설정
 
             // 데이터베이스에 저장
@@ -82,52 +84,43 @@ public class PlaceService {
     }
 
 
-	private void savePlaceDetails(PlaceDTO placeDTO) {
-		placeDAO.upLoadPlaceProc(placeDTO);
-	}
 
-	public List<PlaceDTO> getPlaceList(String p_location, String p_thema) {
-		// 장소 리스트 가져오기
-		return placeDAO.getPlaceList(p_location, p_thema);
-	}
+    private void savePlaceDetails(PlaceDTO placeDTO) {
+        placeDAO.upLoadPlaceProc(placeDTO);
+    }
 
-	// 파라미터x시 리스트
-	public List<PlaceDTO> getPlaceList() {
-		return placeDAO.getPlaceList(null, null);
-	}
+    public List<PlaceDTO> getPlaceList(String p_location, String p_thema) {
+        // 장소 리스트 가져오기
+        return placeDAO.getPlaceList(p_location, p_thema);
+    }
 
-	// 장소 정보
-	public PlaceDTO findById(int p_id) {
+    // 파라미터x시 리스트
+    public List<PlaceDTO> getPlaceList() {
+        return placeDAO.getPlaceList(null, null);
+    }
 
-		return placeDAO.findById(p_id);
-	}
+    public PlaceDTO findById(int p_id) {
+        return placeDAO.findById(p_id);
+    }
 
-	// 조회수 증
-	public void increaseViews(int p_id) {
-		placeDAO.increaseViews(p_id);
-	}
+    public void increaseViews(int p_id) {
+        placeDAO.increaseViews(p_id);
+    }
 
-	// 지역별 리스트
-	public List<PlaceDTO> placeListByLocation(String p_location) {
+    public List<PlaceDTO> placeListByLocation(String p_location) {
+        return placeDAO.placeListByLocation(p_location);
+    }
 
-		List<PlaceDTO> place = placeDAO.placeListByLocation(p_location);
-		return place;
-	}
+    public List<PlaceDTO> placeListByTheme(String p_thema) {
+        return placeDAO.placeListByTheme(p_thema);
+    }
 
-	// 테마별 리스트
-	public List<PlaceDTO> placeListByTheme(String p_thema) {
-		List<PlaceDTO> place = placeDAO.placeListByTheme(p_thema);
+    public void savePlace(PlaceDTO place) {
+        placeDAO.savePlace(place);
+    }
 
-		return place;
-	}
 
-	// 선택한 장소 디비에 저장
-	public void savePlace(PlaceDTO place) {
-		placeDAO.savePlace(place);
-
-	}
-
-	public String updatePlaceProc(List<MultipartFile> files, HttpSession session, PlaceDTO placeDTO,
+    public String updatePlaceProc(List<MultipartFile> files, HttpSession session, PlaceDTO placeDTO,
 			RedirectAttributes rttr) {
 		log.info("updatePlaceProc(), service");
 		String view = null;
