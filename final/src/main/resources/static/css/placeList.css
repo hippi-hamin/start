@@ -57,6 +57,24 @@ body {
 	width: 100px;
 	height: 100px;
 }
+
+.location-name-array {
+	position: absolute;
+    top: 22%;
+    width: 93.5%;
+    min-height: 35px;
+    left: 3.5%;
+    display: flex;
+    align-items: center;
+}
+
+.location-name {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    position: relative;
+    margin: 0 auto;
+}
 /* 검색창 전체네모 */
 .search-background {
 	background-color: black;
@@ -189,7 +207,7 @@ body {
 	width: 90%;
 	border-top: gray 1px solid;
 	position: absolute;
-	top: 25%;
+	top: 28%;
 	left: 5%;
 }
 
