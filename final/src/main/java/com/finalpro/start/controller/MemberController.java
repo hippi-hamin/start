@@ -132,6 +132,7 @@ public class MemberController {
 		String view = memberServ.changePassword(m_pw, changePwEmail, rttr);
 		return view;
 	}
+
 	
 	
 	

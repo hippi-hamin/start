@@ -9,7 +9,7 @@ html {
 
 body {
    margin: 0;
-   height: 100%;
+   height: 50%;
    display: flex;
    flex-direction: column;
 }
@@ -113,6 +113,44 @@ body {
 	text-align: center;
     color: black;
     position: relative;
-    top: 25%; 
+    bottom: 10%;
     font-size: 16px;
+}
+
+/* 장바구니 정렬 */
+.select-list-array {
+	position: static;
+    width: 80%;
+    min-height: 300px;
+    border: 1px solid gray;
+    margin: auto;
+}
+/* 장바구니 헤더 */
+.select-list-header {
+	background-color: black;
+	color: white;
+	font-size: 14px;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	height: 35px;
+}
+/* 장바구니 푸터 */
+.select-list-footer {
+	background-color: black;
+	color: white;
+	font-size: 14px;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	height: 35px;
+	position: relative;
+	top: 95%;
+	width: 100%;
+}
+/* 경로 확인 */
+.route {
+	color: white;
+	font-size: 14px;
+	text-decoration: none;
 }

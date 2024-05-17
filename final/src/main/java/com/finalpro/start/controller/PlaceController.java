@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finalpro.start.dto.PlaceDTO;
 import com.finalpro.start.service.PlaceService;
+import com.finalpro.start.service.PlatformService;
 import com.finalpro.start.util.KakaoApiUtil;
 
 import jakarta.servlet.http.HttpSession;
@@ -38,16 +39,23 @@ public class PlaceController {
     @Autowired
     private PlaceService placeService;
 
-    // 장소 리스트 페이지 이동
-    @GetMapping("placeList")
-    public String placeList(Model model,
-            @RequestParam(value = "p_location", required = false, defaultValue = "defaultLocation") String p_location,
-            @RequestParam(value = "p_thema", required = false, defaultValue = "defaultThema") String p_thema) {
-        log.info("placeList()");
-        List<PlaceDTO> placeList = placeService.getPlaceList(p_location, p_thema);
-        model.addAttribute("placeList", placeList);
-        return "placeList";
-    }
+	// 장소 리스트 페이지 이동
+	@GetMapping("placeList")
+	public String placeList(Model model,
+			@RequestParam(value = "p_location", required = false, defaultValue = "defaultLocation") String p_location,
+			@RequestParam(value = "p_thema", required = false, defaultValue = "defaultThema") String p_thema) {
+		log.info("placeList()");
+		if(p_location.equals("defaultLocation") && p_thema.equals("defaultThema")) {
+			List<PlaceDTO> placeList = placeService.getPlaceList();
+			model.addAttribute("placeList", placeList);
+		} else {
+			List<PlaceDTO> placeList = placeService.getPlaceList(p_location, p_thema);
+			model.addAttribute("placeList", placeList);
+		}
+		
+		return "placeList";
+	}
+
 
     @GetMapping("placeListByLocation")
     public String placeListByLocation(@RequestParam(value = "p_location", required = false) String p_location,
@@ -94,39 +102,39 @@ public class PlaceController {
         // 가져온 정보를 모델에 추가하여 템플릿으로 전달
         model.addAttribute("place", place);
 
-        // 장소 세부 정보를 보여줄 템플릿의 이름을 반환
-        return "placeDetail";
-    }
 
-    @GetMapping("/getImage/{imageName}")
-    public ResponseEntity<byte[]> getImage(@PathVariable String imageName, HttpSession session) {
-        try {
-            // 이미지 파일의 경로를 설정합니다.
-            String uploadDirectory = "/Users/upLoad/"; // 업로드된 이미지 파일이 있는 경로
+		// 장소 세부 정보를 보여줄 템플릿의 이름을 반환
+		return "placeDetail";
+	}
+	@GetMapping("/getImage/{imageName}")
+	public ResponseEntity<byte[]> getImage(@PathVariable String imageName, HttpSession session) {
+	    try {
+	        // 실제 이미지 파일이 저장된 디렉터리 경로 설정
+	        String uploadDirectory = "/Users/upLoad/";
 
-            Path imagePath = Paths.get(uploadDirectory, imageName);
+	        // 이미지 파일의 경로 설정
+	        Path imagePath = Paths.get(uploadDirectory, imageName);
 
-            // 디버깅 로그 추가
-            log.info("Loading image from path: {}", imagePath.toString());
+	        // 이미지 파일을 읽어와 byte 배열로 변환합니다.
+	        byte[] imageBytes = Files.readAllBytes(imagePath);
 
-            // 이미지 파일을 읽어와 byte 배열로 변환합니다.
-            byte[] imageBytes = Files.readAllBytes(imagePath);
+	        // HTTP 응답에 이미지와 적절한 Content-Type을 설정하여 반환합니다.
+	        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
+	    } catch (IOException e) {
+	        // 이미지 파일을 읽어오는 도중에 예외가 발생한 경우
+	        e.printStackTrace();
+	        // 이미지를 찾을 수 없을 때는 HTTP 상태 코드 404를 반환합니다.
+	        return ResponseEntity.notFound().build();
+	    }
+	}
 
-            // HTTP 응답에 이미지와 적절한 Content-Type을 설정하여 반환합니다.
-            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
-        } catch (IOException e) {
-            // 이미지 파일을 읽어오는 도중에 예외가 발생한 경우
-            e.printStackTrace();
-            // 이미지를 찾을 수 없을 때는 HTTP 상태 코드 404를 반환합니다.
-            return ResponseEntity.notFound().build();
-        }
-    }
 
-    @GetMapping("upLoadPlace")
-    public String upLoadPlace() {
-        log.info("upLoad()");
-        return "upLoadPlace";
-    }
+	@GetMapping("upLoadPlace")
+	public String upLoadPlace() {
+		log.info("upLoad()");
+		return "upLoadPlace";
+	}
+
 
     @PostMapping("upLoadPlaceProc")
     public String upLoadPlaceProc(@RequestParam("files") List<MultipartFile> files,
@@ -192,6 +200,7 @@ public class PlaceController {
         return ResponseEntity.ok(cart); // JSON 형태로 장바구니 목록 반환
     }
 
+
     @PostMapping("/clearCart")
     public ResponseEntity<?> clearCart(HttpSession session) {
         List<PlaceDTO> cart = (List<PlaceDTO>) session.getAttribute("cart");
@@ -252,6 +261,7 @@ public class PlaceController {
 
         return "mapPaths";
     }
+
 
 
 

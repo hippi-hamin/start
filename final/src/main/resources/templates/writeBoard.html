@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="/writeBoard" method="post">
+		  <!--  <input type="hidden" name="m_id" th:value="${session.memberDTO.m_id}"> -->
+	제목 : <input type="text" name="b_title"><br>
+	내용 : <input type="text" name="b_content"><br>
+		  <input type="submit" value="작성">
+</form>
+</body>
+</html>

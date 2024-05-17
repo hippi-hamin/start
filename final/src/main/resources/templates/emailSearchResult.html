@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" th:href="@{/css/signup.css}">
+<link rel="stylesheet" th:href="@{/css/emailSearchResult.css}">
 <link rel="stylesheet" th:href="@{/css/header.css}">
 <link rel="stylesheet" th:href="@{/css/footer.css}">
 </head>
@@ -15,11 +15,23 @@
 	<div class="center-ko-text">이메일 찾기</div>
 	<div class="write-line"></div>
 	<!-- foundEmail 모델이 비어 있지 않은 경우에만 출력 -->
-	<p th:if="${not #strings.isEmpty(foundEmail)}" th:text="${foundEmail}"></p>
-	
-	<a href="/signin">로그인</a>
-	<a href="resetPassword">비밀번호 변경</a>
+	<div class="email-result">고객님의 정보와 일치하는 이메일 입니다.</div>
+	<div class="email-result-text"
+		th:if="${not #strings.isEmpty(foundEmail)}" th:text="${foundEmail}"></div>
+	<div class="email-result-text-line"></div>
+	<!-- 로그인 버튼 -->
+	<button class="login-button" type="submit">로그인</button>
+	<!-- 비밀번호 찾기 버튼 -->
+	<button class="password-find-button" onclick="resetPassword()">비밀번호
+		찾기</button>
 	<!-- 푸터 -->
 	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
+<script th:inline="javascript">
+	function resetPassword() {
+		// 이메일이 입력되었으면 resetPassword 페이지로 이동합니다.
+		window.location.href = "/resetPassword";
+	}
+</script>
+
 </html>

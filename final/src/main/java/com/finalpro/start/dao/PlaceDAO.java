@@ -11,7 +11,7 @@ import com.finalpro.start.dto.PlaceDTO;
 @Repository
 @Mapper
 public interface PlaceDAO {
-	// 장소 등로
+	// 장소 등록
 	void upLoadPlaceProc(PlaceDTO placeDTO);
 
 	// 장소 리스트
@@ -28,7 +28,14 @@ public interface PlaceDAO {
 
 	// 테마별 리스트 
 	List<PlaceDTO> placeListByTheme(@Param("p_thema") String p_thema);
+
 	// 선택한 장소 저장 
 	void savePlace(PlaceDTO place);
+	// 장소 수정
+	void updatePlaceProc(PlaceDTO placeDTO);
+
+	List<PlaceDTO> findByRegionIn(List<String> regions);
+
+
 	
 }

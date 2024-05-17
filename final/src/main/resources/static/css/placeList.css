@@ -1,13 +1,15 @@
 @charset "UTF-8";
+
 * {
-   box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 html {
-   height: 100%;
+	height: 100%;
 }
 
 body {
+
    margin: 0;
    height: 100%;
    display: flex;
@@ -28,3 +30,199 @@ body {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 그림자 효과 */
     z-index: 1000; /* 다른 요소들 위에 보이도록 z-index 설정 */
 }
+
+	
+/* 지역 정렬 */
+.location-array {
+	position: absolute;
+	top: 7%;
+	height: 17%;
+	width: 96%;
+	display: flex;
+	justify-content: center;
+	margin-right: 2%;
+	margin-left: 2%;
+}
+/* 개별 지역 출력 */
+.container {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-right: 2%;
+	margin-left: 2%;
+}
+/* 개별 지역 버튼 */
+.circle-button {
+	width: 7%;
+	height: 70%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #fff;
+	border-radius: 50%;
+	border: 2px solid #3498db;
+	overflow: hidden;
+	cursor: pointer;
+}
+/* 개별 지역 클릭시 */
+.circle-button:active {
+	background-color: #3498db;
+	color: #fff;
+}
+/* 개별 지역 버튼 이미지 */
+.circle-button img {
+	width: 100px;
+	height: 100px;
+}
+/* 검색창 전체네모 */
+.search-background {
+	background-color: black;
+	width: 75%;
+	min-height: 35px;
+	position: absolute;
+	top: 30%;
+	margin-left: 2%;
+	display: flex; /* Flexbox 사용 */
+	justify-content: center; /* 수평 가운데 정렬 */
+	align-items: center; /* 수직 가운데 정렬 */
+}
+/* 검색창 텍스트를 적는 인풋 네모 */
+.search-write-box {
+	background-color: white;
+	width: 60%;
+	height: 30px;
+	border: white 1px solid;
+	display: flex; /* 내부 요소들을 정렬하기 위해 Flexbox 사용 */
+	align-items: center; /* 수직 가운데 정렬 */
+	font-size: 14px;
+}
+/* 검색창 활성화 테두리 삭제 */
+.search-write-box:focus {
+	outline: none;
+}
+/* 검색 클릭 버튼 */
+.search-button {
+	background-color: black;
+	color: white;
+	width: 10%;
+	height: 30px;
+	float: right;
+	display: flex; /* Flexbox 사용 */
+	justify-content: center; /* 가로 가운데 정렬 */
+	align-items: center; /* 세로 가운데 정렬 */
+	font-size: 14px;
+	border: white 1px solid;
+	cursor: pointer;
+}
+/* 필터 카테고리 정렬 */
+.filter2-array {
+	width: 75%;
+	min-height: 200px;
+	border: 1px solid gray;
+	margin-left: 2%;
+	position: absolute;
+	top: 35.5%;
+}
+/* 필터 카테고리 헤더 */
+.filter2-header-background {
+	background-color: black;
+	height: 35px;
+	align-items: center;
+	display: flex;
+}
+/* 필터 카테고리 지역 */
+.filter2-header-location {
+	background-color: black;
+	color: white;
+	font-size: 14px;
+	position: relative;
+	border: none;
+	cursor: pointer;
+}
+/* 필터 카테고리 테마 */
+.filter2-header-theme {
+	background-color: black;
+	color: white;
+	font-size: 14px;
+	position: relative;
+	border: none;
+	cursor: pointer; 
+}
+/* 카테고리 체크박스 */
+.filter2-checkbox {
+	position: absolute;
+	top: 20%;
+	left: 1%;
+}
+/* 장바구니 정렬 */
+.select-list-array {
+	position: absolute;
+	top: 30%;
+	left: 78%;
+	width: 20%;
+	height: 80%;
+	border: 1px solid gray;
+}
+/* 장바구니 헤더 */
+.select-list-header {
+	background-color: black;
+	color: white;
+	font-size: 14px;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	height: 35px;
+}
+/* 장바구니 푸터 */
+.select-list-footer {
+	background-color: black;
+	color: white;
+	font-size: 14px;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	height: 35px;
+	position: relative;
+	top: 95%;
+	width: 100%;
+}
+/* 경로 확인 */
+.route {
+	color: white;
+	font-size: 14px;
+	text-decoration: none;
+}
+/* 장소 리스트 출력 */
+.place-list-array {
+	border: 1px solid gray;
+	position: relative;
+	top: 60%;
+	margin-left: 2%;
+	width: 75%;
+	min-height: 150px;
+}
+/* 지역 카테고리 아랫 라인 */
+.start-line {
+	width: 90%;
+	border-top: gray 1px solid;
+	position: absolute;
+	top: 25%;
+	left: 5%;
+}
+
+.filter-list1 {
+    flex-wrap: wrap; /* 요소들이 한 줄을 넘어가면 줄바꿈되도록 함 */
+    width: 100%; /* 부모 요소에 따라 전체 너비를 차지하도록 함 */
+    box-sizing: border-box; /* 내부 여백과 테두리를 포함한 요소의 전체 크기를 계산하도록 함 */
+}
+
+.filter-list1 label {
+    margin-right: 10px; /* 라벨 오른쪽 간격을 늘립니다. */
+    font-size: 14px;
+}
+
+.filter-list1 input[type="checkbox"] {
+    margin-right: 10px; /* 체크박스 오른쪽 간격을 늘립니다. */
+}
+

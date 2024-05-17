@@ -34,6 +34,9 @@
 </head>
 <body>
 	<!-- 헤더 -->
+	<div id="h1_container">
+		<div id="home"></div>
+	</div>
 	<th:block th:replace="~{fragments/header :: header}"></th:block>
 	<!-- 슬라이드 배너 -->
 	<div class="slider-background">
@@ -62,6 +65,12 @@
 				class="btn btn-secondary custom-btn"
 				onclick="goToScroll('recommend')">RECOMMEND</a>
 		</div>
+	</div>
+	<div class="home-retrun">
+		<a class="btn btn-secondary home-retrun-background"
+				onclick="goToScroll('home')">
+			<img class="white-arrow" alt="화살표 이미지" src="/images/whiteArrow.png">
+		</a>
 	</div>
 	<br>
 	<br>
@@ -205,7 +214,7 @@
 			<a href="#" onclick="imageClickedTheme('우정여행')"> <img
 				src="images/js1.jpg" alt="Image 3" width="238" height="238">
 
-				<div class="caption">효도여행</div>
+				<div class="caption">우정여행</div>
 
 
 
@@ -236,19 +245,19 @@
 		<div class="image-wrapper">
 			<a href="#" onclick="imageClickedTheme('효도여행')"> 
 			<img src="/images/fam1.jpg" alt="Image 1" width="317" height="317">
-				<div class="caption">효도여행</div>
+				<div class="caption">가족과</div>
 			</a>
 		</div>
 		<div class="image-wrapper">
 			<a href="#" onclick="imageClickedTheme('데이트')"> 
 			<img src="/images/coup3.png" alt="Image 2" width="317" height="317">
-				<div class="caption">데이트</div>
+				<div class="caption">연인과</div>
 			</a>
 		</div>
 		<div class="image-wrapper">
 			<a href="#" onclick="imageClickedTheme('우정여행')"> 
 			<img src="/images/fre3.jpeg" alt="Image 3" width="317" height="317">
-				<div class="caption">우정여행</div>
+				<div class="caption">친구와</div>
 			</a>
 		</div>
 	</div>
