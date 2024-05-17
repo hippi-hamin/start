@@ -175,8 +175,10 @@ public class PlaceService {
 			log.warn("삭제할 이미지가 존재하지 않습니다: {}", imagePath);
 		}
 	}
-	public List<PlaceDTO> searchPlacesByLocations(List<String> regions) {
-        return placeDAO.findByRegionIn(regions);
-    }
+	// 지역별 검색 
+	public List<PlaceDTO> searchByRegion(List<String> regions) {
+		
+		return placeDAO.searchByRegion(regions);
+	}
 
 }

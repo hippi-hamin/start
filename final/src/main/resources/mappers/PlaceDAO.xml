@@ -71,14 +71,14 @@
 		p_iname=#{p_iname}
 		WHERE p_id=#{p_id}
 	</update>
-	<select id="findByRegionIn" parameterType="list"
-		resultType="Place">
-		SELECT p_name, p_location AS imageName
+	<select id="searchByRegion" parameterType="java.util.List"
+		resultType="com.finalpro.start.dto.PlaceDTO">
+		SELECT p_id, p_name, p_location, p_stScore, p_iname
 		FROM place.placetbl
-		WHERE p_name IN
-		<foreach item="regions" collection="list" open="("
-			separator="," close=")">
-			#{regions}
+		WHERE
+		<foreach item="region" collection="regions" open="("
+			separator=" OR " close=")">
+			p_name LIKE CONCAT('%', #{region}, '%') 
 		</foreach>
 	</select>
 

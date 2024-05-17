@@ -31,8 +31,8 @@ public class PlaceRestController {
        return "redirect:placeListByLocation";
 	}
 	
-	@GetMapping("/searchByLocation")
+	@GetMapping("/searchByRegion")
     public List<PlaceDTO> searchByRegion(@RequestParam(value = "regions", required = false) List<String> regions) {
-        return placeService.searchPlacesByLocations(regions);
+        return placeService.searchByRegion(regions);
     }
 }
