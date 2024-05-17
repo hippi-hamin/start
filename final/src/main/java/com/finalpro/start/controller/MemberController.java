@@ -88,8 +88,6 @@ public class MemberController {
 		return "resetPassword";
 	}
 
-	
-
 	@GetMapping("/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response,
 			RedirectAttributes redirectAttributes) {
@@ -107,24 +105,23 @@ public class MemberController {
 
 	@GetMapping("mypage")
 	public String mypage(HttpSession session, Model model, RedirectAttributes rttr) {
-	    // 세션에서 로그인한 사용자 정보를 가져옴
-	    MemberDTO signedInUser = (MemberDTO) session.getAttribute("signedInUser");
+		// 세션에서 로그인한 사용자 정보를 가져옴
+		MemberDTO signedInUser = (MemberDTO) session.getAttribute("signedInUser");
 
-	    // 만약 로그인한 사용자가 없다면 로그인 페이지로 리다이렉트 또는 예외 처리
-	    if (signedInUser == null) {
-	        return "redirect:/";
-	    }
-	    // 가져온 사용자 정보를 모델에 추가
-	    log.info("signedInUser :{}", signedInUser);
-	    model.addAttribute("currentUser", signedInUser);
-	    model.addAttribute("msg", signedInUser.getM_name()+"님 환영합니다.");
+		// 만약 로그인한 사용자가 없다면 로그인 페이지로 리다이렉트 또는 예외 처리
+		if (signedInUser == null) {
+			return "redirect:/";
+		}
+		// 가져온 사용자 정보를 모델에 추가
+		log.info("signedInUser :{}", signedInUser);
+		model.addAttribute("currentUser", signedInUser);
+		model.addAttribute("msg", signedInUser.getM_name() + "님 환영합니다.");
 
-	    return "mypage";
+		return "mypage";
 	}
 
-	
-	// 비밀번호 변경 
-	@PostMapping("changePassword")
+	// 비밀번호 변경
+	@PostMapping("/changePassword")
 	public String changePassword(@RequestParam("m_pw") String m_pw, HttpSession session, RedirectAttributes rttr) {
 		log.info("changePassword()");
 		String changePwEmail = (String) session.getAttribute("changePwEmail");
@@ -133,7 +130,4 @@ public class MemberController {
 		return view;
 	}
 
-	
-	
-	
 }
