@@ -161,6 +161,7 @@ public class MemberService {
 
 	public void withdrawMember(String memberId) {
 		log.info("wtihdrawMember(), service");
+		memberDAO.deleteBoardByMemberId(memberId);
 		memberDAO.withdrawMember(memberId);
 	}
 

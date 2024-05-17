@@ -32,5 +32,8 @@ public interface MemberDAO {
 	MemberDTO getUserInfo(int m_id);
 	// 탈퇴 
 	void withdrawMember(String memberId);
+	// 탈퇴 회원 보드도 삭제 
+	void deleteBoardByMemberId(String memberId);
+	
 	
 }

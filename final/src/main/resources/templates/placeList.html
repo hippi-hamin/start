@@ -55,10 +55,12 @@
     	</div>
     </div>
 	<div class="search-background">
-		<!-- 검색 적는 박스 -->
-		<input class="search-write-box" type="text" placeholder="검색어를 입력해주세요.">
-		<!-- 검색 버튼 -->
-		<button class="search-button">검색</button>
+		
+       	 	<!-- 검색 적는 박스 -->
+        	<input class="search-write-box" type="text" id="search-query" name="query" placeholder="검색어를 입력해주세요." th:value="${query}">
+        	<!-- 검색 버튼 -->
+        	<button class="search-button" type="submit">검색</button>
+   
 	</div>
 	<!-- 지역, 테마 필터 박스 -->
 	<div class="filter2-array">
@@ -169,7 +171,7 @@
 					th:text="${place.p_name}"></span><br/> 지역 : <span
 					th:text="${place.p_location}"></span><br/> 별점: <span
 					th:text="${place.p_stScore}"></span><br/> <img
-					th:src="@{'/upLoad/' + ${place.p_iname}}"/>
+					th:src="@{'/getImage/' + ${place.p_iname}}" width="150px"/>
 				</a>
 			</div>
 		</th:block>
@@ -196,16 +198,67 @@
 	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 	<script type="text/javascript">
 		function showCategory(category) {
-        	var categorys = document.getElementsByClassName("category");
+			var categorys = document.getElementsByClassName("category");
 
-        
-        
-        	for (var i = 0; i < categorys.length; i++) {
-        		categorys[i].style.display = "none";
-        }
+			for (var i = 0; i < categorys.length; i++) {
+				categorys[i].style.display = "none";
+			}
 
-        	document.getElementById(category).style.display = "block";
-    }
+			document.getElementById(category).style.display = "block";
+		}
+		$(document).ready(function() {
+			$("input[type=checkbox]").change(function() {
+				searchByRegion();
+			});
+		});
+
+		function searchByRegion() {
+			var regions = [];
+			$("input[type=checkbox]:checked").each(function() {
+				regions.push($(this).val());
+			});
+
+			$.ajax({
+				url : '/searchByRegion',
+				type : 'GET',
+				traditional : true,
+				data : {
+					regions : regions
+				},
+				success : function(data) {
+					updatePlaceList(data);
+				},
+				error : function() {
+					alert('지역 검색 중 오류가 발생했습니다.');
+				}
+			});
+		}
+
+		function updatePlaceList(data) {
+			var placeList = $("#place-list");
+			placeList.empty();
+			if (data.length > 0) {
+				data
+						.forEach(function(place) {
+							var placeHtml = '<div class="place-list-array">'
+									+ '<a href="/placeDetail/' + place.id + '">'
+									+ '<span>'
+									+ place.name
+									+ '</span><br />'
+									+ '지역 : <span>'
+									+ place.location
+									+ '</span><br />'
+									+ '별점: <span>'
+									+ place.rating
+									+ '</span><br />'
+									+ '<img src="/upLoad/' + place.imageName + '" width="150px" />'
+									+ '</a>' + '</div>';
+							placeList.append(placeHtml);
+						});
+			} else {
+				placeList.append('<div>검색 결과가 없습니다.</div>');
+			}
+		}
 	</script>
 </body>
 
