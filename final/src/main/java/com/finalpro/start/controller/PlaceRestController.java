@@ -1,6 +1,9 @@
 package com.finalpro.start.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,4 +30,9 @@ public class PlaceRestController {
         
        return "redirect:placeListByLocation";
 	}
+	
+	@GetMapping("/searchByLocation")
+    public List<PlaceDTO> searchByRegion(@RequestParam(value = "regions", required = false) List<String> regions) {
+        return placeService.searchPlacesByLocations(regions);
+    }
 }

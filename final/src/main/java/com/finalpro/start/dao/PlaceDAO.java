@@ -34,6 +34,8 @@ public interface PlaceDAO {
 	// 장소 수정
 	void updatePlaceProc(PlaceDTO placeDTO);
 
+	List<PlaceDTO> findByRegionIn(List<String> regions);
+
 
 	
 }

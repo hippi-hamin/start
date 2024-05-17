@@ -27,4 +27,11 @@
 	<!-- 푸터 -->
 	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
+<script th:inline="javascript">
+	function resetPassword() {
+		// 이메일이 입력되었으면 resetPassword 페이지로 이동합니다.
+		window.location.href = "/resetPassword";
+	}
+</script>
+
 </html>
