@@ -9,29 +9,27 @@ html {
 }
 
 body {
-
-   margin: 0;
-   height: 100%;
-   display: flex;
-   flex-direction: column;
+	margin: 0;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
 }
 
 #mainContent {
-    flex: 1;
+	flex: 1;
 }
 
 #cartSection {
-    position: fixed;
-    right: 20px;
-    top: 100px;
-    width: 300px;
-    background-color: white; /* 배경색 */
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 그림자 효과 */
-    z-index: 1000; /* 다른 요소들 위에 보이도록 z-index 설정 */
+	position: fixed;
+	right: 20px;
+	top: 100px;
+	width: 300px;
+	background-color: white; /* 배경색 */
+	padding: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+	z-index: 1000; /* 다른 요소들 위에 보이도록 z-index 설정 */
 }
 
-	
 /* 지역 정렬 */
 .location-array {
 	position: absolute;
@@ -147,7 +145,7 @@ body {
 	font-size: 14px;
 	position: relative;
 	border: none;
-	cursor: pointer; 
+	cursor: pointer;
 }
 /* 카테고리 체크박스 */
 .filter2-checkbox {
@@ -212,17 +210,71 @@ body {
 }
 
 .filter-list1 {
-    flex-wrap: wrap; /* 요소들이 한 줄을 넘어가면 줄바꿈되도록 함 */
-    width: 100%; /* 부모 요소에 따라 전체 너비를 차지하도록 함 */
-    box-sizing: border-box; /* 내부 여백과 테두리를 포함한 요소의 전체 크기를 계산하도록 함 */
+	flex-wrap: wrap; /* 요소들이 한 줄을 넘어가면 줄바꿈되도록 함 */
+	width: 100%; /* 부모 요소에 따라 전체 너비를 차지하도록 함 */
+	box-sizing: border-box; /* 내부 여백과 테두리를 포함한 요소의 전체 크기를 계산하도록 함 */
 }
 
 .filter-list1 label {
-    margin-right: 10px; /* 라벨 오른쪽 간격을 늘립니다. */
-    font-size: 14px;
+	margin-right: 10px; /* 라벨 오른쪽 간격을 늘립니다. */
+	font-size: 14px;
 }
 
 .filter-list1 input[type="checkbox"] {
-    margin-right: 10px; /* 체크박스 오른쪽 간격을 늘립니다. */
+	margin-right: 10px; /* 체크박스 오른쪽 간격을 늘립니다. */
+}
+/* 패딩을 ul 태그에 적용 */
+.place-list {
+	padding-top: 450px;
+	list-style: none; /* 기본 리스트 스타일 제거 */
+	padding-left: 3%; /* 기본 리스트 들여쓰기 제거 */
+}
+/* 각 리스트 아이템에 대한 스타일 */
+/* 각 리스트 아이템에 대한 스타일 */
+.place-item {
+    position: relative; /* 절대 위치를 위한 기준 요소 */
+    margin-bottom: 20px;
+    list-style-type: none;
+}
+/* 첫 번째 아이템의 위쪽에 여백 추가 */
+.place-item.first-item {
+    margin-top: 450px; /* 첫 번째 아이템의 위쪽에 450px 여백 추가 */
 }
 
+/* 컨텐츠 스타일 */
+.place-content {
+    display: flex;
+    align-items: center;
+}
+/* 링크 스타일 */
+.place-link {
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	color: inherit;
+	flex: 1; /* 버튼을 오른쪽으로 밀기 위해 flex-grow 사용 */
+	
+}
+
+/* 이미지 스타일 */
+.place-image {
+	width: 150px;
+	margin-right: 20px;
+}
+
+/* 텍스트 정보 스타일 */
+.place-info {
+	display: flex;
+	flex-direction: column;
+}
+
+.place-info span {
+	display: block;
+	margin-bottom: 5px; /* 각 줄 간격 조절 */
+}
+/* 버튼 스타일 */
+.add-to-cart-button {
+	position: absolute;
+    left: 60%;
+    transform: translateX(-50%); /
+}
