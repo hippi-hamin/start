@@ -43,14 +43,14 @@ body {
 	align-items: center;
 	background-color: #fff;
 	border-radius: 50%;
-	border: 2px solid #3498db;
+	border: 2px solid black;
 	overflow: hidden;
 	cursor: pointer;
 }
 /* 개별 지역 클릭시 */
 .circle-button:active {
-	background-color: #3498db;
-	color: #fff;
+	background-color: white;
+	color: black;
 }
 /* 개별 지역 버튼 이미지 */
 .circle-button img {
@@ -60,12 +60,13 @@ body {
 
 .location-name-array {
 	position: absolute;
-    top: 22%;
-    width: 93.5%;
-    min-height: 35px;
-    left: 3.5%;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 93%;
     display: flex;
     align-items: center;
+    font-size: 16px;
 }
 
 .location-name {
@@ -216,12 +217,51 @@ body {
     width: 100%; /* 부모 요소에 따라 전체 너비를 차지하도록 함 */
     box-sizing: border-box; /* 내부 여백과 테두리를 포함한 요소의 전체 크기를 계산하도록 함 */
 }
-
-.filter-list1 label {
-    margin-right: 10px; /* 라벨 오른쪽 간격을 늘립니다. */
-    font-size: 14px;
+.checkbox input {
+  display: none;
+}
+.checkbox_icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: black;
+  position: relative;
+  top: 5px;
+  cursor: pointer;
+}
+.checkbox_text {
+	position: relative;
+  	top: 2.5px;
+}
+.checkbox_icon::before, .checkbox_icon::after {
+  content: ''; 
+  display: inline-block; 
+  width: 2px;
+  height: 0; 
+  background-color: white;
+  position: absolute; 
+  transform-origin: left top; 
 }
 
-.filter-list1 input[type="checkbox"] {
-    margin-right: 10px; /* 체크박스 오른쪽 간격을 늘립니다. */
+.checkbox_icon::before {
+  top: 9px; 
+  left: 2px; 
+  transform: rotate(-45deg); 
+}
+
+.checkbox_icon::after {
+  top: 16px; 
+  left: 9px; 
+  transform: rotate(-135deg); 
+}
+.checkbox input:checked + .checkbox_icon {
+  border-color: white;
+}
+.checkbox input:checked + .checkbox_icon::before {
+  height: 9px;
+  transition: all 0.15s ease;
+}
+.checkbox input:checked + .checkbox_icon::after {
+  height: 14px;
+  transition: all 0.15s ease 0.15s; 
 }
