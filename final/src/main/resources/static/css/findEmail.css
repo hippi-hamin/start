@@ -12,6 +12,7 @@ body {
    height: 100%;
    display: flex;
    flex-direction: column;
+   font-family: 'SUITE', sans-serif;
 }
 /* SignUp 영문 텍스트 */
 .center-eng-text {

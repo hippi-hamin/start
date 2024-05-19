@@ -13,6 +13,7 @@ body {
    height: 100%;
    display: flex;
    flex-direction: column;
+   font-family: 'SUITE', sans-serif;
 }
 /* 지역 정렬 */
 .location-array {
@@ -46,6 +47,7 @@ body {
 	border: 2px solid black;
 	overflow: hidden;
 	cursor: pointer;
+	position: relative; /* 이미지의 위치를 조정하기 위해 부모 요소에 상대적 위치 지정 */
 }
 /* 개별 지역 클릭시 */
 .circle-button:active {
@@ -56,6 +58,10 @@ body {
 .circle-button img {
 	width: 100px;
 	height: 100px;
+	position: absolute; /* 절대 위치 지정 */
+    top: 50%; /* 부모 요소의 세로 중앙 */
+    left: 50%; /* 부모 요소의 가로 중앙 */
+    transform: translate(-50%, -50%); /* 요소를 정확히 가운데로 이동 */
 }
 
 .location-name-array {
@@ -332,6 +338,9 @@ body {
     border: 1px solid black;
     width: 75%;
     height: 200px;
+}
+.place-content:hover {
+	background-color: #d4d4d4;
 }
 /* 링크 스타일 */
 .place-link {

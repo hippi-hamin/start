@@ -12,6 +12,7 @@ body {
    height: 100%;
    display: flex;
    flex-direction: column;
+   font-family: 'SUITE', sans-serif;
 }
 /* 첫화면 이미지 정렬 박스 */
 .previews {
