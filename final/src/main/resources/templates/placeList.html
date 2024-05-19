@@ -35,12 +35,6 @@
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3926d3c8dcc51df1b147cee756c64e7&libraries=services"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
-<style>
-#map {
-	height: 500px;
-	width: 100%;
-}
-</style>
 </head>
 <body>
 	<!-- 헤더 -->
@@ -73,6 +67,7 @@
 		<span class="location-name">전라</span> <span class="location-name">충청</span>
 		<span class="location-name">제주</span>
 	</div>
+	<!-- 검색창 바탕 -->
 	<div class="search-background">
 		<!-- 검색 적는 박스 -->
 		<input class="search-write-box" type="text" id="search-query"
@@ -84,112 +79,172 @@
 	<div class="filter2-array">
 		<!-- 카테고리 필터 배경색 -->
 		<div class="filter2-header-background">
-			<!-- 지역 선택 버튼 -->
-			<input class="filter2-header-location" type='button' value='지역' />
 			<!-- 테마 선택 박스 -->
-			<input class="filter2-header-theme" type='button' value='테마'
-				onclick="showCategory('테마')" />
+			<input class="filter2-header-theme" type='button' value='테마' onclick="showCategory('테마')" />
 		</div>
 		<!-- 체크박스 정렬 -->
 		<div class="filter2-checkbox">
 			<!-- 테마 출력 -->
 			<div class="category" id="테마" style="display: none;">
 				<div class="filter-list1">
-					<label class="checkbox"> <input type="checkbox" id="맛집탐방"
-						name="맛집탐방" value="맛집탐방"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">맛집탐방</span></label> <label class="checkbox">
-						<input type="checkbox" id="효도여행" name="효도여행" value="효도여행">
-						<span class="checkbox_icon"></span> <span class="checkbox_text">효도여행</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="역사여행"
-						name="역사여행" value="역사여행"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">역사여행</span></label> <label class="checkbox">
-						<input type="checkbox" id="놀이공원" name="놀이공원" value="놀이공원">
-						<span class="checkbox_icon"></span> <span class="checkbox_text">놀이공원</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="가족"
-						name="가족" value="가족"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">가족</span></label> <label class="checkbox">
-						<input type="checkbox" id="데이트" name="데이트" value="데이트"> <span
-						class="checkbox_icon"></span> <span class="checkbox_text">데이트</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="친구"
-						name="친구" value="친구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">친구</span></label> <label class="checkbox">
-						<input type="checkbox" id="나홀로" name="나홀로" value="나홀로"> <span
-						class="checkbox_icon"></span> <span class="checkbox_text">나홀로</span>
+					<label class="checkbox"> 
+					<input type="checkbox" id="맛집탐방" name="맛집탐방" value="맛집탐방"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">맛집탐방</span>
+					</label> 
+					<label class="checkbox">
+					<input type="checkbox" id="효도여행" name="효도여행" value="효도여행">
+					<span class="checkbox_icon"></span> 
+					<span class="checkbox_text">효도여행</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="역사여행" name="역사여행" value="역사여행"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">역사여행</span>
+					</label> 
+					<label class="checkbox">
+					<input type="checkbox" id="놀이공원" name="놀이공원" value="놀이공원">
+					<span class="checkbox_icon"></span> 
+					<span class="checkbox_text">놀이공원</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="가족" name="가족" value="가족"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">가족</span>
+					</label> 
+					<label class="checkbox">
+					<input type="checkbox" id="데이트" name="데이트" value="데이트"> 
+					<span class="checkbox_icon"></span> 
+					<span class="checkbox_text">데이트</span>
+					</label> <label class="checkbox"> 
+					<input type="checkbox" id="친구" name="친구" value="친구"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">친구</span>
+					</label> 
+					<label class="checkbox">
+					<input type="checkbox" id="나홀로" name="나홀로" value="나홀로"> 
+					<span class="checkbox_icon"></span> 
+					<span class="checkbox_text">나홀로</span>
 					</label>
 				</div>
 			</div>
 			<div class="filter-list1">
 				<!-- 서울 -->
 				<div class="category" id="서울" style="display: none;">
-					<label class="checkbox"> <input type="checkbox" id="강남구"
-						name="강남구" value="강남구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">강남구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="강동구"
-						name="강동구" value="강동구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">강동구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="강북구"
-						name="강북구" value="강북구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">강북구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="강서구"
-						name="강서구" value="강서구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">강서구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="관악구"
-						name="관악구" value="관악구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">관악구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="광진구"
-						name="광진구" value="광진구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">광진구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="구로구"
-						name="구로구" value="구로구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">구로구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="금천구"
-						name="금천구" value="금천구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">금천구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="노원구"
-						name="노원구" value="노원구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">노원구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="도봉구"
-						name="도봉구" value="도봉구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">도봉구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="동대문구"
-						name="동대문구" value="동대문구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">동대문구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="동작구"
-						name="동작구" value="동작구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">동작구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="마포구"
-						name="마포구" value="마포구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">마포구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="서대문구"
-						name="서대문구" value="서대문구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">서대문구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="서초구"
-						name="서초구" value="서초구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">서초구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="성동구"
-						name="성동구" value="성동구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">성동구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="성북구"
-						name="성북구" value="성북구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">성북구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="송파구"
-						name="송파구" value="송파구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">송파구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="양천구"
-						name="양천구" value="양천구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">양천구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="영등포구"
-						name="영등포구" value="영등포구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">영등포구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="용산구"
-						name="용산구" value="용산구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">용산구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="은평구"
-						name="은평구" value="은평구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">은평구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="종로구"
-						name="종로구" value="종로구"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">종로구</span>
+					<label class="checkbox"> 
+					<input type="checkbox" id="강남구" name="강남구" value="강남구"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">강남구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="강동구" name="강동구" value="강동구">
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">강동구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="강북구" name="강북구" value="강북구">
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">강북구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="강서구" name="강서구" value="강서구">
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">강서구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="관악구" name="관악구" value="관악구"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">관악구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="광진구" name="광진구" value="광진구"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">광진구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="구로구" name="구로구" value="구로구"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">구로구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="금천구" name="금천구" value="금천구"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">금천구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="노원구" name="노원구" value="노원구"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">노원구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="도봉구" name="도봉구" value="도봉구">
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">도봉구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="동대문구" name="동대문구" value="동대문구"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">동대문구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="동작구" name="동작구" value="동작구"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">동작구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="마포구" name="마포구" value="마포구"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">마포구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="서대문구" name="서대문구" value="서대문구"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">서대문구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="서초구" name="서초구" value="서초구"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">서초구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="성동구" name="성동구" value="성동구"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">성동구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="성북구" name="성북구" value="성북구"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">성북구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="송파구" name="송파구" value="송파구"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">송파구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="양천구" name="양천구" value="양천구"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">양천구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="영등포구" name="영등포구" value="영등포구"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">영등포구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="용산구" name="용산구" value="용산구"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">용산구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="은평구" name="은평구" value="은평구"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">은평구</span>
+					</label> 
+					<label class="checkbox"> 
+					<input type="checkbox" id="종로구" name="종로구" value="종로구"> 
+					<span class="checkbox_icon"></span>
+					<span class="checkbox_text">종로구</span>
 					</label>
 				</div>
 			</div>
@@ -1094,7 +1149,7 @@
                             <div class="place-info">
                                 <span th:text="${place.p_name}"></span>
                                 <span th:utext="'지역 : ' + ${place.p_location}"></span>
-                                <span th:text="'별점 : ' + ${place.p_stScore}"></span>
+                                <img class="st-img" src="/images/heart.png"><span class="st-text" th:text="${place.p_stScore}"></span>
                             </div>
                         </a>
                         <button type="button" th:attr="data-pid=${place.p_id}" onclick="addToCart(this.getAttribute('data-pid'))" class="add-to-cart-button">장바구니에 추가</button>
@@ -1103,34 +1158,27 @@
 			</th:block>
 		</ul>
 	</div>
-	<div style="display: flex;">
-		<div style="flex: 1;">
-			<!-- 장소 리스트 -->
-			<ul>
-				<!-- 기존 리스트 아이템 -->
-			</ul>
-		</div>
-		<div id="cartSection"
-			style="position: fixed; right: 20px; top: 70px; width: 300px;">
+		<div id="cart-section">
 			<!-- 장바구니 섹션 -->
-			<h1>Your Cart</h1>
-			<h2>출발지</h2>
+			<div class="select-list-header">선택하신 리스트입니다.</div>
+			<div class="point-text">출발지</div>
 			<ul id="startPoint" class="sortable">
 				<!-- 출발지 아이템이 동적으로 추가됩니다 -->
 			</ul>
-			<h2>경유지</h2>
+			<div class="point-text">경유지</div>
 			<ul id="wayPoints" class="sortable">
 				<!-- 경유지 아이템이 동적으로 추가됩니다 -->
 			</ul>
-			<h2>목적지</h2>
+			<div class="point-text">목적지</div>
 			<ul id="endPoint" class="sortable">
 				<!-- 목적지 아이템이 동적으로 추가됩니다 -->
 			</ul>
-			<button id="clearCartButton">장바구니 비우기</button>
-			<button id="routeButton">길찾기</button>
+			<div class="point-button-array">
+			<button class="cart-clear-button" id="clearCartButton">장바구니 비우기</button>
+			<button class="route-button" id="routeButton">길찾기</button>
+			</div>
 			<div id="map"></div>
 		</div>
-	</div>
 	<!-- 푸터 -->
 	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
@@ -1404,8 +1452,27 @@
 		            placeList.append(placeHtml);
 		        });
 		    } else {
-		        placeList.append('<div>검색 결과가 없습니다.</div>');
+		        placeList.append('<div class="no-result-place">검색 결과가 없습니다.</div>');
 		    }
 		}
+		
+		// 스크롤 이벤트 리스너 추가
+		window.addEventListener('scroll', function() {
+		    var cartSection = document.getElementById('cart-section');
+		    var footer = document.querySelector('footer'); // 푸터 요소를 선택
+		    var scrollPosition = window.scrollY || document.documentElement.scrollTop;
+		    var windowHeight = window.innerHeight;
+		    var footerTop = footer.getBoundingClientRect().top + scrollPosition;
+		    var scrollThreshold = document.documentElement.scrollHeight * 0.05; // 문서 높이의 30%
+
+		    // 스크롤 위치에 따라 cart-section의 위치를 조정
+		    if (scrollPosition + windowHeight >= footerTop) {
+		        cartSection.style.top = '-35%';
+		    } else if (scrollPosition > scrollThreshold) {
+		        cartSection.style.top = '0%';
+		    } else {
+		        cartSection.style.top = '30%';
+		    }
+		});
 </script>
 </html>

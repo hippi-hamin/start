@@ -230,5 +230,11 @@ body {
    color: black;
    font-size: 14px;
    font-weight: bold;
-   position: relative;
+   position: absolute;
+   left: 12.5%;
+}
+.st-img {
+	height: 20px;
+	width: 20px;
+	position: absolute;
 }

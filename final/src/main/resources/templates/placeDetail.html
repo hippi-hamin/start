@@ -69,8 +69,10 @@
 	</div>
 	<!-- 좋아요 -->
      <div class="st-score" th:if="${place != null}">
-         별점 : <span th:text="${place.p_stScore}"></span>
+     <span th:text="${place.p_stScore}"></span>
       </div>
+     <img class="st-img" src="/images/heart.png">
+        
    </div>
    <!-- 아래 화살표 -->
    <div class="arrow-box">
