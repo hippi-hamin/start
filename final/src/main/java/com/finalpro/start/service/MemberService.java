@@ -47,7 +47,7 @@ public class MemberService {
 
 			// 회원가입 후 메인 페이지로 리다이렉트
 			view = "redirect:/";
-			msg = "가입 성공. 1000point 적립되었습니다.";
+			msg = "가입 성공.";
 			log.info("currentPoint {}", member.getM_point());
 		} catch (Exception e) {
 			e.printStackTrace();

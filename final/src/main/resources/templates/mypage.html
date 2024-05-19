@@ -56,10 +56,8 @@
 	<div class="phone-text">전화번호</div>
 	<input class="phone-write-box" type="text" id="phone" name="m_phone"
 		th:value="${currentUser.m_phone}">
-	<!-- 포인트 -->
-	<div class="point-text">포인트</div>
-	<input class="point-write-box" type="text" id="point" name="m_point"
-		th:value="${currentUser.m_point} + point" readonly>
+		<!-- 포인트창 제거 -안재문- -->
+	
 	<!-- 기타 사용자 정보를 표시할 input 요소 추가 -->
 	<button class="center-button" type="button" id="updateButton">정보 변경</button>
 	<!--  회원 탈퇴  -->
