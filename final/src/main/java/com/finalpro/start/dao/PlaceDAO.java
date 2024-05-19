@@ -33,6 +33,9 @@ public interface PlaceDAO {
 	void savePlace(PlaceDTO place);
 	// 장소 수정
 	void updatePlaceProc(PlaceDTO placeDTO);
+	// 지역별 검색 
+	List<PlaceDTO> searchByRegion(@Param("regions") List<String> regions);
+
 
 
 	

@@ -9,11 +9,29 @@ html {
 }
 
 body {
-	margin: 0;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
+
+   margin: 0;
+   height: 100%;
+   display: flex;
+   flex-direction: column;
 }
+
+#mainContent {
+    flex: 1;
+}
+
+#cartSection {
+    position: fixed;
+    right: 20px;
+    top: 100px;
+    width: 300px;
+    background-color: white; /* 배경색 */
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 그림자 효과 */
+    z-index: 1000; /* 다른 요소들 위에 보이도록 z-index 설정 */
+}
+
+	
 /* 지역 정렬 */
 .location-array {
 	position: absolute;
@@ -249,6 +267,7 @@ body {
   transform: rotate(-45deg); 
 }
 
+<<<<<<< HEAD
 .checkbox_icon::after {
   top: 16px; 
   left: 9px; 
@@ -265,3 +284,5 @@ body {
   height: 14px;
   transition: all 0.15s ease 0.15s; 
 }
+=======
+>>>>>>> develop

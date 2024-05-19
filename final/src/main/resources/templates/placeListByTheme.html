@@ -3,49 +3,78 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 <link rel="stylesheet" th:href="@{/css/header.css}">
 <link rel="stylesheet" th:href="@{/css/footer.css}">
 <link rel="stylesheet" th:href="@{/css/placeListByTheme.css}">
 
 </head>
 <body>
-	<!-- 헤더 -->
-	<th:block th:replace="~{fragments/header :: header}"></th:block>
-	<!-- 장소 리스트를 반복하여 표시 -->
-	<div class="start-line"></div>
-	<th:block th:if="${placeListByTheme != null and placeListByTheme.size()> 0}">
-		<div class="image-container">
-			<th:block th:each="place : ${placeListByTheme}">
-				<a class="image-item" th:href="@{'/placeDetail/' + ${place.p_id}}">
-					<div class="image-wrapper">
-						<img class="p-img" th:src="@{'/getImage/' + ${place.p_iname}}"
-							alt="이미지"> <span class="place-text"
-							th:text="${place.p_name}"></span> <span class="location-text"
-							th:text="${place.p_location}"></span> <img class="st-img"
-							src="/images/heart.png" alt=""> <span class="stScore-text"
-							th:text="${place.p_stScore}"></span>
-						<div class="comment-text" th:text="${place.p_description}"></div>
-					</div>
-					<div class="list-line"></div>
-				</a>
-			</th:block>
-		</div>
-	</th:block>
-	<th:block
-		th:unless="${placeListByTheme != null and placeListByTheme.size() > 0}">
-		<div class="non-content-text">장소 리스트가 존재하지 않습니다.</div>
-	</th:block>
-	<div class="select-list-array">
-		<!-- 장바구니 헤더 -->
-		<div class="select-list-header">선택하신 리스트 입니다.</div>
-			<!-- 장바구니 푸터 -->
-			<div class="select-list-footer">
-				<!-- 경로 확인 -->
-				<a class="route" href="mapPaths">경로 확인</a>
-			</div>
-		</div>
-	<!-- 푸터 -->
-	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+    <!-- 헤더 -->
+    <th:block th:replace="~{fragments/header :: header}"></th:block>
+    <div class="theme-array">
+        <!-- 지역 정렬 박스 -->
+        <div class="container">
+            <div class="button-text-container">
+                <button class="circle-button">놀이공원</button>
+                <span class="theme-name">놀이공원</span>
+            </div>
+            <div class="button-text-container">
+                <button class="circle-button">맛집탐방</button>
+                <span class="theme-name">맛집탐방</span>
+            </div>
+            <div class="button-text-container">
+                <button class="circle-button">효도여행</button>
+                <span class="theme-name">효도여행</span>
+            </div>
+            <div class="button-text-container">
+                <button class="circle-button">역사여행</button>
+                <span class="theme-name">역사여행</span>
+            </div>
+            <div class="button-text-container">
+                <button class="circle-button">반려동물</button>
+                <span class="theme-name">반려동물</span>
+            </div>
+            <div class="button-text-container">
+                <button class="circle-button">가족</button>
+                <span class="theme-name">가족</span>
+            </div>
+            <div class="button-text-container">
+                <button class="circle-button">데이트</button>
+                <span class="theme-name">데이트</span>
+            </div>
+            <div class="button-text-container">
+                <button class="circle-button">친구</button>
+                <span class="theme-name">친구</span>
+            </div>
+            <div class="button-text-container">
+                <button class="circle-button">나홀로</button>
+                <span class="theme-name">나홀로</span>
+            </div>
+        </div>
+    </div>
+    <!-- 장소 리스트를 반복하여 표시 -->
+    <div class="start-line"></div>
+    <th:block th:if="${placeListByTheme != null and placeListByTheme.size()> 0}">
+        <div class="image-container">
+            <th:block th:each="place : ${placeListByTheme}">
+                <a class="image-item" th:href="@{'/placeDetail/' + ${place.p_id}}">
+                    <div class="image-wrapper">
+                        <img class="p-img" th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
+                        <span class="place-text" th:text="${place.p_name}"></span>
+                        <span class="location-text" th:text="${place.p_location}"></span>
+                        <img class="st-img" src="/images/heart.png" alt="">
+                        <span class="stScore-text" th:text="${place.p_stScore}"></span>
+                        <div class="comment-text" th:text="${place.p_description}"></div>
+                    </div>
+                    <div class="list-line"></div>
+                </a>
+            </th:block>
+        </div>
+    </th:block>
+    <th:block th:unless="${placeListByTheme != null and placeListByTheme.size() > 0}">
+        <div class="non-content-text">장소 리스트가 존재하지 않습니다.</div>
+    </th:block>
+    <!-- 푸터 -->
+    <th:block th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
 </html>

@@ -10,9 +10,66 @@
 <body>
 	<!-- 헤더 -->
 	<th:block th:replace="~{fragments/header :: header}"></th:block>
-
-	<!-- 장소 리스트를 반복하여 표시 -->
+	<!-- 지역 정렬 -->
+	<div class="location-array">
+		<!-- 지역 정렬 박스 -->
+		<div class="container">
+			<div class="button-text-container">
+				<button class="circle-button">서울</button>
+				<span class="location-name">서울</span>
+			</div>
+			<div class="button-text-container">
+				<button class="circle-button">부산</button>
+				<span class="location-name">부산</span>
+			</div>
+			<div class="button-text-container">
+				<button class="circle-button">인천</button>
+				<span class="location-name">인천</span>
+			</div>
+			<div class="button-text-container">
+				<button class="circle-button">대구</button>
+				<span class="location-name">대구</span>
+			</div>
+			<div class="button-text-container">
+				<button class="circle-button">대전</button>
+				<span class="location-name">대전</span>
+			</div>
+			<div class="button-text-container">
+				<button class="circle-button">울산</button>
+				<span class="location-name">울산</span>
+			</div>
+			<div class="button-text-container">
+				<button class="circle-button">광주</button>
+				<span class="location-name">광주</span>
+			</div>
+			<div class="button-text-container">
+				<button class="circle-button">경기</button>
+				<span class="location-name">경기</span>
+			</div>
+			<div class="button-text-container">
+				<button class="circle-button">강원</button>
+				<span class="location-name">강원</span>
+			</div>
+			<div class="button-text-container">
+				<button class="circle-button">경상</button>
+				<span class="location-name">경상</span>
+			</div>
+			<div class="button-text-container">
+				<button class="circle-button">전라</button>
+				<span class="location-name">전라</span>
+			</div>
+			<div class="button-text-container">
+				<button class="circle-button">충청</button>
+				<span class="location-name">충청</span>
+			</div>
+			<div class="button-text-container">
+				<button class="circle-button">제주</button>
+				<span class="location-name">제주</span>
+			</div>
+		</div>
+	</div>
 	<div class="start-line"></div>
+	<!-- 장소 리스트를 반복하여 표시 -->
 	<th:block th:if="${placeListByLocation != null and placeListByLocation.size() > 0}">
 		<div class="image-container">
 			<th:block th:each="place : ${placeListByLocation}">
@@ -35,15 +92,6 @@
 		th:unless="${placeListByLocation != null and placeListByLocation.size() > 0}">
 		<div class="non-content-text">장소 리스트가 존재하지 않습니다.</div>
 	</th:block>
-	<div class="select-list-array">
-		<!-- 장바구니 헤더 -->
-		<div class="select-list-header">선택하신 리스트 입니다.</div>
-			<!-- 장바구니 푸터 -->
-			<div class="select-list-footer">
-				<!-- 경로 확인 -->
-				<a class="route" href="mapPaths">경로 확인</a>
-			</div>
-		</div>
 	<!-- 푸터 -->
 	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 	<script>

@@ -3,28 +3,101 @@
 * {
 	box-sizing: border-box;
 }
+
 html {
-   height: 100%;
+	height: 100%;
 }
 
 body {
-   margin: 0;
-   height: 50%;
-   display: flex;
-   flex-direction: column;
+	margin: 0;
+	height: 50%;
+	display: flex;
+	flex-direction: column;
 }
+/* 리스트 시작 선 */
 .start-line {
 	width: 80%;
-    border-top: gray 1px solid;
-    margin-left: 10%;
-    margin-top: 15%;
+	border-top: gray 1px solid;
+	margin-left: 10%;
+	margin-top: 15%;
+}
+/* 지역 정렬 */
+.theme-array {
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	height: 17%;
+	width: 96%;
+	display: flex;
+	justify-content: center;
+}
+
+/* 개별 지역 출력 */
+.container {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	margin-right: 2%;
+	margin-left: 2%;
+}
+
+/* 버튼과 텍스트를 담는 컨테이너 */
+.button-text-container {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+/* 개별 지역 버튼 */
+.circle-button {
+	width: 100px;
+	height: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #fff;
+	border-radius: 50%;
+	border: 2px solid black;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+/* 개별 지역 클릭시 */
+.circle-button:active {
+	background-color: white;
+	color: black;
+}
+
+/* 버튼 아래 텍스트 */
+.theme-name {
+	margin-top: 10px; /* 버튼과 텍스트 간의 간격 조정 */
+	text-align: center;
+}
+
+/* 개별 지역 버튼 이미지 */
+.circle-button img {
+	width: 100px;
+	height: 100px;
+}
+
+.theme-name-array {
+	position: absolute;
+	top: 25%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 96%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between; /* 이 속성은 요소들이 공간을 고르게 분배하게 합니다 */
 }
 
 .list-line {
 	width: 100%;
-    border-top: gray 1px solid;
-    position: relative;
-    top: 45%;
+	border-top: gray 1px solid;
+	position: relative;
+	top: 45%;
 }
 
 .image-container {
@@ -38,7 +111,7 @@ body {
 
 .image-item {
 	width: calc(33.33% - 7.5%);
-    margin-bottom: 15%;
+	margin-bottom: 15%;
 }
 
 .image-wrapper {
@@ -55,7 +128,7 @@ body {
 	transform: translateX(-50%);
 	color: black;
 	font-size: 20px;
-	text-align: center; 
+	text-align: center;
 }
 
 .location-text {
@@ -65,7 +138,7 @@ body {
 	transform: translateX(-50%);
 	color: black;
 	font-size: 14px;
-	text-align: center; 
+	text-align: center;
 }
 
 .stScore-text {
@@ -75,35 +148,35 @@ body {
 	transform: translateX(-50%);
 	color: black;
 	font-size: 14px;
-	text-align: center; 
+	text-align: center;
 }
 
 .p-img {
-	width: 100%; 
+	width: 100%;
 	height: 275px;
 	transition: transform 0.3s ease;
 }
 
 .p-img:hover {
-	transform: scale(1.05); 
+	transform: scale(1.05);
 }
 
 .st-img {
 	height: 20px;
 	width: 20px;
 	position: absolute;
-    left: 70%;
-    bottom: -25%;
+	left: 70%;
+	bottom: -25%;
 }
 
 .comment-text {
 	position: absolute;
 	left: 50%;
-    bottom: -35%;
+	bottom: -35%;
 	transform: translateX(-50%);
 	color: black;
 	font-size: 14px;
-	text-align: center; 
+	text-align: center;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -111,20 +184,21 @@ body {
 
 .non-content-text {
 	text-align: center;
-    color: black;
-    position: relative;
-    bottom: 10%;
-    font-size: 16px;
+	color: black;
+	position: relative;
+	top: 10%;
+	font-size: 16px;
 }
 
 /* 장바구니 정렬 */
 .select-list-array {
 	position: static;
-    width: 80%;
-    min-height: 300px;
-    border: 1px solid gray;
-    margin: auto;
+	width: 80%;
+	min-height: 300px;
+	border: 1px solid gray;
+	margin: auto;
 }
+
 /* 장바구니 헤더 */
 .select-list-header {
 	background-color: black;
@@ -133,24 +207,5 @@ body {
 	justify-content: center;
 	align-items: center;
 	display: flex;
-	height: 35px;
-}
-/* 장바구니 푸터 */
-.select-list-footer {
-	background-color: black;
-	color: white;
-	font-size: 14px;
-	justify-content: center;
-	align-items: center;
-	display: flex;
-	height: 35px;
-	position: relative;
-	top: 95%;
-	width: 100%;
-}
-/* 경로 확인 */
-.route {
-	color: white;
-	font-size: 14px;
-	text-decoration: none;
+	height: 35
 }
