@@ -177,4 +177,28 @@ public class PlaceService {
 		return result;
 	}
 
+	// 장소 삭제 메소
+	public String deletePlace(int p_id, RedirectAttributes rttr) {
+		
+		String view = null;
+		String msg = null;
+		
+		try {
+			log.info("deletePlace 실행 성공");
+			placeDAO.deletePlace(p_id);
+			
+			msg = "삭제 성공!";
+			view = "redirect:/adminPage";
+			
+		} catch (Exception e) {
+			log.info("deletePlace 실행 오류");
+			
+			msg = "삭제 실패!";
+			view = "redirect:/";
+		}
+		
+		rttr.addFlashAttribute("msg", msg);
+		return view;
+	}
+
 }

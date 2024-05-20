@@ -43,4 +43,7 @@ public interface PlaceDAO {
 
 	// 테마별 리스트
 	List<PlaceDTO> fetchPlacesTheme(@Param("theme") String theme);
+
+	// 지역 삭제
+	void deletePlace(int p_id);
 }

@@ -178,7 +178,13 @@ public class PlaceController {
 	public String deletePlace(@RequestAttribute(name = "p_id") int p_id) {
 		log.info("deletePlace");
 		
+		return "";
+	}
 	
+	@PostMapping("/deletePlaceProc")
+	public String deletePlaceProc(int p_id, Model model, RedirectAttributes rttr) {
+		
+		String view = placeService.deletePlace(p_id, rttr);
 		
 		
 		return "";
