@@ -35,13 +35,12 @@ public interface PlaceDAO {
 	// 장소 수정
 	void updatePlaceProc(PlaceDTO placeDTO);
 
-	// 지역별 검색
-	List<PlaceDTO> searchByRegion(@Param("regions") List<String> regions);
-
-	// 테마별 검색
-	List<PlaceDTO> searchByTheme(@Param("themes") List<String> themes);
-
+	// make plan 필터
 	List<PlaceDTO> searchByFilters(@Param("themes") List<String> themes, @Param("regions") List<String> regions);
 
+	// 지역별 리스트
 	List<PlaceDTO> fetchPlacesLocation(@Param("location") String location);
+
+	// 테마별 리스트
+	List<PlaceDTO> fetchPlacesTheme(@Param("theme") String theme);
 }
