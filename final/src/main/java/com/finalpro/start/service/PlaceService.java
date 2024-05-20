@@ -60,7 +60,8 @@ public class PlaceService {
 
 	private List<String> fileUpLoad(List<MultipartFile> files, HttpSession session) throws IOException {
 		List<String> uploadedFileNames = new ArrayList<>();
-		String uploadDirectory = "/Users/upLoad/";
+		//String uploadDirectory = "/Users/upLoad/";
+		String uploadDirectory = "C:\\Development\\upLoad";
 
 		File folder = new File(uploadDirectory);
 
@@ -151,17 +152,8 @@ public class PlaceService {
 		return view;
 	}
 
-	// 지역별 검색
-	public List<PlaceDTO> searchByRegion(List<String> regions) {
-
-		return placeDAO.searchByRegion(regions);
-	}
-	// 테마별 
-	public List<PlaceDTO> searchByTheme(List<String> themes) {	  
-	    log.info("searchByTheme()", themes);
-		return placeDAO.searchByTheme(themes);
-	}
-
+	// 필요없는 메서드 삭제 -안재문-
+	// make plan 필터 
 	public List<PlaceDTO> searchByFilters(List<String> themes, List<String> regions) {
 		log.info("themes : " + themes );
 		log.info("regions : " + regions);
@@ -169,12 +161,19 @@ public class PlaceService {
 	    log.info("result : " + result);
 	    return result;
 	}
-
+	// 지역별 리스트
 	public List<PlaceDTO> fetchPlacesLocation(String location) {
 		log.info(location);
 		
 		List<PlaceDTO> result = placeDAO.fetchPlacesLocation(location);
 		
+		return result;
+	}
+
+	// 테마별 리스트
+	public List<PlaceDTO> fetchPlacesTheme(String theme) {
+		log.info(theme);
+		List<PlaceDTO> result = placeDAO.fetchPlacesTheme(theme);
 		return result;
 	}
 

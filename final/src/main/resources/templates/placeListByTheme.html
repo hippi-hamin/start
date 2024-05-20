@@ -7,7 +7,7 @@
 <link rel="stylesheet" th:href="@{/css/header.css}">
 <link rel="stylesheet" th:href="@{/css/footer.css}">
 <link rel="stylesheet" th:href="@{/css/placeListByTheme.css}">
-
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
     <!-- 헤더 -->
@@ -16,66 +16,125 @@
         <!-- 지역 정렬 박스 -->
         <div class="container">
             <div class="button-text-container">
-                <button class="circle-button">놀이공원</button>
+                <button class="circle-button" data-theme="놀이공원">놀이공원</button>
                 <span class="theme-name">놀이공원</span>
             </div>
             <div class="button-text-container">
-                <button class="circle-button">맛집탐방</button>
+                <button class="circle-button" data-theme="맛집탐방">맛집탐방</button>
                 <span class="theme-name">맛집탐방</span>
             </div>
             <div class="button-text-container">
-                <button class="circle-button">효도여행</button>
-                <span class="theme-name">효도여행</span>
-            </div>
-            <div class="button-text-container">
-                <button class="circle-button">역사여행</button>
+                <button class="circle-button" data-theme="역사여행">역사여행</button>
                 <span class="theme-name">역사여행</span>
             </div>
             <div class="button-text-container">
-                <button class="circle-button">반려동물</button>
+                <button class="circle-button" data-theme="반려동물">반려동물</button>
                 <span class="theme-name">반려동물</span>
             </div>
             <div class="button-text-container">
-                <button class="circle-button">가족</button>
-                <span class="theme-name">가족</span>
+                <button class="circle-button" data-theme="가족여행">가족여행</button>
+                <span class="theme-name">가족여행</span>
             </div>
             <div class="button-text-container">
-                <button class="circle-button">데이트</button>
+                <button class="circle-button" data-theme="데이트">데이트</button>
                 <span class="theme-name">데이트</span>
             </div>
             <div class="button-text-container">
-                <button class="circle-button">친구</button>
-                <span class="theme-name">친구</span>
+<<<<<<< HEAD
+                <button class="circle-button">우정여행</button>
+=======
+                <button class="circle-button" data-theme="우정여행">우정여행</button>
+>>>>>>> develop
+                <span class="theme-name">우정여행</span>
             </div>
             <div class="button-text-container">
-                <button class="circle-button">나홀로</button>
+                <button class="circle-button" data-theme="나홀로">나홀로</button>
                 <span class="theme-name">나홀로</span>
             </div>
         </div>
     </div>
     <!-- 장소 리스트를 반복하여 표시 -->
     <div class="start-line"></div>
-    <th:block th:if="${placeListByTheme != null and placeListByTheme.size()> 0}">
-        <div class="image-container">
-            <th:block th:each="place : ${placeListByTheme}">
-                <a class="image-item" th:href="@{'/placeDetail/' + ${place.p_id}}">
-                    <div class="image-wrapper">
-                        <img class="p-img" th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
-                        <span class="place-text" th:text="${place.p_name}"></span>
-                        <span class="location-text" th:text="${place.p_location}"></span>
-                        <img class="st-img" src="/images/heart.png" alt="">
-                        <span class="stScore-text" th:text="${place.p_stScore}"></span>
-                        <div class="comment-text" th:text="${place.p_description}"></div>
-                    </div>
-                    <div class="list-line"></div>
-                </a>
-            </th:block>
-        </div>
-    </th:block>
+    <div id="place-list">
+	    <th:block th:if="${placeListByTheme != null and placeListByTheme.size()> 0}">
+	        <div class="image-container">
+	            <th:block th:each="place : ${placeListByTheme}">
+	                <a class="image-item" th:href="@{'/placeDetail/' + ${place.p_id}}">
+	                    <div class="image-wrapper">
+	                        <img class="p-img" th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
+	                        <span class="place-text" th:text="${place.p_name}"></span>
+	                        <span class="location-text" th:text="${place.p_location}"></span>
+	                        <img class="st-img" src="/images/heart.png" alt="">
+	                        <span class="stScore-text" th:text="${place.p_stScore}"></span>
+	                        <div class="comment-text" th:text="${place.p_description}"></div>
+	                    </div>
+	                    <div class="list-line"></div>
+	                </a>
+	            </th:block>
+	        </div>
+	    </th:block>
+	 </div>
     <th:block th:unless="${placeListByTheme != null and placeListByTheme.size() > 0}">
         <div class="non-content-text">장소 리스트가 존재하지 않습니다.</div>
     </th:block>
     <!-- 푸터 -->
     <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+   	<script type="text/javascript">
+   	$(document).ready(function() {
+		$('.circle-button').click(function() {
+			var theme = $(this).data('theme');
+			console.log(theme);
+			fetchPlacesByTheme(theme);
+		});
+	});
+   	function fetchPlacesByTheme(theme) {
+		$.ajax({
+			url : '/fetchPlacesByTheme',
+			method : 'GET',
+			data : {
+				theme : theme
+			},
+			success : function(response) {
+				updatePlaceList(response);
+			},
+			error : function(xhr, status, error) {
+				console.error('장소를 가져오는 중 오류가 발생했습니다:', error);
+			}
+		});
+	}
+   	function updatePlaceList(data) {
+		var placeList = $('#place-list');
+		placeList.empty();
+		if (data.length > 0) {
+			var html = '<div class="image-container">';
+			data
+					.forEach(function(place) {
+						html += '<a class="image-item" href="/placeDetail/' + place.p_id + '">'
+								+ '<div class="image-wrapper">'
+								+ '<img class="p-img" src="/getImage/' + place.p_iname + '" alt="이미지">'
+								+ '<span class="place-text">'
+								+ place.p_name
+								+ '</span>'
+								+ '<span class="location-text">'
+								+ place.p_location
+								+ '</span>'
+								+ '<img class="st-img" src="/images/heart.png">'
+								+ '<span class="stScore-text">'
+								+ place.p_stScore.toFixed(1)
+								+ '</span>'
+								+ '<div class="comment-text">'
+								+ place.p_description
+								+ '</div>'
+								+ '</div>'
+								+ '<div class="list-line"></div>' + '</a>';
+					});
+			html += '</div>';
+			placeList.append(html);
+		} else {
+			placeList
+					.append('<div class="non-content-text">장소 리스트가 존재하지 않습니다.</div>');
+		}
+	}
+   	</script>
 </body>
 </html>
