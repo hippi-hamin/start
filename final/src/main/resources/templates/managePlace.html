@@ -21,12 +21,17 @@
                             </div>
                         </a>
                         <a th:href="@{'/updatePlace/' + ${place.p_id}}">수정</a>
-                        <a th:href="@{'/updatePlace/' + ${place.p_id}}">삭제</a>
                     </div>
-                    
-				</li>
+                </li>
             </th:block>
         </ul>
     </div>
+    <!-- 업로드 버튼 -안재문- -->
+    <button type="button" class="upload-button" onclick="uploadPlace()">업로드</button>
+    <script th:inline="javascript">
+    	function uploadPlace() {
+       	 	window.location.href = [[@{/upLoadPlace}]];
+    	}
+    </script>
 </body>
 </html>
