@@ -6,6 +6,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,14 +21,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.finalpro.start.dto.OrderUpdateDTO;
 import com.finalpro.start.dto.PlaceDTO;
 import com.finalpro.start.service.PlaceService;
-import com.finalpro.start.service.PlatformService;
 import com.finalpro.start.util.KakaoApiUtil;
 
 import jakarta.servlet.http.HttpSession;
@@ -134,8 +137,8 @@ public class PlaceController {
 	}
 
 	@PostMapping("upLoadPlaceProc")
-	public String upLoadPlaceProc(@RequestParam("files") List<MultipartFile> files,
-			@RequestParam("address") String address, // 주소 파라미터 추가
+	public String upLoadPlaceProc(@RequestParam(name = "files") List<MultipartFile> files,
+			@RequestParam(name = "address") String address, // 주소 파라미터 추가
 			HttpSession session, @Validated @ModelAttribute("PlaceDTO") PlaceDTO placeDTO, BindingResult bindingResult,
 			RedirectAttributes rttr) {
 
@@ -186,10 +189,10 @@ public class PlaceController {
 
 	// 장소 수정 처리 -안재문
 	@PostMapping("/updatePlaceProc")
-	public String updatePlaceProc(@RequestParam("files") List<MultipartFile> files, HttpSession session,
-			@RequestParam("p_id") int p_id, @RequestParam("p_location") String p_location,
-			@RequestParam("p_name") String p_name, @RequestParam("p_thema") String p_thema,
-			@RequestParam("p_description") String p_description, @RequestParam("address") String address,
+	public String updatePlaceProc(@RequestParam(name = "files") List<MultipartFile> files, HttpSession session,
+			@RequestParam(name = "p_id") int p_id, @RequestParam(name = "p_location") String p_location,
+			@RequestParam(name = "p_name") String p_name, @RequestParam(name = "p_thema") String p_thema,
+			@RequestParam(name = "p_description") String p_description, @RequestParam(name = "address") String address,
 			RedirectAttributes rttr) {
 		String view = null;
 
@@ -221,7 +224,7 @@ public class PlaceController {
 	}
 
 	@PostMapping("/addPlaceToCart")
-	public ResponseEntity<?> addPlaceToCart(@RequestParam("p_id") String p_idStr, HttpSession session) {
+	public ResponseEntity<?> addPlaceToCart(@RequestParam(name = "p_id") String p_idStr, HttpSession session) {
 		log.info("addToCart()");
 		try {
 			int p_id = Integer.parseInt(p_idStr);
@@ -248,6 +251,46 @@ public class PlaceController {
 		return ResponseEntity.ok(cart); // JSON 형태로 장바구니 목록 반환
 	}
 
+	// 드로그앤 드랍 했을 때 값 바뀌는 메소드
+	@PostMapping("/updateCartOrder")
+	public ResponseEntity<?> updateCartOrder(@RequestBody OrderUpdateDTO orderUpdate, HttpSession session) {
+		try {
+			List<PlaceDTO> cart = (List<PlaceDTO>) session.getAttribute("cart");
+			if (cart == null) {
+				return ResponseEntity.badRequest().body("Cart is empty.");
+			}
+
+			// 새로운 순서대로 cart를 재정렬합니다.
+			List<PlaceDTO> newCart = new ArrayList<>();
+			Map<Integer, PlaceDTO> placeMap = cart.stream()
+					.collect(Collectors.toMap(PlaceDTO::getP_id, place -> place));
+
+			orderUpdate.getStartPoint().forEach(p_id -> {
+				if (placeMap.containsKey(p_id)) {
+					newCart.add(placeMap.get(p_id));
+				}
+			});
+
+			orderUpdate.getWayPoints().forEach(p_id -> {
+				if (placeMap.containsKey(p_id)) {
+					newCart.add(placeMap.get(p_id));
+				}
+			});
+
+			orderUpdate.getEndPoint().forEach(p_id -> {
+				if (placeMap.containsKey(p_id)) {
+					newCart.add(placeMap.get(p_id));
+				}
+			});
+
+			session.setAttribute("cart", newCart);
+
+			return ResponseEntity.ok("Order updated successfully.");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating order.");
+		}
+	}
+
 	@PostMapping("/clearCart")
 	public ResponseEntity<?> clearCart(HttpSession session) {
 		List<PlaceDTO> cart = (List<PlaceDTO>) session.getAttribute("cart");
@@ -260,7 +303,7 @@ public class PlaceController {
 	}
 
 	@PostMapping("/removeItemFromCart")
-	public ResponseEntity<String> removeItemFromCart(@RequestParam("p_id") int productId, HttpSession session) {
+	public ResponseEntity<String> removeItemFromCart(@RequestParam(name = "p_id") int productId, HttpSession session) {
 		// 세션에서 장바구니를 가져옴
 		List<PlaceDTO> cart = (List<PlaceDTO>) session.getAttribute("cart");
 		if (cart != null) {

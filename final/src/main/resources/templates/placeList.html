@@ -1,42 +1,41 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUITE/fonts/static/woff2/SUITE.css" rel="stylesheet">
-<head>
-<meta charset="UTF-8">
-<title>장소 리스트</title>
-<link rel="stylesheet" th:href="@{/css/placeList.css}">
-<link rel="stylesheet" th:href="@{/css/header.css}">
-<link rel="stylesheet" th:href="@{/css/footer.css}">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script th:inline="javascript">
-	/*<![CDATA[*/
-	function addToCart(p_id) {
-		var id = parseInt(p_id, 10); // 정수 변환
-		console.log(id); // Debug: 변환된 값 확인
 
-		if (!Number.isInteger(id)) {
-			alert("잘못된 상품 ID입니다.");
-			return;
+<head>
+	<meta charset="UTF-8">
+	<title>장소 리스트</title>
+	<link rel="stylesheet" th:href="@{/css/placeList.css}">
+	<link rel="stylesheet" th:href="@{/css/header.css}">
+	<link rel="stylesheet" th:href="@{/css/footer.css}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		function addToCart(p_id) {
+			var id = parseInt(p_id, 10); // 정수 변환
+			console.log(id); // Debug: 변환된 값 확인
+
+			if (!Number.isInteger(id)) {
+				alert("잘못된 상품 ID입니다.");
+				return;
+			}
+
+			$.post("/addPlaceToCart", {
+				p_id: id
+			}).done(function (response) {
+				alert("장소가 장바구니에 추가되었습니다.");
+			}).fail(function () {
+				alert("장소를 추가하는데 문제가 발생했습니다.");
+			});
 		}
 
-		$.post("/addPlaceToCart", {
-			p_id : id
-		}).done(function(response) {
-			alert("장소가 장바구니에 추가되었습니다.");
-		}).fail(function() {
-			alert("장소를 추가하는데 문제가 발생했습니다.");
-		});
-	}
-
-	/*]]>*/
-</script>
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3926d3c8dcc51df1b147cee756c64e7&libraries=services"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+		/*]]>*/
+	</script>
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3926d3c8dcc51df1b147cee756c64e7&libraries=services"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
 </head>
+
 <body>
 	<!-- 헤더 -->
 	<th:block th:replace="~{fragments/header :: header}"></th:block>
@@ -71,8 +70,8 @@
 	<!-- 검색창 바탕 -->
 	<div class="search-background">
 		<!-- 검색 적는 박스 -->
-		<input class="search-write-box" type="text" id="search-query"
-			name="query" placeholder="검색어를 입력해주세요." th:value="${query}">
+		<input class="search-write-box" type="text" id="search-query" name="query" placeholder="검색어를 입력해주세요."
+			th:value="${query}">
 		<!-- 검색 버튼 -->
 		<button class="search-button" type="submit">검색</button>
 	</div>
@@ -87,217 +86,217 @@
 		<div class="filter2-checkbox">
 			<!-- 테마 출력 -->
 			<div class="category" id="테마" style="display: none;">
-			<!-- 파라미터값 변경 -->
+				<!-- 파라미터값 변경 -->
 				<div class="filter-list1">
-				
-					<label class="checkbox"> 
-					<input type="checkbox" id="먹방여행" name="먹방여행" value="먹방여행"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">맛집탐방</span>
-					</label> 
+
 					<label class="checkbox">
-					<input type="checkbox" id="반려동물과" name="반려동물과" value="반려동물과">
-					<span class="checkbox_icon"></span> 
-					<span class="checkbox_text">반려동물과</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="역사여행" name="역사여행" value="역사여행"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">역사여행</span>
-					</label> 
+						<input type="checkbox" id="먹방여행" name="먹방여행" value="먹방여행">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">맛집탐방</span>
+					</label>
 					<label class="checkbox">
-					<input type="checkbox" id="놀이공원" name="놀이공원" value="놀이공원">
-					<span class="checkbox_icon"></span> 
-					<span class="checkbox_text">놀이공원</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="가족여행" name="가족여행" value="가족여행"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">가족여행</span>
-					</label> 
+						<input type="checkbox" id="반려동물과" name="반려동물과" value="반려동물과">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">반려동물과</span>
+					</label>
 					<label class="checkbox">
-					<input type="checkbox" id="데이트" name="데이트" value="데이트"> 
-					<span class="checkbox_icon"></span> 
-					<span class="checkbox_text">데이트</span>
-					</label> <label class="checkbox"> 
-					<input type="checkbox" id="우정여행" name="우정여행" value="우정여행"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">우정여행</span>
-					</label> 
+						<input type="checkbox" id="역사여행" name="역사여행" value="역사여행">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">역사여행</span>
+					</label>
 					<label class="checkbox">
-					<input type="checkbox" id="나홀로" name="나홀로" value="나홀로"> 
-					<span class="checkbox_icon"></span> 
-					<span class="checkbox_text">나홀로</span>
+						<input type="checkbox" id="놀이공원" name="놀이공원" value="놀이공원">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">놀이공원</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="가족여행" name="가족여행" value="가족여행">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">가족여행</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="데이트" name="데이트" value="데이트">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">데이트</span>
+					</label> <label class="checkbox">
+						<input type="checkbox" id="우정여행" name="우정여행" value="우정여행">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">우정여행</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="나홀로" name="나홀로" value="나홀로">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">나홀로</span>
 					</label>
 				</div>
 			</div>
 			<div class="filter-list1">
 				<!-- 서울 -->
 				<div class="category" id="서울" style="display: none;">
-					<label class="checkbox"> 
-					<input type="checkbox" id="강남구" name="강남구" value="강남구"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">강남구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="강동구" name="강동구" value="강동구">
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">강동구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="강북구" name="강북구" value="강북구">
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">강북구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="강서구" name="강서구" value="강서구">
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">강서구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="관악구" name="관악구" value="관악구"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">관악구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="광진구" name="광진구" value="광진구"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">광진구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="구로구" name="구로구" value="구로구"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">구로구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="금천구" name="금천구" value="금천구"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">금천구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="노원구" name="노원구" value="노원구"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">노원구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="도봉구" name="도봉구" value="도봉구">
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">도봉구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="동대문구" name="동대문구" value="동대문구"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">동대문구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="동작구" name="동작구" value="동작구"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">동작구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="마포구" name="마포구" value="마포구"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">마포구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="서대문구" name="서대문구" value="서대문구"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">서대문구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="서초구" name="서초구" value="서초구"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">서초구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="성동구" name="성동구" value="성동구"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">성동구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="성북구" name="성북구" value="성북구"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">성북구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="송파구" name="송파구" value="송파구"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">송파구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="양천구" name="양천구" value="양천구"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">양천구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="영등포구" name="영등포구" value="영등포구"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">영등포구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="용산구" name="용산구" value="용산구"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">용산구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="은평구" name="은평구" value="은평구"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">은평구</span>
-					</label> 
-					<label class="checkbox"> 
-					<input type="checkbox" id="종로구" name="종로구" value="종로구"> 
-					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">종로구</span>
+					<label class="checkbox">
+						<input type="checkbox" id="강남구" name="강남구" value="강남구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">강남구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="강동구" name="강동구" value="강동구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">강동구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="강북구" name="강북구" value="강북구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">강북구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="강서구" name="강서구" value="강서구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">강서구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="관악구" name="관악구" value="관악구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">관악구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="광진구" name="광진구" value="광진구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">광진구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="구로구" name="구로구" value="구로구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">구로구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="금천구" name="금천구" value="금천구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">금천구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="노원구" name="노원구" value="노원구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">노원구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="도봉구" name="도봉구" value="도봉구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">도봉구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="동대문구" name="동대문구" value="동대문구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">동대문구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="동작구" name="동작구" value="동작구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">동작구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="마포구" name="마포구" value="마포구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">마포구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="서대문구" name="서대문구" value="서대문구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">서대문구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="서초구" name="서초구" value="서초구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">서초구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="성동구" name="성동구" value="성동구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">성동구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="성북구" name="성북구" value="성북구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">성북구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="송파구" name="송파구" value="송파구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">송파구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="양천구" name="양천구" value="양천구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">양천구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="영등포구" name="영등포구" value="영등포구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">영등포구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="용산구" name="용산구" value="용산구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">용산구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="은평구" name="은평구" value="은평구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">은평구</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="종로구" name="종로구" value="종로구">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">종로구</span>
 					</label>
 				</div>
 			</div>
 			<!-- 부산 -->
 			<div class="category" id="부산" style="display: none;">
 				<div class="filter-list1">
-					<label class="checkbox"> <input type="checkbox" id="강서구"
-						name="강서구" value="강서구"> <span class="checkbox_icon"></span>
+					<label class="checkbox"> <input type="checkbox" id="강서구" name="강서구" value="강서구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">강서구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="금정구"
-						name="금정구" value="금정구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="금정구" name="금정구" value="금정구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">금정구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="남구"
-						name="남구" value="남구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="남구" name="남구" value="남구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">남구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="동구"
-						name="동구" value="동구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="동구" name="동구" value="동구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">동구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="동래"
-						name="동래" value="동래"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="동래" name="동래" value="동래"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">동래</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="부산진구"
-						name="부산진구" value="부산진구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="부산진구" name="부산진구" value="부산진구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">부산진구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="북구"
-						name="북구" value="북구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="북구" name="북구" value="북구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">북구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="사상구"
-						name="사상구" value="사상구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="사상구" name="사상구" value="사상구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">사상구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="사하"
-						name="사하" value="사하"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="사하" name="사하" value="사하"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">사하구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="서구"
-						name="서구" value="서구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="서구" name="서구" value="서구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">서구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="수영구"
-						name="수영구" value="수영구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="수영구" name="수영구" value="수영구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">수영구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="연제구"
-						name="연제구" value="연제구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="연제구" name="연제구" value="연제구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">연제구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="영도구"
-						name="영도구" value="영도구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="영도구" name="영도구" value="영도구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">영도구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="중구"
-						name="중구" value="중구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="중구" name="중구" value="중구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">중구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="해운대구"
-						name="해운대구" value="해운대구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="해운대구" name="해운대구" value="해운대구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">해운대구</span>
 					</label>
 				</div>
@@ -305,35 +304,35 @@
 			<!-- 인천 -->
 			<div class="category" id="인천" style="display: none;">
 				<div class="filter-list1">
-					<label class="checkbox"> <input type="checkbox" id="강화군"
-						name="강화군" value="강화군"> <span class="checkbox_icon"></span>
+					<label class="checkbox"> <input type="checkbox" id="강화군" name="강화군" value="강화군"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">강화군</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="계양구"
-						name="계양구" value="계양구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="계양구" name="계양구" value="계양구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">계양구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="남동구"
-						name="남동구" value="남동구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="남동구" name="남동구" value="남동구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">남동구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="동구"
-						name="동구" value="동구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="동구" name="동구" value="동구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">동구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="미추홀구"
-						name="미추홀구" value="미추홀구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbo"> <input type="checkbox" id="미추홀구" name="미추홀구" value="미추홀구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">미추홀구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="부평구"
-						name="부평구" value="부평구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="부평구" name="부평구" value="부평구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">부평구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="서구"
-						name="서구" value="서구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="서구" name="서구" value="서구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">서구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="연수구"
-						name="연수구" value="연수구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="연수구" name="연수구" value="연수구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">연수구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="옹진군"
-						name="옹진군" value="옹진군"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="옹진군" name="옹진군" value="옹진군"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">옹진군</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="중구"
-						name="중구" value="중구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="중구" name="중구" value="중구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">중구</span>
 					</label>
 				</div>
@@ -341,35 +340,35 @@
 			<!-- 대구 -->
 			<div class="category" id="대구" style="display: none;">
 				<div class="filter-list1">
-					<label class="checkbox"> <input type="checkbox" id="군위군"
-						name="군위군" value="군위군"> <span class="checkbox_icon"></span>
+					<label class="checkbox"> <input type="checkbox" id="군위군" name="군위군" value="군위군"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">군위군</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="남구"
-						name="남구" value="남구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="남구" name="남구" value="남구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">남구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="달서구"
-						name="달서구" value="달서구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="달서구" name="달서구" value="달서구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">달서구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="달성군"
-						name="달성군" value="달성군"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="달성군" name="달성군" value="달성군"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">달성군</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="동구"
-						name="동구" value="동구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="동구" name="동구" value="동구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">동구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="동구"
-						name="동구" value="동구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="동구" name="동구" value="동구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">동구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="북구"
-						name="북구" value="북구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="북구" name="북구" value="북구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">북구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="서구"
-						name="서구" value="서구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="서구" name="서구" value="서구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">서구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="수성구"
-						name="수성구" value="수성구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="수성구" name="수성구" value="수성구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">수성구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="중구"
-						name="중구" value="중구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="중구" name="중구" value="중구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">중구</span>
 					</label>
 				</div>
@@ -377,20 +376,20 @@
 			<!-- 대전 -->
 			<div class="category" id="대전" style="display: none;">
 				<div class="filter-list1">
-					<label class="checkbox"> <input type="checkbox" id="대덕구"
-						name="대덕구" value="대덕구"> <span class="checkbox_icon"></span>
+					<label class="checkbox"> <input type="checkbox" id="대덕구" name="대덕구" value="대덕구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">대덕구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="동구"
-						name="동구" value="동구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="동구" name="동구" value="동구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">동구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="서구"
-						name="서구" value="서구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="서구" name="서구" value="서구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">서구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="유성구"
-						name="유성구" value="유성구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="유성구" name="유성구" value="유성구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">유성구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="중구"
-						name="중구" value="중구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="중구" name="중구" value="중구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">중구</span>
 					</label>
 				</div>
@@ -398,20 +397,20 @@
 			<!-- 울산 -->
 			<div class="category" id="울산" style="display: none;">
 				<div class="filter-list1">
-					<label class="checkbox"> <input type="checkbox" id="남구"
-						name="남구" value="남구"> <span class="checkbox_icon"></span>
+					<label class="checkbox"> <input type="checkbox" id="남구" name="남구" value="남구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">남구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="동구"
-						name="동구" value="동구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="동구" name="동구" value="동구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">동구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="북구"
-						name="북구" value="북구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="북구" name="북구" value="북구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">북구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="울주구"
-						name="울주구" value="울주구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="울주구" name="울주구" value="울주구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">울주구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="중구"
-						name="중구" value="중구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="중구" name="중구" value="중구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">중구</span>
 					</label>
 				</div>
@@ -419,20 +418,20 @@
 			<!-- 광주 -->
 			<div class="category" id="광주" style="display: none;">
 				<div class="filter-list1">
-					<label class="checkbox"> <input type="checkbox" id="광산구"
-						name="광산구" value="광산구"> <span class="checkbox_icon"></span>
+					<label class="checkbox"> <input type="checkbox" id="광산구" name="광산구" value="광산구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">광산구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="남구"
-						name="남구" value="남구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="남구" name="남구" value="남구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">남구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="동구"
-						name="동구" value="동구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="동구" name="동구" value="동구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">동구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="북구"
-						name="북구" value="북구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="북구" name="북구" value="북구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">북구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="서구"
-						name="서구" value="서구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="서구" name="서구" value="서구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">서구</span>
 					</label>
 				</div>
@@ -440,703 +439,703 @@
 			<!-- 경기 -->
 			<div class="category" id="경기" style="display: none;">
 				<div class="filter-list1">
-					<label class="checkbox"> <input type="checkbox" id="권선구"
-						name="권선구" value="권선구"> <span class="checkbox_icon"></span>
+					<label class="checkbox"> <input type="checkbox" id="권선구" name="권선구" value="권선구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">권선구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="기흥구"
-						name="기흥구" value="기흥구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="기흥구" name="기흥구" value="기흥구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">기흥구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="단원구"
-						name="단원구" value="단원구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="단원구" name="단원구" value="단원구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">단원구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="덕양구"
-						name="덕양구" value="덕양구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="덕양구" name="덕양구" value="덕양구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">덕양구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="동안구"
-						name="동안구" value="동안구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="동안구" name="동안구" value="동안구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">동안구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="만안구"
-						name="만안구" value="만안구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="만안구" name="만안구" value="만안구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">만안구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="분당구"
-						name="분당구" value="분당구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="분당구" name="분당구" value="분당구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">분당구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="상록구"
-						name="상록구" value="상록구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="상록구" name="상록구" value="상록구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">상록구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="소사구"
-						name="소사구" value="소사구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="소사구" name="소사구" value="소사구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">소사구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="수정구"
-						name="수정구" value="수정구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="수정구" name="수정구" value="수정구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">수정구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="수지구"
-						name="수지구" value="수지구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="수지구" name="수지구" value="수지구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">수지구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="영통구"
-						name="영통구" value="영통구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="영통구" name="영통구" value="영통구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">영통구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="오정구"
-						name="오정구" value="오정구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="오정구" name="오정구" value="오정구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">오정구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="원미구"
-						name="원미구" value="원미구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="원미구" name="원미구" value="원미구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">원미구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="일산동구"
-						name="일산동구" value="일산동구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="일산동구" name="일산동구" value="일산동구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">일산동구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="일산서구"
-						name="일산서구" value="일산서구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="일산서구" name="일산서구" value="일산서구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">일산서구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="장안구"
-						name="장안구" value="장안구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="장안구" name="장안구" value="장안구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">장안구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="중원구"
-						name="중원구" value="중원구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="중원구" name="중원구" value="중원구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">중원구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="처인구"
-						name="처인구" value="처인구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="처인구" name="처인구" value="처인구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">처인구</span>
-					</label> <label class="checkbox"> <input type="checkbox" id="팔달구"
-						name="팔달구" value="팔달구"> <span class="checkbox_icon"></span>
+					</label> <label class="checkbox"> <input type="checkbox" id="팔달구" name="팔달구" value="팔달구"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">팔달구</span>
 					</label>
 				</div>
 			</div>
 			<!-- 강원 -->
-<div class="category" id="강원" style="display: none;">
-    <div class="filter-list1">
-        <label class="checkbox">
-            <input type="checkbox" id="강릉시" name="강릉시" value="강릉시">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">강릉시</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="고성군" name="고성군" value="고성군">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">고성군</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="동해시" name="동해시" value="동해시">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">동해시</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="삼척시" name="삼척시" value="삼척시">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">삼척시</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="속초시" name="속초시" value="속초시">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">속초시</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="양구군" name="양구군" value="양구군">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">양구군</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="양양군" name="양양군" value="양양군">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">양양군</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="영월군" name="영월군" value="영월군">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">영월군</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="원주시" name="원주시" value="원주시">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">원주시</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="인제군" name="인제군" value="인제군">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">인제군</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="정선군" name="정선군" value="정선군">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">정선군</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="철원군" name="철원군" value="철원군">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">철원군</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="춘천시" name="춘천시" value="춘천시">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">춘천시</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="태백시" name="태백시" value="태백시">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">태백시</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="평창군" name="평창군" value="평창군">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">평창군</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="홍천군" name="홍천군" value="홍천군">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">홍천군</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="화천군" name="화천군" value="화천군">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">화천군</span>
-        </label>
-					<label class="checkbox"> <input type="checkbox" id="횡성군"
-						name="횡성군" value="횡성군"> <span class="checkbox_icon"></span>
+			<div class="category" id="강원" style="display: none;">
+				<div class="filter-list1">
+					<label class="checkbox">
+						<input type="checkbox" id="강릉시" name="강릉시" value="강릉시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">강릉시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="고성군" name="고성군" value="고성군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">고성군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="동해시" name="동해시" value="동해시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">동해시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="삼척시" name="삼척시" value="삼척시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">삼척시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="속초시" name="속초시" value="속초시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">속초시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="양구군" name="양구군" value="양구군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">양구군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="양양군" name="양양군" value="양양군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">양양군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="영월군" name="영월군" value="영월군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">영월군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="원주시" name="원주시" value="원주시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">원주시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="인제군" name="인제군" value="인제군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">인제군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="정선군" name="정선군" value="정선군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">정선군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="철원군" name="철원군" value="철원군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">철원군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="춘천시" name="춘천시" value="춘천시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">춘천시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="태백시" name="태백시" value="태백시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">태백시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="평창군" name="평창군" value="평창군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">평창군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="홍천군" name="홍천군" value="홍천군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">홍천군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="화천군" name="화천군" value="화천군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">화천군</span>
+					</label>
+					<label class="checkbox"> <input type="checkbox" id="횡성군" name="횡성군" value="횡성군"> <span
+							class="checkbox_icon"></span>
 						<span class="checkbox_text">횡성군</span>
 					</label>
 				</div>
 			</div>
 			<!-- 경상 -->
-<div class="category" id="경상" style="display: none;">
-    <div class="filter-list1">
-    <label class="checkbox">
-    <input type="checkbox" id="경산시" name="경산시" value="경산시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">경산시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="경주시" name="경주시" value="경주시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">경주시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="고령군" name="고령군" value="고령군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">고령군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="구미시" name="구미시" value="구미시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">구미시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="김천시" name="김천시" value="김천시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">김천시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="문경시" name="문경시" value="문경시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">문경시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="봉화군" name="봉화군" value="봉화군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">봉화군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="상주시" name="상주시" value="상주시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">상주시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="성주군" name="성주군" value="성주군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">성주군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="안동시" name="안동시" value="안동시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">안동시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="영덕군" name="영덕군" value="영덕군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">영덕군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="영양군" name="영양군" value="영양군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">영양군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="영주시" name="영주시" value="영주시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">영주시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="영천시" name="영천시" value="영천시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">영천시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="예천군" name="예천군" value="예천군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">예천군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="울릉군" name="울릉군" value="울릉군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">울릉군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="울진군" name="울진군" value="울진군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">울진군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="의성군" name="의성군" value="의성군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">의성군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="청도군" name="청도군" value="청도군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">청도군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="청송군" name="청송군" value="청송군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">청송군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="칠곡군" name="칠곡군" value="칠곡군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">칠곡군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="포항시" name="포항시" value="포항시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">포항시</span>
-</label>
-        <label class="checkbox">
-            <input type="checkbox" id="거제시" name="거제시" value="거제시">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">거제시</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="거창군" name="거창군" value="거창군">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">거창군</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="고성군" name="고성군" value="고성군">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">고성군</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="김해시" name="김해시" value="김해시">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">김해시</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="남해군" name="남해군" value="남해군">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">남해군</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="밀양시" name="밀양시" value="밀양시">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">밀양시</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="사천시" name="사천시" value="사천시">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">사천시</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="산청군" name="산청군" value="산청군">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">산청군</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="양산시" name="양산시" value="양산시">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">양산시</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="의령군" name="의령군" value="의령군">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">의령군</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="진주시" name="진주시" value="진주시">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">진주시</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="창녕군" name="창녕군" value="창녕군">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">창녕군</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="창원시" name="창원시" value="창원시">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">창원시</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="통영시" name="통영시" value="통영시">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">통영시</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="하동군" name="하동군" value="하동군">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">하동군</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="함안군" name="함안군" value="함안군">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">함안군</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="함양군" name="함양군" value="함양군">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">함양군</span>
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" id="합천군" name="합천군" value="합천군">
-            <span class="checkbox_icon"></span>
-            <span class="checkbox_text">합천군</span>
-        </label>
-		</div>
-		</div>
-		<!-- 전라 -->
-<div class="category" id="전라" style="display: none;">
-    <div class="filter-list1">
-    <label class="checkbox">
-    <input type="checkbox" id="고창군" name="고창군" value="고창군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">고창군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="군산시" name="군산시" value="군산시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">군산시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="김제시" name="김제시" value="김제시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">김제시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="남원시" name="남원시" value="남원시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">남원시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="무주군" name="무주군" value="무주군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">무주군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="부안군" name="부안군" value="부안군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">부안군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="순창군" name="순창군" value="순창군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">순창군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="완주군" name="완주군" value="완주군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">완주군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="익산시" name="익산시" value="익산시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">익산시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="임실군" name="임실군" value="임실군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">임실군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="장수군" name="장수군" value="장수군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">장수군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="전주시" name="전주시" value="전주시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">전주시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="정읍시" name="정읍시" value="정읍시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">정읍시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="진안군" name="진안군" value="진안군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">진안군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="강진군" name="강진군" value="강진군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">강진군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="고흥군" name="고흥군" value="고흥군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">고흥군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="곡성군" name="곡성군" value="곡성군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">곡성군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="광양시" name="광양시" value="광양시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">광양시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="구례군" name="구례군" value="구례군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">구례군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="나주시" name="나주시" value="나주시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">나주시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="담양군" name="담양군" value="담양군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">담양군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="목포시" name="목포시" value="목포시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">목포시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="무안군" name="무안군" value="무안군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">무안군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="보성군" name="보성군" value="보성군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">보성군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="순천시" name="순천시" value="순천시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">순천시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="신안군" name="신안군" value="신안군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">신안군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="여수시" name="여수시" value="여수시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">여수시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="영광군" name="영광군" value="영광군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">영광군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="영암군" name="영암군" value="영암군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">영암군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="완도군" name="완도군" value="완도군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">완도군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="장성군" name="장성군" value="장성군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">장성군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="장흥군" name="장흥군" value="장흥군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">장흥군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="진도군" name="진도군" value="진도군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">진도군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="함평군" name="함평군" value="함평군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">함평군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="해남군" name="해남군" value="해남군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">해남군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="화순군" name="화순군" value="화순군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">화순군</span>
-</label>
-</div>
-</div>
-<!-- 충청 -->
-<div class="category" id="충청" style="display: none;">
-    <div class="filter-list1">
-    <label class="checkbox">
-    <input type="checkbox" id="괴산군" name="괴산군" value="괴산군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">괴산군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="단양군" name="단양군" value="단양군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">단양군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="보운군" name="보운군" value="보운군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">보운군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="영동군" name="영동군" value="영동군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">영동군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="옥천군" name="옥천군" value="옥천군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">옥천군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="음성군" name="음성군" value="음성군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">음성군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="제천시" name="제천시" value="제천시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">제천시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="증평군" name="증평군" value="증평군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">증평군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="진천군" name="진천군" value="진천군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">진천군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="청주시" name="청주시" value="청주시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">청주시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="충주시" name="충주시" value="충주시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">충주시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="계룡시" name="계룡시" value="계룡시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">계룡시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="공주시" name="공주시" value="공주시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">공주시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="금산군" name="금산군" value="금산군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">금산군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="논산시" name="논산시" value="논산시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">논산시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="당진시" name="당진시" value="당진시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">당진시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="보령시" name="보령시" value="보령시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">보령시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="부여군" name="부여군" value="부여군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">부여군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="서산시" name="서산시" value="서산시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">서산시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="서천군" name="서천군" value="서천군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">서천군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="아산시" name="아산시" value="아산시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">아산시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="예산군" name="예산군" value="예산군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">예산군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="천안시" name="천안시" value="천안시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">천안시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="청양군" name="청양군" value="청양군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">청양군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="태안군" name="태안군" value="태안군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">태안군</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="홍성군" name="홍성군" value="홍성군">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">홍성군</span>
-</label>
-</div>
-</div>
-<!-- 제주 -->
-<div class="category" id="제주" style="display: none;">
-    <div class="filter-list1">
-    <label class="checkbox">
-    <input type="checkbox" id="제주시" name="제주시" value="제주시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">제주시</span>
-</label>
-<label class="checkbox">
-    <input type="checkbox" id="서귀포시" name="서귀포시" value="서귀포시">
-    <span class="checkbox_icon"></span>
-    <span class="checkbox_text">서귀포시</span>
-</label>
-</div>
-</div>
+			<div class="category" id="경상" style="display: none;">
+				<div class="filter-list1">
+					<label class="checkbox">
+						<input type="checkbox" id="경산시" name="경산시" value="경산시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">경산시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="경주시" name="경주시" value="경주시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">경주시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="고령군" name="고령군" value="고령군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">고령군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="구미시" name="구미시" value="구미시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">구미시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="김천시" name="김천시" value="김천시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">김천시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="문경시" name="문경시" value="문경시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">문경시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="봉화군" name="봉화군" value="봉화군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">봉화군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="상주시" name="상주시" value="상주시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">상주시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="성주군" name="성주군" value="성주군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">성주군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="안동시" name="안동시" value="안동시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">안동시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="영덕군" name="영덕군" value="영덕군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">영덕군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="영양군" name="영양군" value="영양군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">영양군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="영주시" name="영주시" value="영주시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">영주시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="영천시" name="영천시" value="영천시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">영천시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="예천군" name="예천군" value="예천군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">예천군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="울릉군" name="울릉군" value="울릉군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">울릉군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="울진군" name="울진군" value="울진군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">울진군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="의성군" name="의성군" value="의성군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">의성군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="청도군" name="청도군" value="청도군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">청도군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="청송군" name="청송군" value="청송군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">청송군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="칠곡군" name="칠곡군" value="칠곡군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">칠곡군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="포항시" name="포항시" value="포항시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">포항시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="거제시" name="거제시" value="거제시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">거제시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="거창군" name="거창군" value="거창군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">거창군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="고성군" name="고성군" value="고성군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">고성군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="김해시" name="김해시" value="김해시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">김해시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="남해군" name="남해군" value="남해군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">남해군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="밀양시" name="밀양시" value="밀양시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">밀양시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="사천시" name="사천시" value="사천시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">사천시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="산청군" name="산청군" value="산청군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">산청군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="양산시" name="양산시" value="양산시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">양산시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="의령군" name="의령군" value="의령군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">의령군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="진주시" name="진주시" value="진주시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">진주시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="창녕군" name="창녕군" value="창녕군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">창녕군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="창원시" name="창원시" value="창원시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">창원시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="통영시" name="통영시" value="통영시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">통영시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="하동군" name="하동군" value="하동군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">하동군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="함안군" name="함안군" value="함안군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">함안군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="함양군" name="함양군" value="함양군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">함양군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="합천군" name="합천군" value="합천군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">합천군</span>
+					</label>
+				</div>
+			</div>
+			<!-- 전라 -->
+			<div class="category" id="전라" style="display: none;">
+				<div class="filter-list1">
+					<label class="checkbox">
+						<input type="checkbox" id="고창군" name="고창군" value="고창군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">고창군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="군산시" name="군산시" value="군산시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">군산시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="김제시" name="김제시" value="김제시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">김제시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="남원시" name="남원시" value="남원시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">남원시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="무주군" name="무주군" value="무주군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">무주군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="부안군" name="부안군" value="부안군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">부안군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="순창군" name="순창군" value="순창군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">순창군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="완주군" name="완주군" value="완주군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">완주군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="익산시" name="익산시" value="익산시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">익산시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="임실군" name="임실군" value="임실군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">임실군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="장수군" name="장수군" value="장수군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">장수군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="전주시" name="전주시" value="전주시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">전주시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="정읍시" name="정읍시" value="정읍시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">정읍시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="진안군" name="진안군" value="진안군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">진안군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="강진군" name="강진군" value="강진군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">강진군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="고흥군" name="고흥군" value="고흥군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">고흥군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="곡성군" name="곡성군" value="곡성군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">곡성군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="광양시" name="광양시" value="광양시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">광양시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="구례군" name="구례군" value="구례군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">구례군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="나주시" name="나주시" value="나주시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">나주시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="담양군" name="담양군" value="담양군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">담양군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="목포시" name="목포시" value="목포시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">목포시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="무안군" name="무안군" value="무안군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">무안군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="보성군" name="보성군" value="보성군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">보성군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="순천시" name="순천시" value="순천시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">순천시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="신안군" name="신안군" value="신안군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">신안군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="여수시" name="여수시" value="여수시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">여수시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="영광군" name="영광군" value="영광군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">영광군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="영암군" name="영암군" value="영암군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">영암군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="완도군" name="완도군" value="완도군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">완도군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="장성군" name="장성군" value="장성군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">장성군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="장흥군" name="장흥군" value="장흥군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">장흥군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="진도군" name="진도군" value="진도군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">진도군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="함평군" name="함평군" value="함평군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">함평군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="해남군" name="해남군" value="해남군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">해남군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="화순군" name="화순군" value="화순군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">화순군</span>
+					</label>
+				</div>
+			</div>
+			<!-- 충청 -->
+			<div class="category" id="충청" style="display: none;">
+				<div class="filter-list1">
+					<label class="checkbox">
+						<input type="checkbox" id="괴산군" name="괴산군" value="괴산군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">괴산군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="단양군" name="단양군" value="단양군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">단양군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="보운군" name="보운군" value="보운군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">보운군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="영동군" name="영동군" value="영동군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">영동군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="옥천군" name="옥천군" value="옥천군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">옥천군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="음성군" name="음성군" value="음성군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">음성군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="제천시" name="제천시" value="제천시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">제천시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="증평군" name="증평군" value="증평군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">증평군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="진천군" name="진천군" value="진천군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">진천군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="청주시" name="청주시" value="청주시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">청주시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="충주시" name="충주시" value="충주시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">충주시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="계룡시" name="계룡시" value="계룡시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">계룡시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="공주시" name="공주시" value="공주시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">공주시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="금산군" name="금산군" value="금산군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">금산군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="논산시" name="논산시" value="논산시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">논산시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="당진시" name="당진시" value="당진시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">당진시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="보령시" name="보령시" value="보령시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">보령시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="부여군" name="부여군" value="부여군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">부여군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="서산시" name="서산시" value="서산시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">서산시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="서천군" name="서천군" value="서천군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">서천군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="아산시" name="아산시" value="아산시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">아산시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="예산군" name="예산군" value="예산군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">예산군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="천안시" name="천안시" value="천안시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">천안시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="청양군" name="청양군" value="청양군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">청양군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="태안군" name="태안군" value="태안군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">태안군</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="홍성군" name="홍성군" value="홍성군">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">홍성군</span>
+					</label>
+				</div>
+			</div>
+			<!-- 제주 -->
+			<div class="category" id="제주" style="display: none;">
+				<div class="filter-list1">
+					<label class="checkbox">
+						<input type="checkbox" id="제주시" name="제주시" value="제주시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">제주시</span>
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" id="서귀포시" name="서귀포시" value="서귀포시">
+						<span class="checkbox_icon"></span>
+						<span class="checkbox_text">서귀포시</span>
+					</label>
+				</div>
+			</div>
 		</div>
 	</div>
 	<!-- 장소 리스트를 반복하여 표시 -->
@@ -1145,366 +1144,410 @@
 	<div id="place-list">
 		<ul class="place-list">
 			<th:block th:each="place : ${placeList}">
-				 <li class="place-item">
-                    <div class="place-content">
-                        <a th:href="@{'/placeDetail/' + ${place.p_id}}" class="place-link">
-                            <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="Image of ${place.p_name}" class="place-image" />
-                            <div class="place-info">
-                                <span th:text="${place.p_name}"></span>
-                                <span th:utext="'지역 : ' + ${place.p_location}"></span>
-                                <img class="st-img" src="/images/heart.png"><span class="st-text" th:text="${place.p_stScore}"></span>
-                            </div>
-                        </a>
-                        <button type="button" th:attr="data-pid=${place.p_id}" onclick="addToCart(this.getAttribute('data-pid'))" class="add-to-cart-button">장바구니에 추가</button>
-                    </div>
-                </li>
+				<li class="place-item">
+					<div class="place-content">
+						<a th:href="@{'/placeDetail/' + ${place.p_id}}" class="place-link">
+							<img th:src="@{'/getImage/' + ${place.p_iname}}" alt="Image of ${place.p_name}"
+								class="place-image" />
+							<div class="place-info">
+								<span th:text="${place.p_name}"></span>
+								<span th:utext="'지역 : ' + ${place.p_location}"></span>
+								<img class="st-img" src="/images/heart.png"><span class="st-text"
+									th:text="${place.p_stScore}"></span>
+							</div>
+						</a>
+						<button type="button" th:attr="data-pid=${place.p_id}"
+							onclick="addToCart(this.getAttribute('data-pid'))" class="add-to-cart-button">장바구니에
+							추가</button>
+					</div>
+				</li>
 			</th:block>
 		</ul>
 	</div>
-		<div id="cart-section">
-			<!-- 장바구니 섹션 -->
-			<div class="select-list-header">선택하신 리스트입니다.</div>
-			<div class="point-text">출발지</div>
-			<ul id="startPoint" class="sortable">
-				<!-- 출발지 아이템이 동적으로 추가됩니다 -->
-			</ul>
-			<div class="point-text">경유지</div>
-			<ul id="wayPoints" class="sortable">
-				<!-- 경유지 아이템이 동적으로 추가됩니다 -->
-			</ul>
-			<div class="point-text">목적지</div>
-			<ul id="endPoint" class="sortable">
-				<!-- 목적지 아이템이 동적으로 추가됩니다 -->
-			</ul>
-			<div class="point-button-array">
+	<div id="cart-section">
+		<!-- 장바구니 섹션 -->
+		<div class="select-list-header">선택하신 리스트입니다.</div>
+		<div class="point-text">출발지</div>
+		<ul id="startPoint" class="sortable">
+			<!-- 출발지 아이템이 동적으로 추가됩니다 -->
+		</ul>
+		<div class="point-text">경유지</div>
+		<ul id="wayPoints" class="sortable">
+			<!-- 경유지 아이템이 동적으로 추가됩니다 -->
+		</ul>
+		<div class="point-text">목적지</div>
+		<ul id="endPoint" class="sortable">
+			<!-- 목적지 아이템이 동적으로 추가됩니다 -->
+		</ul>
+		<div class="point-button-array">
 			<button class="cart-clear-button" id="clearCartButton">장바구니 비우기</button>
 			<button class="route-button" id="routeButton">길찾기</button>
-			</div>
-			<div id="map"></div>
 		</div>
+		<div id="map"></div>
+	</div>
 	<!-- 푸터 -->
 	<th:block th:id="footer" th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
 <script th:inline="javascript">
-        /*<![CDATA[*/
+    /*<![CDATA[*/
 
-        function addToCart(p_id) {
-            var id = parseInt(p_id, 10);
-            if (!Number.isInteger(id)) {
-                alert("잘못된 상품 ID입니다.");
-                return;
-            }
-
-            $.post("/addPlaceToCart", { p_id: id })
-                .done(function () {
-                    alert("장소가 장바구니에 추가되었습니다.");
-                    updateCart(); // 장바구니 업데이트
-                })
-                .fail(function () {
-                    alert("장소를 추가하는데 문제가 발생했습니다.");
-                });
+    function addToCart(p_id) {
+        var id = parseInt(p_id, 10);
+        if (!Number.isInteger(id)) {
+            alert("잘못된 상품 ID입니다.");
+            return;
         }
 
-        function removeFromCart(pid) {
-            $.post("/removeItemFromCart", { p_id: pid })
-                .done(function () {
-                    alert("상품이 장바구니에서 제거되었습니다.");
+        $.post("/addPlaceToCart", { p_id: id })
+            .done(function () {
+                alert("장소가 장바구니에 추가되었습니다.");
+                updateCart(); // 장바구니 업데이트
+            })
+            .fail(function () {
+                alert("장소를 추가하는데 문제가 발생했습니다.");
+            });
+    }
+
+    function removeFromCart(pid) {
+        $.post("/removeItemFromCart", { p_id: pid })
+            .done(function () {
+                alert("상품이 장바구니에서 제거되었습니다.");
+                updateCart(); // 장바구니 UI 업데이트
+            })
+            .fail(function () {
+                alert("상품을 제거하는데 문제가 발생했습니다.");
+            });
+    }
+
+    function updateCart() {
+        $.get("/showCart")
+            .done(function (response) {
+                // 기존 내용을 지웁니다.
+                $("#startPoint").empty();
+                $("#wayPoints").empty();
+                $("#endPoint").empty();
+
+                if (response.length > 0) {
+                    // 출발지 추가
+                    $("#startPoint").append(`<li data-pid="${response[0].p_id}">${response[0].p_name} <button type="button" class="removeItem" data-pid="${response[0].p_id}">삭제</button></li>`);
+                    // 경유지 추가
+                    for (var i = 1; i < response.length - 1; i++) {
+                        $("#wayPoints").append(`<li data-pid="${response[i].p_id}">${response[i].p_name} <button type="button" class="removeItem" data-pid="${response[i].p_id}">삭제</button></li>`);
+                    }
+                    // 목적지 추가
+                    $("#endPoint").append(`<li data-pid="${response[response.length - 1].p_id}">${response[response.length - 1].p_name} <button type="button" class="removeItem" data-pid="${response[response.length - 1].p_id}">삭제</button></li>`);
+                }
+
+                updateMap(response); // 지도 업데이트
+            });
+    }
+
+    function initMap() {
+        var mapContainer = document.getElementById('map'),
+            mapOption = {
+                center: new kakao.maps.LatLng(37.5665, 126.9780), // 초기 지도의 중심 좌표
+                level: 3 // 초기 지도의 확대 레벨
+            };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption);
+        var bounds = new kakao.maps.LatLngBounds();
+        return { map, bounds };
+    }
+
+    function updateMap(locations) {
+        var { map, bounds } = initMap(); // 초기 지도를 설정
+
+        if (locations.length === 0) {
+            return;
+        }
+
+        // 출발지, 경유지, 목적지에만 마커 추가
+        if (locations.length > 0) {
+            var fromMarkerPosition = new kakao.maps.LatLng(locations[0].y, locations[0].x);
+            var fromMarker = new kakao.maps.Marker({
+                position: fromMarkerPosition,
+                title: '출발지'
+            });
+            fromMarker.setMap(map);
+            bounds.extend(fromMarkerPosition);
+        }
+
+        if (locations.length > 2) {
+            for (var i = 1; i < locations.length - 1; i++) {
+                var wayMarkerPosition = new kakao.maps.LatLng(locations[i].y, locations[i].x);
+                var wayMarker = new kakao.maps.Marker({
+                    position: wayMarkerPosition,
+                    title: '경유지'
+                });
+                wayMarker.setMap(map);
+                bounds.extend(wayMarkerPosition);
+            }
+        }
+
+        if (locations.length > 1) {
+            var toMarkerPosition = new kakao.maps.LatLng(locations[locations.length - 1].y, locations[locations.length - 1].x);
+            var toMarker = new kakao.maps.Marker({
+                position: toMarkerPosition,
+                title: '목적지'
+            });
+            toMarker.setMap(map);
+            bounds.extend(toMarkerPosition);
+        }
+
+        // 선을 구성하는 좌표 배열입니다.
+        var linePath = [];
+        if (Array.isArray(locations) && locations.length > 0) {
+            locations.forEach(point => {
+                linePath.push(new kakao.maps.LatLng(point.y, point.x));
+            });
+
+            // 디버깅 로그 추가
+            console.log('Line Path:', linePath);
+
+            // 선을 생성합니다.
+            var polyline = new kakao.maps.Polyline({
+                path: linePath,
+                strokeWeight: 5,
+                strokeColor: 'blue',
+                strokeOpacity: 0.7,
+                strokeStyle: 'solid'
+            });
+
+            // 지도에 선을 표시합니다.
+            polyline.setMap(map);
+        }
+
+        map.setBounds(bounds); // 지도의 경계를 마커가 모두 보이도록 설정합니다
+        
+    }
+
+    // 드래그 앤 드롭을 설정합니다.
+    new Sortable(document.getElementById('startPoint'), {
+        group: 'shared',
+        draggable: 'li',
+        onEnd: function (evt) {
+            updateOrder();
+        }
+    });
+
+    new Sortable(document.getElementById('wayPoints'), {
+        group: 'shared',
+        draggable: 'li',
+        onEnd: function (evt) {
+            updateOrder();
+        }
+    });
+
+    new Sortable(document.getElementById('endPoint'), {
+        group: 'shared',
+        draggable: 'li',
+        onEnd: function (evt) {
+            updateOrder();
+        }
+    });
+
+    function updateOrder() {
+        // 출발지, 경유지, 목적지의 순서를 가져와서 업데이트합니다.
+        let startPoint = [];
+        $('#startPoint li').each(function() {
+            startPoint.push($(this).attr('data-pid'));
+        });
+
+        let wayPoints = [];
+        $('#wayPoints li').each(function() {
+            wayPoints.push($(this).attr('data-pid'));
+        });
+
+        let endPoint = [];
+        $('#endPoint li').each(function() {
+            endPoint.push($(this).attr('data-pid'));
+        });
+
+        console.log('Start Point:', startPoint);
+        console.log('Way Points:', wayPoints);
+        console.log('End Point:', endPoint);
+
+        // AJAX 요청을 통해 서버에 순서를 업데이트합니다.
+        $.ajax({
+            url: '/updateCartOrder',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                startPoint: startPoint,
+                wayPoints: wayPoints,
+                endPoint: endPoint
+            }),
+            success: function(response) {
+                console.log('Updated Cart:', response);
+                updateCart(); // 장바구니 UI 업데이트
+            },
+            error: function(error) {
+                console.log('Error updating order:', error);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        updateCart(); // 페이지 로드 시 장바구니 및 지도 업데이트
+
+        $('#clearCartButton').click(function () {
+            $.post("/clearCart")
+                .done(function (response) {
+                    alert(response); // 성공 메시지 표시
                     updateCart(); // 장바구니 UI 업데이트
                 })
                 .fail(function () {
-                    alert("상품을 제거하는데 문제가 발생했습니다.");
+                    alert('장바구니를 비우는 데 실패했습니다.');
                 });
-        }
+        });
 
-        function updateCart() {
-            $.get("/showCart")
-                .done(function (response) {
-                    // 기존 내용을 지웁니다.
-                    $("#startPoint").empty();
-                    $("#wayPoints").empty();
-                    $("#endPoint").empty();
+        $('#routeButton').click(function () {
+            console.log("길찾기 버튼 클릭됨"); // 디버깅 로그
+            startRoute(); // 길찾기 기능 실행
+        });
 
-                    if (response.length > 0) {
-                        // 출발지 추가
-                        $("#startPoint").append(`<li>${response[0].p_name} <button type="button" class="removeItem" data-pid="${response[0].p_id}">삭제</button></li>`);
-                        // 경유지 추가
-                        for (var i = 1; i < response.length - 1; i++) {
-                            $("#wayPoints").append(`<li>${response[i].p_name} <button type="button" class="removeItem" data-pid="${response[i].p_id}">삭제</button></li>`);
-                        }
-                        // 목적지 추가
-                        $("#endPoint").append(`<li>${response[response.length - 1].p_name} <button type="button" class="removeItem" data-pid="${response[response.length - 1].p_id}">삭제</button></li>`);
+        // 개별 삭제 버튼 클릭 시
+        $(document).on('click', '.removeItem', function () {
+            var pid = $(this).data('pid');
+            removeFromCart(pid); // 해당 상품을 장바구니에서 제거
+        });
+
+        // 드래그 앤 드롭을 설정합니다.
+        new Sortable(document.getElementById('startPoint'), {
+            group: 'shared',
+            draggable: 'li',
+            onEnd: function (evt) {
+                updateOrder();
+            }
+        });
+        //
+
+        new Sortable(document.getElementById('wayPoints'), {
+            group: 'shared',
+            draggable: 'li',
+            onEnd: function (evt) {
+                updateOrder();
+            }
+        });
+
+        new Sortable(document.getElementById('endPoint'), {
+            group: 'shared',
+            draggable: 'li',
+            onEnd: function (evt) {
+                updateOrder();
+            }
+        });
+    });
+
+    function startRoute() {
+        $.get("/showCart")
+            .done(function (response) {
+                if (response.length > 0) {
+                    var fromPoint = response[0];
+                    var toPoint = response[response.length - 1];
+                    var wayPoints = response.slice(1, response.length - 1);
+                    var params = {
+                        fromX: fromPoint.x,
+                        fromY: fromPoint.y,
+                        toX: toPoint.x,
+                        toY: toPoint.y,
+                    };
+
+                    if (wayPoints.length > 0) {
+                        params.wayPoints = wayPoints.map(point => `${point.x},${point.y}`).join('|');
                     }
 
-                    updateMap(response); // 지도 업데이트
-                });
-        }
-
-        function initMap() {
-            var mapContainer = document.getElementById('map'),
-                mapOption = {
-                    center: new kakao.maps.LatLng(37.5665, 126.9780), // 초기 지도의 중심 좌표
-                    level: 3 // 초기 지도의 확대 레벨
-                };
-
-            var map = new kakao.maps.Map(mapContainer, mapOption);
-            var bounds = new kakao.maps.LatLngBounds();
-            return { map, bounds };
-        }
-
-        function updateMap(locations) {
-            var { map, bounds } = initMap(); // 초기 지도를 설정
-
-            if (locations.length === 0) {
-                return;
-            }
-
-            // 출발지, 경유지, 목적지에만 마커 추가
-            if (locations.length > 0) {
-                var fromMarkerPosition = new kakao.maps.LatLng(locations[0].y, locations[0].x);
-                var fromMarker = new kakao.maps.Marker({
-                    position: fromMarkerPosition,
-                    title: '출발지'
-                });
-                fromMarker.setMap(map);
-                bounds.extend(fromMarkerPosition);
-            }
-
-            if (locations.length > 2) {
-                for (var i = 1; i < locations.length - 1; i++) {
-                    var wayMarkerPosition = new kakao.maps.LatLng(locations[i].y, locations[i].x);
-                    var wayMarker = new kakao.maps.Marker({
-                        position: wayMarkerPosition,
-                        title: '경유지'
-                    });
-                    wayMarker.setMap(map);
-                    bounds.extend(wayMarkerPosition);
+                    var paramString = $.param(params);
+                    window.location.href = "/mapPaths?" + paramString;
+                } else {
+                    alert("장바구니에 장소가 없습니다.");
                 }
-            }
+            });
+    }
+    
+    function showCategory(category) {
+        var categorys = document.getElementsByClassName("category");
 
-            if (locations.length > 1) {
-                var toMarkerPosition = new kakao.maps.LatLng(locations[locations.length - 1].y, locations[locations.length - 1].x);
-                var toMarker = new kakao.maps.Marker({
-                    position: toMarkerPosition,
-                    title: '목적지'
-                });
-                toMarker.setMap(map);
-                bounds.extend(toMarkerPosition);
-            }
-
-            // 선을 구성하는 좌표 배열입니다.
-            var linePath = [];
-            if (Array.isArray(locations) && locations.length > 0) {
-                locations.forEach(point => {
-                    linePath.push(new kakao.maps.LatLng(point.y, point.x));
-                });
-
-                // 디버깅 로그 추가
-                console.log('Line Path:', linePath);
-
-                // 선을 생성합니다.
-                var polyline = new kakao.maps.Polyline({
-                    path: linePath,
-                    strokeWeight: 5,
-                    strokeColor: 'blue',
-                    strokeOpacity: 0.7,
-                    strokeStyle: 'solid'
-                });
-
-                // 지도에 선을 표시합니다.
-                polyline.setMap(map);
-            }
-
-            map.setBounds(bounds); // 지도의 경계를 마커가 모두 보이도록 설정합니다
-            
+        for (var i = 0; i < categorys.length; i++) {
+            categorys[i].style.display = "none";
         }
- function startRoute() {
-    $.get("/showCart")
-        .done(function (response) {
-            if (response.length > 0) {
-                var fromPoint = response[0];
-                var toPoint = response[response.length - 1];
-                var wayPoints = response.slice(1, response.length - 1);
-               var params = {
-                    fromX: fromPoint.x,
-                    fromY: fromPoint.y,
-                    toX: toPoint.x,
-                    toY: toPoint.y,
-                };
 
-                if (wayPoints.length > 0) {
-                    params.wayPoints = wayPoints.map(point => `${point.x},${point.y}`).join('|');
-                }
+        document.getElementById(category).style.display = "block";
+    }
 
-                var paramString = $.param(params);
-                window.location.href = "/mapPaths?" + paramString;
-            } else {
-                alert("장바구니에 장소가 없습니다.");
+    $(document).ready(function() {
+        $("input[type=checkbox]").change(function() {
+            searchByRegion();
+        });
+    });
+
+    function searchByRegion() {
+        var regions = [];
+        $("input[type=checkbox]:checked").each(function() {
+            regions.push($(this).val());
+        });
+
+        $.ajax({
+            url : '/searchByRegion',
+            type : 'GET',
+            traditional : true,
+            data : {
+                regions : regions
+            },
+            success : function(data) {
+                updatePlaceList(data);
+            },
+            error : function() {
+                alert('지역 검색 중 오류가 발생했습니다.');
             }
         });
-}
+    }
 
-        $(document).ready(function () {
-            updateCart(); // 페이지 로드 시 장바구니 및 지도 업데이트
+    function updatePlaceList(data) {
+        var placeList = $("#place-list");
+        placeList.empty();
+        if (data.length > 0) {
+            data.forEach(function(place, index) {
+                var placeHtml = '<li class="place-item' + (index === 0 ? ' first-item' : '') + '">'
+                    + '<div class="place-content">'
+                    + '<a href="/placeDetail/' + place.p_id + '" class="place-link">'
+                    + '<img src="/getImage/' + place.p_iname + '" class="place-image" width="150px" />'
+                    + '<div class="place-info">'
+                    + '<span>' + place.p_name + '</span>'
+                    + '<span>지역 : ' + place.p_location + '</span>'
+                    + '<span>별점: ' + place.p_stScore.toFixed(1) + '</span>'
+                    + '</div>'
+                    + '</a>'
+                    + '<div class="button-wrapper">'
+                    + '<button type="button" data-pid="' + place.p_id + '" class="add-to-cart-button" onclick="addToCart(this.getAttribute(\'data-pid\'))">장바구니에 추가</button>'
+                    + '</div>'
+                    + '</div>'
+                    + '</li>';
 
-            $('#clearCartButton').click(function () {
-                $.post("/clearCart")
-                    .done(function (response) {
-                        alert(response); // 성공 메시지 표시
-                        updateCart(); // 장바구니 UI 업데이트
-                    })
-                    .fail(function () {
-                        alert('장바구니를 비우는 데 실패했습니다.');
-                    });
+                placeList.append(placeHtml);
             });
+        } else {
+            placeList.append('<div class="no-result-place">검색 결과가 없습니다.</div>');
+        }
+    }
 
-            $('#routeButton').click(function () {
-                console.log("길찾기 버튼 클릭됨"); // 디버깅 로그
-                startRoute(); // 길찾기 기능 실행
-            });
+    // 스크롤 이벤트 리스너 추가
+    window.addEventListener('scroll', function() {
+        var cartSection = document.getElementById('cart-section');
+        var footer = document.querySelector('footer'); // 푸터 요소를 선택
+        var scrollPosition = window.scrollY || document.documentElement.scrollTop;
+        var windowHeight = window.innerHeight;
+        var footerTop = footer.getBoundingClientRect().top + scrollPosition;
+        var scrollThreshold = document.documentElement.scrollHeight * 0.05; // 문서 높이의 30%
 
-            // 개별 삭제 버튼 클릭 시
-            $(document).on('click', '.removeItem', function () {
-                var pid = $(this).data('pid');
-                removeFromCart(pid); // 해당 상품을 장바구니에서 제거
-            });
-
-            // 드래그 앤 드롭을 설정합니다.
-            new Sortable(document.getElementById('startPoint'), {
-                group: 'shared',
-                draggable: 'li',
-                onEnd: function (evt) {
-                    // 출발지가 변경되면 처리할 코드
-                }
-            });
-
-            new Sortable(document.getElementById('wayPoints'), {
-                group: 'shared',
-                draggable: 'li',
-                onEnd: function (evt) {
-                    // 경유지가 변경되면 처리할 코드
-                }
-            });
-
-            new Sortable(document.getElementById('endPoint'), {
-                group: 'shared',
-                draggable: 'li',
-                onEnd: function (evt) {
-                    // 목적지가 변경되면 처리할 코드
-                }
-            });
-        });
-        
-        
-		function showCategory(category) {
-			var categorys = document.getElementsByClassName("category");
-
-			for (var i = 0; i < categorys.length; i++) {
-				categorys[i].style.display = "none";
-			}
-
-			document.getElementById(category).style.display = "block";
-		}
-		$(document).ready(function() {
-		    // 테마 체크박스 변경 이벤트
-		    $("#테마 input[type=checkbox]").change(function() {
-		        searchByFilters();
-		    });
-
-		    // 지역 체크박스 변경 이벤트
-		    $(".category input[type=checkbox]").change(function() {
-		        searchByFilters();
-		    });
-		});
-
-		function searchByFilters() {
-		    var themes = [];
-		    var regions = [];
-
-		    // 테마 체크박스 값 수집
-		    $("#테마 input[type=checkbox]:checked").each(function() {
-		        themes.push($(this).val());
-		    });
-
-		    // 지역 체크박스 값 수집
-		    $(".category input[type=checkbox]:checked").each(function() {
-		        regions.push($(this).val());
-		    });
-
-		    // 디버깅용 로그 추가
-		    console.log("Selected themes:", themes);
-		    console.log("Selected regions:", regions);
-
-		    // 테마와 지역 값이 모두 없는 경우 빈 리스트로 업데이트
-		    if (themes.length === 0 && regions.length === 0) {
-		        updatePlaceList([]);
-		        return;
-		    }
-
-		    // AJAX 요청
-		    $.ajax({
-		        url: '/searchByFilters',
-		        type: 'GET',
-		        traditional: true,
-		        data: {
-		            themes: themes,
-		            regions: regions
-		        },
-		        success: function(data) {
-		            console.log("Received data:", data); // 디버깅용 로그 추가
-		            updatePlaceList(data);
-		        },
-		        error: function() {
-		            alert('검색 중 오류가 발생했습니다.');
-		        }
-		    });
-		}
-		function updatePlaceList(data) {
-		    var placeList = $("#place-list");
-		    placeList.empty();
-		    if (data.length > 0) {
-		        data.forEach(function(place, index) {
-		            var placeHtml = '<li class="place-item' + (index === 0 ? ' first-item' : '') + '">'
-		                + '<div class="place-content">'
-		                + '<a href="/placeDetail/' + place.p_id + '" class="place-link">'
-		                + '<img src="/getImage/' + place.p_iname + '" class="place-image" width="150px" />'
-		                + '<div class="place-info">'
-		                + '<span>' + place.p_name + '</span>'
-		                + '<span>지역 : ' + place.p_location + '</span>'
-		                + '<span>별점: ' + place.p_stScore.toFixed(1) + '</span>'
-		                + '</div>'
-		                + '</a>'
-		                + '<div class="button-wrapper">'
-		                + '<button type="button" data-pid="' + place.p_id + '" class="add-to-cart-button" onclick="addToCart(this.getAttribute(\'data-pid\'))">장바구니에 추가</button>'
-		                + '</div>'
-		                + '</div>'
-		                + '</li>';
-
-		            placeList.append(placeHtml);
-		        });
-		    } else {
-		        placeList.append('<div class="no-result-place">검색 결과가 없습니다.</div>');
-		    }
-		}
-		
-
-		// 스크롤 이벤트 리스너 추가
-		window.addEventListener('scroll', function() {
-		    var cartSection = document.getElementById('cart-section');
-		    var footer = document.querySelector('footer'); // 푸터 요소를 선택
-		    var scrollPosition = window.scrollY || document.documentElement.scrollTop;
-		    var windowHeight = window.innerHeight;
-		    var footerTop = footer.getBoundingClientRect().top + scrollPosition;
-		    var scrollThreshold = document.documentElement.scrollHeight * 0.05; // 문서 높이의 30%
-
-
-	          // 스크롤 위치에 따라 cart-section의 위치를 조정
-	          if (scrollPosition + windowHeight >= footerTop) {
-	              cartSection.style.top = '-35%';
-	          } else if (scrollPosition > scrollThreshold) {
-	              cartSection.style.top = '15%';
-	          } else {
-	              cartSection.style.top = '30%';
-	          }
-	      });
+        // 스크롤 위치에 따라 cart-section의 위치를 조정
+        if (scrollPosition + windowHeight >= footerTop) {
+            cartSection.style.top = '-35%';
+        } else if (scrollPosition > scrollThreshold) {
+            cartSection.style.top = '0%';
+        } else {
+            cartSection.style.top = '30%';
+        }
+    });
 </script>
 </html>
