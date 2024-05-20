@@ -78,9 +78,59 @@
 		WHERE
 		<foreach item="region" collection="regions" open="("
 			separator=" OR " close=")">
-			p_name LIKE CONCAT('%', #{region}, '%') 
+			p_name LIKE CONCAT('%', #{region}, '%')
 		</foreach>
 	</select>
-
+	<select id="searchByTheme" parameterType="java.util.List"
+		resultType="com.finalpro.start.dto.PlaceDTO">
+		SELECT p_id, p_name, p_location, p_stScore, p_iname
+		FROM place.placetbl
+		WHERE
+		<foreach item="theme" collection="themes" open="("
+			separator=" OR " close=")">
+			p_thema LIKE CONCAT('%', #{theme}, '%')
+		</foreach>
+	</select>
+	<select id="searchByFilters" parameterType="map"
+		resultType="com.finalpro.start.dto.PlaceDTO">
+		SELECT p_id, p_name, p_location, p_stScore, p_iname
+		FROM place.placetbl
+		WHERE 1=1
+		<if test="themes != null and !themes.isEmpty()">
+			AND (
+			<foreach item="theme" collection="themes" open=""
+				separator=" OR " close="">
+				p_thema = #{theme}
+			</foreach>
+			)
+		</if>
+		<if test="regions != null and !regions.isEmpty()">
+			AND (
+			<foreach item="region" collection="regions" open=""
+				separator=" OR " close="">
+				p_name LIKE CONCAT('%', #{region}, '%')
+			</foreach>
+			)
+		</if>
+		<if test="themes == null or themes.isEmpty()">
+			<if test="regions == null or regions.isEmpty()">
+				AND 1=0
+			</if>
+		</if>
+	</select>
+	<select id="fetchPlacesLocation" parameterType="String"
+		resultType="place">
+		SELECT p_name, p_location, p_description, p_iname
+		FROM
+		place.placetbl
+		WHERE p_location=#{location}
+	</select>
+	<select id="fetchPlacesTheme" parameterType="String"
+		resultType="place">
+		SELECT p_name, p_location, p_description, p_iname
+		FROM
+		place.placetbl
+		WHERE p_thema=#{theme}
+	</select>
 
 </mapper>

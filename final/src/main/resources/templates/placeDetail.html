@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/footer.css}">
 <link rel="stylesheet" th:href="@{/css/placeDetail.css}">
 </head>
 <body>
@@ -22,18 +23,18 @@
          <div class="preview-img-array-box">
          <!-- 대표 이미지 -->
             <div class="preview-img">
-               <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
+               <!-- <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">  -->
             </div>
             <!-- 부가 이미지들 -->
             <div class="preview-imgs">
                <div class="preview-img-lt">
-                  <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
+                  <!-- <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지"> -->
                </div>
                <div class="preview-img-rt">
-                  <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
+                  <!-- <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지"> -->
                </div>
                <div class="preview-img-lb">
-                  <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
+                  <!-- <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지"> -->
                </div>
                <!-- 더보기 클릭 이미지 -->
                <div class="preview-img-rb">
@@ -41,23 +42,24 @@
                      <img src="/images/scrollArrow.png" alt="">
                   </div>
                   <div class="preview-img-page">
-                     <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
+                     <!-- <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지"> -->
                   </div>
                </div>
             </div>
          </div>
          <!-- 장소 이름 -->
          <div class="place-name" th:text="${place.p_name}"></div>
+         <div class="text-start-line"></div>
          <!-- 지역 이름 -->
          <div class="place-location" th:text="${place.p_location}"></div>
+         <!-- 세부 이미지 이미지 출력 -->
+         <div class="place-detail-description-img">
+         <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
+         </div>
          <!-- 세부 디테일 내용 페이지 글 -->
          <div class="place-detail-array-box">
             <div class="place-detail-description"
                th:text="${place.p_description}"></div>
-         </div>
-         <!-- 세부 이미지 이미지 출력 -->
-         <div class="place-detail-description-img">
-         	
          </div>
          <!-- 세부 디테일 끝맺음 -->
          <div class="detail-img-end"></div>
@@ -75,13 +77,40 @@
      <img class="st-img" src="/images/heart.png">
         
    </div>
-   <!-- 아래 화살표 -->
-   <div class="arrow-box">
-      <img class="arrow-box-motion" src="/images/scrollArrow.png" alt="">
-   </div>
 	<th:block th:if="${session.signedInUserEmail == 'ajm0111@naver.com'}">
 		<a th:href="@{'/updatePlace/' + ${place.p_id}}">수정</a>
 	</th:block>
+	<!-- 아래 화살표 -->
+	<button type="button" class="st-score-button" id="stScoreButton">
+		<img src="/images/heart.png">
+	</button>
+   <div class="arrow-box">
+      <img class="arrow-box-motion" src="/images/scrollArrow.png" alt="">
+   </div>
+	<!-- 푸터 -->
+   <th:block th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
-
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#stScoreButton").click(function(event) {
+		event.preventDefault();
+		$.ajax({
+			type : "POST",
+			url : "like",
+			data : {
+				p_code : "${placeDetail.p_code}"
+			},
+			dataType : 'json',
+			cache : false, // 캐시 사용 x
+			success : function(newLikeCount) {
+				// 좋아요 개수를 업데이트하여 화면에 반영
+				$("#stScoreButton").text("좋아요: " + newLikeCount);
+			},
+			error : function(xhr, status, error) {
+				console.error(xhr.responseText);
+			}
+		});
+	});
+});
+</script>
 </html>

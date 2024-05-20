@@ -99,8 +99,8 @@ input[type=file]::file-selector-button {
 }
 /* 장소명 적는 창 */
 .place-name-write {
-   position: absolute; 
-   top: 65%;
+  	position: absolute; 
+   	top: 65%;
     left: 50%; 
     transform: translate(-50%, -50%);    
     width: 25%;
@@ -114,9 +114,9 @@ input[type=file]::file-selector-button {
 }
 /* 상세 정보 창 */
 .write-input {
-   position: absolute;
-   margin: 0 auto;
-   top: 95%;
+  	position: absolute;
+   	margin: 0 auto;
+  	top: 95%;
     left: 50%; 
     transform: translate(-50%, -50%);    
     width: 25%;
@@ -139,8 +139,8 @@ input[type=file]::file-selector-button {
 }
 /* 주소 등록 창 */
 .address-write {
-   position: absolute; 
-   top: 75%;
+  	position: absolute; 
+   	top: 75%;
     left: 50%; 
     transform: translate(-50%, -50%);    
     width: 25%;
