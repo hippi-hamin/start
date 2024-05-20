@@ -15,23 +15,47 @@
 			border: 1px solid black;
 			/* 시각적 확인을 위한 경계선 추가 */
 		}
+		
+		 #placeList {
+            margin-top: 20px;
+        }
 	</style>
 </head>
 
 <body>
 	<div id="map"></div>
+	 <div id="placeList"></div>
     
 	<script th:inline="javascript">
 		// 서버에서 전달된 좌표 데이터임
 		const fromX = /*[[${fromPoint?.x}]]*/ null;
+		const fromName = /*[[]${fromPoint?.p_name}]*/ null;
 		const fromY = /*[[${fromPoint?.y}]]*/ null;
 		let wayPoint2 = /*[[${wayPoint2}]]*/ null;
 		const toX = /*[[${toPoint?.x}]]*/ null;
 		const toY = /*[[${toPoint?.y}]]*/ null;
 		var pointList = /*[[${placeList}]]*/ '[]';
 		pointList = pointList ? JSON.parse(pointList) : [];
-
+		const fwtList = /*[[${fwtList}]]*/ '[]';
+		
+		
 		console.log(wayPoint2);
+		console.log("fwtList", fwtList);
+		console.log("fromName", fromName);
+
+		async function fetchCart() {
+            const response = await fetch('/showCart');
+            if (!response.ok) {
+                console.error("서버 응답 에러:", response.statusText);
+                return [];
+            }
+            const cart = await response.json();
+            if (!cart || cart.length === 0) {
+                console.warn("장바구니가 비어 있습니다.");
+                return [];
+            }
+            return cart;
+        }
 
 		var mapContainer = document.getElementById('map'),
 			mapOption = {
@@ -46,9 +70,13 @@
 			console.error("지도 객체 초기화에 실패했습니다.");
 		}
 
-		function setMarkersAndPath() {
+		async function setMarkersAndPath() {
+			const parsedCart = await fetchCart();
+            console.log("parsedCart", parsedCart);
 			var bounds = new kakao.maps.LatLngBounds();
 			var linePath = [];
+			var placeListContainer = document.getElementById('placeList');
+			
 			if (fromY != null) {
 				var fromMarkerPosition = new kakao.maps.LatLng(fromY, fromX);
 				var fromMarker = new kakao.maps.Marker({
@@ -104,6 +132,12 @@
                 console.log(`linePath[${index}]: ${latlng.getLat()}, ${latlng.getLng()}`);
             });
 			
+			 // 장바구니 항목 리스트를 placeListContainer에 추가
+            parsedCart.forEach((place, index) => {
+                var listItem = document.createElement('div');
+                listItem.innerText = `${index + 1}. ${place.p_name}`;
+                placeListContainer.appendChild(listItem);
+            });
 
 			var polyline = new kakao.maps.Polyline({
 				path: linePath,
