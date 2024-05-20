@@ -24,14 +24,17 @@
 	<script th:inline="javascript">
 		// 서버에서 전달된 좌표 데이터임
 		const fromX = /*[[${fromPoint?.x}]]*/ null;
+		const fromName = /*[[]${fromPoint?.p_name}]*/ null;
 		const fromY = /*[[${fromPoint?.y}]]*/ null;
 		let wayPoint2 = /*[[${wayPoint2}]]*/ null;
 		const toX = /*[[${toPoint?.x}]]*/ null;
 		const toY = /*[[${toPoint?.y}]]*/ null;
 		var pointList = /*[[${placeList}]]*/ '[]';
 		pointList = pointList ? JSON.parse(pointList) : [];
-
+		const fwtList = /*[[${fwtList}]]*/ '[]';
 		console.log(wayPoint2);
+		console.log("fwtList", fwtList);
+		console.log("fromName", fromName);
 
 		var mapContainer = document.getElementById('map'),
 			mapOption = {
@@ -129,3 +132,4 @@
 </body>
 
 </html>
+mapPaths

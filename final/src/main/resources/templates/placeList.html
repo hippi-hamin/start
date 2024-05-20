@@ -1457,23 +1457,23 @@
 		    }
 		}
 		
-		// 스크롤 이벤트 리스너 추가
-		window.addEventListener('scroll', function() {
-		    var cartSection = document.getElementById('cart-section');
-		    var footer = document.querySelector('footer'); // 푸터 요소를 선택
-		    var scrollPosition = window.scrollY || document.documentElement.scrollTop;
-		    var windowHeight = window.innerHeight;
-		    var footerTop = footer.getBoundingClientRect().top + scrollPosition;
-		    var scrollThreshold = document.documentElement.scrollHeight * 0.05; // 문서 높이의 30%
+		 // 스크롤 이벤트 리스너 추가
+	      window.addEventListener('scroll', function() {
+	          var cartSection = document.getElementById('cart-section');
+	          var footer = document.querySelector('footer'); // 푸터 요소를 선택
+	          var scrollPosition = window.scrollY || document.documentElement.scrollTop;
+	          var windowHeight = window.innerHeight;
+	          var footerTop = footer.getBoundingClientRect().top + scrollPosition;
+	          var scrollThreshold = document.documentElement.scrollHeight * 0.05; // 문서 높이의 30%
 
-		    // 스크롤 위치에 따라 cart-section의 위치를 조정
-		    if (scrollPosition + windowHeight >= footerTop) {
-		        cartSection.style.top = '-35%';
-		    } else if (scrollPosition > scrollThreshold) {
-		        cartSection.style.top = '0%';
-		    } else {
-		        cartSection.style.top = '30%';
-		    }
-		});
+	          // 스크롤 위치에 따라 cart-section의 위치를 조정
+	          if (scrollPosition + windowHeight >= footerTop) {
+	              cartSection.style.top = '-35%';
+	          } else if (scrollPosition > scrollThreshold) {
+	              cartSection.style.top = '15%';
+	          } else {
+	              cartSection.style.top = '30%';
+	          }
+	      });
 </script>
 </html>

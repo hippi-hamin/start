@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/footer.css}">
 <link rel="stylesheet" th:href="@{/css/placeDetail.css}">
 </head>
 <body>
@@ -48,16 +49,17 @@
          </div>
          <!-- 장소 이름 -->
          <div class="place-name" th:text="${place.p_name}"></div>
+         <div class="text-start-line"></div>
          <!-- 지역 이름 -->
          <div class="place-location" th:text="${place.p_location}"></div>
+         <!-- 세부 이미지 이미지 출력 -->
+         <div class="place-detail-description-img">
+         	
+         </div>
          <!-- 세부 디테일 내용 페이지 글 -->
          <div class="place-detail-array-box">
             <div class="place-detail-description"
                th:text="${place.p_description}"></div>
-         </div>
-         <!-- 세부 이미지 이미지 출력 -->
-         <div class="place-detail-description-img">
-         	
          </div>
          <!-- 세부 디테일 끝맺음 -->
          <div class="detail-img-end"></div>
