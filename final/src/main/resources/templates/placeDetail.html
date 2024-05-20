@@ -77,9 +77,7 @@
      <img class="st-img" src="/images/heart.png">
         
    </div>
-	<th:block th:if="${session.signedInUserEmail == 'ajm0111@naver.com'}">
-		<a th:href="@{'/updatePlace/' + ${place.p_id}}">수정</a>
-	</th:block>
+	
 	<!-- 아래 화살표 -->
 	<button type="button" class="st-score-button" id="stScoreButton">
 		<img src="/images/heart.png">
