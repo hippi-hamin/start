@@ -50,7 +50,7 @@ public class PlaceController {
 			@RequestParam(value = "p_thema", required = false, defaultValue = "defaultThema") String p_thema) {
 		log.info("placeList()");
 		if (p_location.equals("defaultLocation") && p_thema.equals("defaultThema")) {
-			List<PlaceDTO> placeList = placeService.getPlaceList();
+			List<PlaceDTO> placeList = placeService.getPlaceList(model);
 			model.addAttribute("placeList", placeList);
 		} else {
 			List<PlaceDTO> placeList = placeService.getPlaceList(p_location, p_thema);
@@ -69,7 +69,7 @@ public class PlaceController {
 		if (p_location != null && !p_location.isEmpty()) {
 			place = placeService.placeListByLocation(p_location);
 		} else {
-			place = placeService.getPlaceList();
+			place = placeService.getPlaceList(model);
 		}
 
 		model.addAttribute("placeListByLocation", place);
@@ -86,7 +86,7 @@ public class PlaceController {
 		if (p_thema != null && !p_thema.isEmpty()) {
 			place = placeService.placeListByTheme(p_thema);
 		} else {
-			place = placeService.getPlaceList();
+			place = placeService.getPlaceList(model);
 		}
 
 		model.addAttribute("placeListByTheme", place);
@@ -390,6 +390,14 @@ public class PlaceController {
 	@GetMapping("map")
 	public String getMethodName() {
 		return "map";
+	}
+
+	// 장소관리 페이지 이동 -안재문-
+	@GetMapping("/adminPage/managePlace")
+	public String managePlace(Model model) {
+		log.info("managePlace()");
+		placeService.getPlaceList(model);
+		return "managePlace";
 	}
 
 }
