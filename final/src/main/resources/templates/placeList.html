@@ -186,7 +186,7 @@
 	</div>
 
 	<!-- 푸터 -->
-	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+	<th:block th:id="footer" th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
 
 <script th:inline="javascript">
@@ -419,6 +419,12 @@
 			$("input[type=checkbox]:checked").each(function() {
 				regions.push($(this).val());
 			});
+			/* 체크박스 선택 안됐을 시 에러 메세지 뜨는 현상 수정 -안재문- */
+			if (regions.length === 0) {
+		        // 체크박스가 모두 해제된 경우 기본 동작 수행
+		        updatePlaceList([]); // 빈 리스트로 업데이트
+		        return; // 서버로 요청하지 않고 종료
+		    }
 
 			$.ajax({
 				url : '/searchByRegion',
