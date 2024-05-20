@@ -9,27 +9,12 @@ html {
 }
 
 body {
-	margin: 0;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
+   margin: 0;
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+   font-family: 'SUITE', sans-serif;
 }
-
-#mainContent {
-	flex: 1;
-}
-
-#cartSection {
-	position: fixed;
-	right: 20px;
-	top: 100px;
-	width: 300px;
-	background-color: white; /* 배경색 */
-	padding: 10px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
-	z-index: 1000; /* 다른 요소들 위에 보이도록 z-index 설정 */
-}
-
 /* 지역 정렬 */
 .location-array {
 	position: absolute;
@@ -59,19 +44,43 @@ body {
 	align-items: center;
 	background-color: #fff;
 	border-radius: 50%;
-	border: 2px solid #3498db;
+	border: 2px solid black;
 	overflow: hidden;
 	cursor: pointer;
+	position: relative; /* 이미지의 위치를 조정하기 위해 부모 요소에 상대적 위치 지정 */
 }
 /* 개별 지역 클릭시 */
 .circle-button:active {
-	background-color: #3498db;
-	color: #fff;
+	background-color: white;
+	color: black;
 }
 /* 개별 지역 버튼 이미지 */
 .circle-button img {
 	width: 100px;
 	height: 100px;
+	position: absolute; /* 절대 위치 지정 */
+    top: 50%; /* 부모 요소의 세로 중앙 */
+    left: 50%; /* 부모 요소의 가로 중앙 */
+    transform: translate(-50%, -50%); /* 요소를 정확히 가운데로 이동 */
+}
+
+.location-name-array {
+	position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 93%;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.location-name {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    position: relative;
+    margin: 0 auto;
 }
 /* 검색창 전체네모 */
 .search-background {
@@ -129,15 +138,6 @@ body {
 	align-items: center;
 	display: flex;
 }
-/* 필터 카테고리 지역 */
-.filter2-header-location {
-	background-color: black;
-	color: white;
-	font-size: 14px;
-	position: relative;
-	border: none;
-	cursor: pointer;
-}
 /* 필터 카테고리 테마 */
 .filter2-header-theme {
 	background-color: black;
@@ -153,14 +153,25 @@ body {
 	top: 20%;
 	left: 1%;
 }
+.add-to-cart-button {
+	background-color: black;
+    color: white;
+    width: 20%;
+    height: 30px;
+    border-radius: 3px;
+    font-size: 10px;
+}
 /* 장바구니 정렬 */
-.select-list-array {
-	position: absolute;
+#cart-section {
+	position: fixed;
 	top: 30%;
 	left: 78%;
 	width: 20%;
-	height: 80%;
+	height: 100%;
 	border: 1px solid gray;
+	z-index: 1;
+	background-color: white;
+	transition: top 0.5s ease; /* 부드러운 이동을 위한 트랜지션 추가 */
 }
 /* 장바구니 헤더 */
 .select-list-header {
@@ -172,25 +183,50 @@ body {
 	display: flex;
 	height: 35px;
 }
-/* 장바구니 푸터 */
-.select-list-footer {
+.point-text {
+	border-bottom: 1px solid black;
+	width: 80%;
+	margin: 0 auto;
+	margin-top: 10px;
+}
+.removeItem {
 	background-color: black;
-	color: white;
-	font-size: 14px;
-	justify-content: center;
-	align-items: center;
-	display: flex;
-	height: 35px;
+    color: white;
+    width: 30%;
+    height: 20px;
+    border-radius: 3px;
+    font-size: 10px;
+    position: relative;
+    bottom: 2px;
+}
+.point-button-array {
 	position: relative;
-	top: 95%;
-	width: 100%;
+	justify-content: center;
+    align-items: center;
+	display: flex;
+	margin-bottom: 5%;
 }
-/* 경로 확인 */
-.route {
-	color: white;
-	font-size: 14px;
-	text-decoration: none;
+.cart-clear-button {
+	background-color: black;
+    color: white;
+    width: 45%;
+    height: 30px;
+    border-radius: 3px;
+    font-size: 10px;
+    margin-right: 3%;
 }
+.route-button {
+	background-color: black;
+    color: white;
+    width: 45%;
+    height: 30px;
+    border-radius: 3px;
+    font-size: 10px;
+}
+#mainContent {
+    flex: 1;
+}
+
 /* 장소 리스트 출력 */
 .place-list-array {
 	border: 1px solid gray;
@@ -205,8 +241,19 @@ body {
 	width: 90%;
 	border-top: gray 1px solid;
 	position: absolute;
-	top: 25%;
+	top: 28%;
 	left: 5%;
+}
+.st-text {
+	position: relative;
+    bottom: 10px;
+    left: 100%;
+    transform: translate(-50%, -50%);
+}
+.st-img {
+	height: 20px;
+	width: 20px;
+	position: relative;
 }
 
 .filter-list1 {
@@ -214,12 +261,57 @@ body {
 	width: 100%; /* 부모 요소에 따라 전체 너비를 차지하도록 함 */
 	box-sizing: border-box; /* 내부 여백과 테두리를 포함한 요소의 전체 크기를 계산하도록 함 */
 }
+.checkbox input {
+  display: none;
+}
+.checkbox_icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: black;
+  position: relative;
+  top: 5px;
+  cursor: pointer;
+}
+.checkbox_text {
+	position: relative;
+  	top: 2.5px;
+}
+.checkbox_icon::before, .checkbox_icon::after {
+  content: ''; 
+  display: inline-block; 
+  width: 2px;
+  height: 0; 
+  background-color: white;
+  position: absolute; 
+  transform-origin: left top; 
+}
 
+.checkbox_icon::before {
+  top: 9px; 
+  left: 2px; 
+  transform: rotate(-45deg); 
+}
+.checkbox_icon::after {
+  top: 16px; 
+  left: 9px; 
+  transform: rotate(-135deg); 
+}
+.checkbox input:checked + .checkbox_icon {
+  border-color: white;
+}
+.checkbox input:checked + .checkbox_icon::before {
+  height: 9px;
+  transition: all 0.15s ease;
+}
+.checkbox input:checked + .checkbox_icon::after {
+  height: 14px;
+  transition: all 0.15s ease 0.15s; 
+}
 .filter-list1 label {
 	margin-right: 10px; /* 라벨 오른쪽 간격을 늘립니다. */
 	font-size: 14px;
 }
-
 .filter-list1 input[type="checkbox"] {
 	margin-right: 10px; /* 체크박스 오른쪽 간격을 늘립니다. */
 }
@@ -230,21 +322,25 @@ body {
 	padding-left: 3%; /* 기본 리스트 들여쓰기 제거 */
 }
 /* 각 리스트 아이템에 대한 스타일 */
-/* 각 리스트 아이템에 대한 스타일 */
 .place-item {
-    position: relative; /* 절대 위치를 위한 기준 요소 */
-    margin-bottom: 20px;
-    list-style-type: none;
+	position: relative; /* 절대 위치를 위한 기준 요소 */
+	margin-bottom: 20px;
+	list-style-type: none;
 }
 /* 첫 번째 아이템의 위쪽에 여백 추가 */
 .place-item.first-item {
-    margin-top: 450px; /* 첫 번째 아이템의 위쪽에 450px 여백 추가 */
+	margin-top: 450px; /* 첫 번째 아이템의 위쪽에 450px 여백 추가 */
 }
-
 /* 컨텐츠 스타일 */
 .place-content {
     display: flex;
     align-items: center;
+    border: 1px solid black;
+    width: 75%;
+    height: 200px;
+}
+.place-content:hover {
+	background-color: #d4d4d4;
 }
 /* 링크 스타일 */
 .place-link {
@@ -253,21 +349,17 @@ body {
 	text-decoration: none;
 	color: inherit;
 	flex: 1; /* 버튼을 오른쪽으로 밀기 위해 flex-grow 사용 */
-	
 }
-
 /* 이미지 스타일 */
 .place-image {
 	width: 150px;
 	margin-right: 20px;
 }
-
 /* 텍스트 정보 스타일 */
 .place-info {
 	display: flex;
 	flex-direction: column;
 }
-
 .place-info span {
 	display: block;
 	margin-bottom: 5px; /* 각 줄 간격 조절 */
@@ -276,5 +368,21 @@ body {
 .add-to-cart-button {
 	position: absolute;
     left: 60%;
-    transform: translateX(-50%); /
+    transform: translateX(-50%); 
+}
+.no-result-place {
+	text-align: center;
+    color: black;
+    position: absolute;
+    top: 70%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+}
+li {
+	list-style-type: none;
+}
+#map {
+	height: 500px;
+	width: 100%;
 }

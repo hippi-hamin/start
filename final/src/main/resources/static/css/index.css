@@ -8,6 +8,7 @@ body {
    height: 100%;
    display: flex;
    flex-direction: column;
+   font-family: 'SUITE', sans-serif;
 }
 /* 슬라이드 바탕 */
 .slider-background {
@@ -110,10 +111,15 @@ height: 575px;
 }
 /* 버튼 클릭시 이동할 위치의 텍스트 */
 #h1_container {
+	display: flex;
 	margin-left: 10%;
 	font-size : 24px;
 	font-weight: bold;
+	font-color: black;
+	justify-content: space-between; /* 하민 */
 }
+
+
 /* Make Plan */
 .make-box {
   width: 80%;
@@ -172,8 +178,8 @@ select:focus{
 }
 
 .image-wrapper img {
-	width: 275px;
-	height: 275px;
+  width: 275px;
+  height: 275px;
 }
 
 .caption {
@@ -214,6 +220,7 @@ select:focus{
 	width: 80%;
 	border-top: black 2px solid;
 	margin-left: 10%;
+	margin-right: 10%;
 	margin-bottom: 2%;
 }
 
@@ -241,4 +248,29 @@ select:focus{
 	height: 50px;
 	margin-top: 1px;
 	transform: rotate(180deg);
+}
+
+/* ---------------------hamin------------------------ */
+
+/* 마우스 호버 시 버튼 색상 변경 */
+.transparent-button:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* 투명한 검정색으로 변경 */
+}
+.routerWithArrow {
+	display: flex;
+	justify-content: center; /* 수평 가운데 정렬 */
+    align-items: flex-end; /* 수직 가운데 정렬 */
+    margin-right: 10%;
+}
+.see-more {
+	background-color: transparent; /* 배경색을 투명하게 설정 */
+    border: none; /* 테두리 없앰 */
+    color: inherit; /* 텍스트 색상을 상속받음 */
+    padding: 10px 20px; /* 내부 여백 설정 */
+    font-size: 16px; /* 폰트 크기 설정 */
+    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+}
+
+a {
+	color: black;
 }

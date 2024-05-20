@@ -12,6 +12,7 @@ body {
    height: 100%;
    display: flex;
    flex-direction: column;
+   font-family: 'SUITE', sans-serif;
 }
 /* 머릿글 영문 텍스트 */
 .center-eng-text {
@@ -43,13 +44,13 @@ body {
 	text-align: center;
     color: black;
     position: relative;
-    top: 25%; 
+    top: 20%;
     font-size: 16px;
 }
 /* 인증 코드 입력 박스 */
 #v_code {
 	position: absolute; 
-	top: 55%;
+	top: 45%;
     left: 50%; 
     transform: translate(-50%, -50%); 	
     width: 25%;
@@ -61,7 +62,11 @@ body {
     color: black;
     font-size: 14px;
 }
-
+/* 인풋 미리보기 텍스트 */
+input::placeholder {
+   font-size: 14px;
+   text-align: left;
+}
 #v_code:focus {
     outline: none;
 }
@@ -73,7 +78,7 @@ body {
     width: 25%;
     height: 30px;
     position: absolute;
-    top: 65%; /* 상단에서 50% 위치에 배치 */
+    top: 75%; /* 상단에서 50% 위치에 배치 */
     left: 50%;
     transform: translate(-50%, -50%); /* 가운데 정렬을 위한 이동 */
     line-height: 30px;
