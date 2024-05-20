@@ -50,7 +50,7 @@ public class PlaceController {
 			@RequestParam(value = "p_thema", required = false, defaultValue = "defaultThema") String p_thema) {
 		log.info("placeList()");
 		if (p_location.equals("defaultLocation") && p_thema.equals("defaultThema")) {
-			List<PlaceDTO> placeList = placeService.getPlaceList();
+			List<PlaceDTO> placeList = placeService.getPlaceList(model);
 			model.addAttribute("placeList", placeList);
 		} else {
 			List<PlaceDTO> placeList = placeService.getPlaceList(p_location, p_thema);
@@ -69,7 +69,7 @@ public class PlaceController {
 		if (p_location != null && !p_location.isEmpty()) {
 			place = placeService.placeListByLocation(p_location);
 		} else {
-			place = placeService.getPlaceList();
+			place = placeService.getPlaceList(model);
 		}
 
 		model.addAttribute("placeListByLocation", place);
@@ -86,7 +86,7 @@ public class PlaceController {
 		if (p_thema != null && !p_thema.isEmpty()) {
 			place = placeService.placeListByTheme(p_thema);
 		} else {
-			place = placeService.getPlaceList();
+			place = placeService.getPlaceList(model);
 		}
 
 		model.addAttribute("placeListByTheme", place);
@@ -172,6 +172,15 @@ public class PlaceController {
 					"Error processing your upload. Please try again or contact support.");
 			return "redirect:upLoadPlace";
 		}
+	}
+	
+	// 장소 삭제 메소드
+	@PostMapping("/deletePlaceProc")
+	public String deletePlaceProc(@RequestParam(name = "p_id") int p_id, Model model, RedirectAttributes rttr) {
+		
+		String view = placeService.deletePlace(p_id, rttr);
+		
+		return view;
 	}
 
 	@GetMapping("/deletePlace")
@@ -355,41 +364,55 @@ public class PlaceController {
 	// 경로 최적화
 	@GetMapping("mapPaths")
 	public String getMapPaths(@RequestParam(name = "fromX") Double fromX, @RequestParam(name = "fromY") Double fromY,
-			@RequestParam(name = "toX") Double toX, @RequestParam(name = "toY") Double toY,
-			@RequestParam(name = "wayPoints", required = false) String wayPoints, Model model) {
-		PlaceDTO fromPoint = new PlaceDTO(fromX, fromY);
-		PlaceDTO toPoint = new PlaceDTO(toX, toY);
-		List<PlaceDTO> wayPointList = new ArrayList<>();
+	                          @RequestParam(name = "toX") Double toX, @RequestParam(name = "toY") Double toY,
+	                          @RequestParam(name = "wayPoints", required = false) String wayPoints, Model model) {
+	    PlaceDTO fromPoint = new PlaceDTO(fromX, fromY);
+	    PlaceDTO toPoint = new PlaceDTO(toX, toY);
+	    List<PlaceDTO> wayPointList = new ArrayList<>();
 
-		if (wayPoints != null && !wayPoints.isEmpty()) {
-			String[] wayPointsArray = wayPoints.split("\\|");
-			for (String point : wayPointsArray) {
-				String[] coords = point.split(",");
-				wayPointList.add(new PlaceDTO(Double.parseDouble(coords[0]), Double.parseDouble(coords[1])));
-			}
-		}
+	    if (wayPoints != null && !wayPoints.isEmpty()) {
+	        String[] wayPointsArray = wayPoints.split("\\|");
+	        for (String point : wayPointsArray) {
+	            String[] coords = point.split(",");
+	            wayPointList.add(new PlaceDTO(Double.parseDouble(coords[0]), Double.parseDouble(coords[1])));
+	        }
+	    }
 
-		try {
-			List<PlaceDTO> placeList = KakaoApiUtil.getVehiclePaths(fromPoint, toPoint, wayPointList, "RECOMMEND");
-			String placeListJson = new ObjectMapper().writeValueAsString(placeList);
-			model.addAttribute("fromPoint", fromPoint);
-			model.addAttribute("toPoint", toPoint);
-			model.addAttribute("wayPoint2", wayPointList.isEmpty() ? null : wayPointList);
-			model.addAttribute("placeList", placeListJson);
+	    
+	    // 시간이랑 거리 넣는거 때문에 DTO에서 MAP으로 바꿈
+	    try {
+	        Map<String, Object> resultMap = KakaoApiUtil.getVehiclePaths(fromPoint, toPoint, wayPointList, "RECOMMEND");
+	        List<PlaceDTO> placeList = (List<PlaceDTO>) resultMap.get("placeList");
+	        double distance = (double) resultMap.get("distance");
+	        int duration = (int) resultMap.get("duration");
 
-			System.out.println("kkkk" + placeListJson);
-		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-			model.addAttribute("errorMessage", "경로를 계산하는 도중 오류가 발생했습니다.");
-			return "error";
-		}
+	        String placeListJson = new ObjectMapper().writeValueAsString(placeList);
+	        model.addAttribute("fromPoint", fromPoint);
+	        model.addAttribute("toPoint", toPoint);
+	        model.addAttribute("wayPoint2", wayPointList.isEmpty() ? null : wayPointList);
+	        model.addAttribute("placeList", placeListJson);
+	        model.addAttribute("distance", distance);
+	        model.addAttribute("duration", duration);
 
-		return "mapPaths";
+	        System.out.println("Place List JSON: " + placeListJson);
+	    } catch (IOException | InterruptedException e) {
+	        e.printStackTrace();
+	        model.addAttribute("errorMessage", "경로를 계산하는 도중 오류가 발생했습니다.");
+	        return "error";
+	    }
+
+	    return "mapPaths";
 	}
 
 	@GetMapping("map")
 	public String getMethodName() {
 		return "map";
 	}
-
+	// 장소관리 페이지 이동 -안재문-
+	@GetMapping("/adminPage/managePlace")
+	public String managePlace(Model model) {
+		log.info("managePlace()");
+		placeService.getPlaceList(model);
+		return "managePlace";
+	}
 }

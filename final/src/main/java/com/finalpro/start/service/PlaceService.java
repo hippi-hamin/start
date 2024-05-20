@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 // 필요없는 라이브러리 삭제 -안재문- 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -92,8 +94,11 @@ public class PlaceService {
 	}
 
 	// 파라미터x시 리스트
-	public List<PlaceDTO> getPlaceList() {
-		return placeDAO.getPlaceList(null, null);
+	public List<PlaceDTO> getPlaceList(Model model) {
+		List<PlaceDTO> result = placeDAO.getPlaceList(null, null);
+		model.addAttribute("placeList", result);
+		return result;
+
 	}
 
 	public PlaceDTO findById(int p_id) {
@@ -152,20 +157,21 @@ public class PlaceService {
 	}
 
 	// 필요없는 메서드 삭제 -안재문-
-	// make plan 필터 
+	// make plan 필터
 	public List<PlaceDTO> searchByFilters(List<String> themes, List<String> regions) {
-		log.info("themes : " + themes );
+		log.info("themes : " + themes);
 		log.info("regions : " + regions);
-	    List<PlaceDTO> result = placeDAO.searchByFilters(themes, regions);
-	    log.info("result : " + result);
-	    return result;
+		List<PlaceDTO> result = placeDAO.searchByFilters(themes, regions);
+		log.info("result : " + result);
+		return result;
 	}
+
 	// 지역별 리스트
 	public List<PlaceDTO> fetchPlacesLocation(String location) {
 		log.info(location);
-		
+
 		List<PlaceDTO> result = placeDAO.fetchPlacesLocation(location);
-		
+
 		return result;
 	}
 
@@ -174,6 +180,30 @@ public class PlaceService {
 		log.info(theme);
 		List<PlaceDTO> result = placeDAO.fetchPlacesTheme(theme);
 		return result;
+	}
+
+	// 장소 삭제 메소드
+	public String deletePlace(int p_id, RedirectAttributes rttr) {
+		
+		String view = null;
+		String msg = null;
+		
+		try {
+			log.info("deletePlace 실행 성공");
+			placeDAO.deletePlace(p_id);
+			
+			msg = "삭제 성공!";
+			view = "redirect:/adminPage";
+			
+		} catch (Exception e) {
+			log.info("deletePlace 실행 오류");
+			
+			msg = "삭제 실패!";
+			view = "redirect:/";
+		}
+		
+		rttr.addFlashAttribute("msg", msg);
+		return view;
 	}
 
 }

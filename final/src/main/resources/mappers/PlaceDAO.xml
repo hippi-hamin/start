@@ -132,5 +132,11 @@
 		place.placetbl
 		WHERE p_thema=#{theme}
 	</select>
+	<select id="deletePlace" parameterType="int">
+		DELETE 
+		FROM place.placetbl
+		WHERE p_id=#{p_id}
+	</select>
+	
 
 </mapper>
