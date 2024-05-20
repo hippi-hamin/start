@@ -12,6 +12,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3926d3c8dcc51df1b147cee756c64e7&libraries=services"></script>
+
 </head>
 <body>
 	<!-- 헤더 -->
@@ -43,28 +44,24 @@
 		var pointList = /*[[${placeList}]]*/ '[]';
 		pointList = pointList ? JSON.parse(pointList) : [];
 		const fwtList = /*[[${fwtList}]]*/ '[]';
-		console.log(wayPoint2);
-		console.log("fwtList", fwtList);
-		console.log("fromName", fromName);
-		
-		
+
 		console.log(wayPoint2);
 		console.log("fwtList", fwtList);
 		console.log("fromName", fromName);
 
 		async function fetchCart() {
-            const response = await fetch('/showCart');
-            if (!response.ok) {
-                console.error("서버 응답 에러:", response.statusText);
-                return [];
-            }
-            const cart = await response.json();
-            if (!cart || cart.length === 0) {
-                console.warn("장바구니가 비어 있습니다.");
-                return [];
-            }
-            return cart;
-        }
+			const response = await fetch('/showCart');
+			if (!response.ok) {
+				console.error("서버 응답 에러:", response.statusText);
+				return [];
+			}
+			const cart = await response.json();
+			if (!cart || cart.length === 0) {
+				console.warn("장바구니가 비어 있습니다.");
+				return [];
+			}
+			return cart;
+		}
 
 		var mapContainer = document.getElementById('map'),
 			mapOption = {
@@ -81,11 +78,11 @@
 
 		async function setMarkersAndPath() {
 			const parsedCart = await fetchCart();
-            console.log("parsedCart", parsedCart);
+			console.log("parsedCart", parsedCart);
 			var bounds = new kakao.maps.LatLngBounds();
 			var linePath = [];
 			var placeListContainer = document.getElementById('placeList');
-			
+
 			if (fromY != null) {
 				var fromMarkerPosition = new kakao.maps.LatLng(fromY, fromX);
 				var fromMarker = new kakao.maps.Marker({
@@ -99,21 +96,38 @@
 			}
 
 			if (wayPoint2.length > 0) {
-				wayPoint2.forEach(waypoint => {
+				wayPoint2.forEach((waypoint, index) => {
+					var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
+						imageSize = new kakao.maps.Size(40, 40); // 마커이미지의 크기입니다
+
+					var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
 					var wayMarkerPosition = new kakao.maps.LatLng(waypoint.y, waypoint.x);
 					var wayMarker = new kakao.maps.Marker({
 						position: wayMarkerPosition,
 						map: map,
-						title: "경유지"
+						image: markerImage,
+						title: "경유지 " + (index + 1) // 경유지 순서
 					});
+
+					// 텍스트 오버레이를 생성합니다
+					var content = '<div style="padding:5px; background:white; border:1px solid black; border-radius:3px;">' + (index + 1) + '</div>';
+					var customOverlay = new kakao.maps.CustomOverlay({
+						position: wayMarkerPosition,
+						content: content,
+						yAnchor: 1 // 오버레이의 yAnchor를 설정하여 마커 위에 표시되도록 합니다
+					});
+
+					customOverlay.setMap(map);
+
 					//linePath.push(wayMarkerPosition);
 					bounds.extend(wayMarkerPosition);
 					console.log("경유지 마커 추가:", wayMarkerPosition);
-
 				});
 			} else {
 				console.warn("경유지가 비어 있습니다.", wayPoint2);
 			}
+
 
 			if (toY != null) {
 				var toMarkerPosition = new kakao.maps.LatLng(toY, toX);
@@ -122,7 +136,7 @@
 					map: map,
 					title: "목적지"
 				});
-			//	linePath.push(toMarkerPosition);
+				//	linePath.push(toMarkerPosition);
 				bounds.extend(toMarkerPosition);
 				console.log("목적지 마커 추가:", toMarkerPosition);
 			}
@@ -135,8 +149,9 @@
 					// console.log("포인트 추가:", pointPosition);
 				});
 			}
-			
+
 			// 각 라인의 좌표를 확인
+
             linePath.forEach((latlng, index) => {
                 console.log(`linePath[${index}]: ${latlng.getLat()}, ${latlng.getLng()}`);
             });
