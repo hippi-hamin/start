@@ -17,8 +17,11 @@
 	<th:block th:replace="~{fragments/header :: header}"></th:block>
 	<div class="container">
 		<div id="map"></div>
-		<div id="placeList"></div>
+		<div id="placeList">
+		<div class="place-list-header">선택하신 리스트입니다.</div>
+		</div>
 	</div>
+	<div class="end-line"></div>
     <th:block th:replace="~{fragments/footer :: footer}"></th:block>
 	<script th:inline="javascript">
 		// 서버에서 전달된 좌표 데이터임

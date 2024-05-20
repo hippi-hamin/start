@@ -17,22 +17,41 @@ body {
 	flex-direction: row; /* 수평 정렬 */
 	justify-content: center; /* 필요에 따라 중앙 정렬 */
 	width: 100%;
-	height: 500px;
+	height: 635px;
 }
 
 #map {
-	width: 50%;
-	height: 100%; /* 부모의 높이를 채우도록 변경 */
-	border: 1px solid black;
+	width: 70%;
+	height: 100%; /* 부모의 높이를 채우도록 변경 */	
 }
 
 #placeList {
-	width: 50%;
-	height: 100%; /* 부모의 높이를 채우도록 변경 */
+	width: 30%;
+	height: 635px; /* 부모의 높이를 채우도록 변경 */
 	border: 1px solid black;
 }
 .place-list-array {
 	width: 100%;
 	height: 20%;
-	border: 1px solid black;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+}
+.place-list-header {
+	background-color: black;
+	color: white;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	height: 35px;
+}
+.end-line {
+	width: 80%;
+	border-bottom: 1px solid black;
+	margin-top: 2.5%;
+	margin-bottom: 2.5%;
+	position: relative;
+    left: 50%; 
+    transform: translate(-50%, -50%); 	
 }
