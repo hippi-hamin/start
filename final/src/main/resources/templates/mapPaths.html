@@ -121,37 +121,63 @@
 			var linePath = [];
 			var placeListContainer = document.getElementById('placeList');
 
+			// 출발지 마커 찍기.
+			
 			if (fromY != null) {
 				var fromMarkerPosition = new kakao.maps.LatLng(fromY, fromX);
 				var fromMarker = new kakao.maps.Marker({
-					position: fromMarkerPosition,
 					map: map,
 					title: "출발지"
 				});
+				
+				var content = '<img src="images/markerDep.png" style="width:29px; height: 42px;">';
+				
+				var customOverlay = new kakao.maps.CustomOverlay({
+					position: fromMarkerPosition,
+					content: content,
+					yAnchor: 1 // 오버레이의 yAnchor를 설정하여 마커 위에 표시되도록 합니다
+				});
+				customOverlay.setMap(map);
+				
 				//linePath.push(fromMarkerPosition);
 				bounds.extend(fromMarkerPosition);
 				console.log("출발지 마커 추가:", fromMarkerPosition);
 			}
-
-			// 조건wayPoint2 추가
-
+			
+			// 경유지 마커 찍기.
+			
 			if (wayPoint2 && wayPoint2.length > 0) {
 				wayPoint2.forEach((waypoint, index) => {
-					var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
-						imageSize = new kakao.maps.Size(40, 40); // 마커이미지의 크기입니다
-
-					var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-
+					
 					var wayMarkerPosition = new kakao.maps.LatLng(waypoint.y, waypoint.x);
 					var wayMarker = new kakao.maps.Marker({
-						position: wayMarkerPosition,
 						map: map,
-						image: markerImage,
 						title: "경유지 " + (index + 1) // 경유지 순서
 					});
 
-					// 텍스트 오버레이를 생성합니다
-					var content = '<div style="padding:5px; background:white; border:1px solid black; border-radius:3px;">' + (index + 1) + '</div>';
+					// 각 경유지에 해당하는 이미지를 설정
+			        var content;
+			        switch (index) {
+			            case 0:
+			                content = '<img src="images/marker1.png" style="width:29px; height: 42px;">';
+			                break;
+			            case 1:
+			                content = '<img src="images/marker2.png" style="width:29px; height: 42px;">';
+			                break;
+			            case 2:
+			                content = '<img src="images/marker3.png" style="width:29px; height: 42px;">';
+			                break;
+			            case 3:
+			                content = '<img src="images/marker4.png" style="width:29px; height: 42px;">';
+			                break;
+			            case 4:
+			                content = '<img src="images/marker5.png" style="width:29px; height: 42px;">';
+			                break;
+			            default:
+			                content = ''; // 기본값
+			                break;
+			        }
+					
 					var customOverlay = new kakao.maps.CustomOverlay({
 						position: wayMarkerPosition,
 						content: content,
@@ -168,18 +194,29 @@
 				console.warn("경유지가 비어 있습니다.", wayPoint2);
 			}
 
-
+			// 목적지 마커 찍기. 
+			
 			if (toY != null) {
 				var toMarkerPosition = new kakao.maps.LatLng(toY, toX);
 				var toMarker = new kakao.maps.Marker({
-					position: toMarkerPosition,
 					map: map,
 					title: "목적지"
 				});
+				
+				var content = '<img src="images/markerArr.png" style="width:29px; height: 42px;">';
+				
+				var customOverlay = new kakao.maps.CustomOverlay({
+					position: toMarkerPosition,
+					content: content,
+					yAnchor: 1 // 오버레이의 yAnchor를 설정하여 마커 위에 표시되도록 합니다
+				});
+				customOverlay.setMap(map);
+				
 				//	linePath.push(toMarkerPosition);
 				bounds.extend(toMarkerPosition);
 				console.log("목적지 마커 추가:", toMarkerPosition);
 			}
+			
 			console.log("linePath 배열:", linePath);
 			if (pointList.length > 0) {
 				pointList.forEach(point => {
