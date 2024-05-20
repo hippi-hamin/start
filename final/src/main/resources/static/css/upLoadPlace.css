@@ -177,6 +177,33 @@ input[type=file]::file-selector-button {
 }
 /* 업로드 버튼 */
 .btn-upLoad {
+=======
+  	position: absolute; 
+   	top: 65%;
+    left: 50%; 
+    transform: translate(-50%, -50%);    
+    width: 25%;
+    height: 30px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid gray;
+    color: black;
+    font-size: 14px;
+}
+/* 상세 정보 창 */
+.write-input {
+  	position: absolute;
+   	margin: 0 auto;
+  	top: 95%;
+    left: 50%; 
+    transform: translate(-50%, -50%);    
+    width: 25%;
+    height: 25%;
+}
+/* 업로드 버튼 */
+.btn-upLoad {
+>>>>>>> develop
    position: absolute;
    width: 25%;
    height: 30px;
