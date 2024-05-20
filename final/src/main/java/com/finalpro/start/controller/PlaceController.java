@@ -364,36 +364,44 @@ public class PlaceController {
 	// 경로 최적화
 	@GetMapping("mapPaths")
 	public String getMapPaths(@RequestParam(name = "fromX") Double fromX, @RequestParam(name = "fromY") Double fromY,
-			@RequestParam(name = "toX") Double toX, @RequestParam(name = "toY") Double toY,
-			@RequestParam(name = "wayPoints", required = false) String wayPoints, Model model) {
-		PlaceDTO fromPoint = new PlaceDTO(fromX, fromY);
-		PlaceDTO toPoint = new PlaceDTO(toX, toY);
-		List<PlaceDTO> wayPointList = new ArrayList<>();
+	                          @RequestParam(name = "toX") Double toX, @RequestParam(name = "toY") Double toY,
+	                          @RequestParam(name = "wayPoints", required = false) String wayPoints, Model model) {
+	    PlaceDTO fromPoint = new PlaceDTO(fromX, fromY);
+	    PlaceDTO toPoint = new PlaceDTO(toX, toY);
+	    List<PlaceDTO> wayPointList = new ArrayList<>();
 
-		if (wayPoints != null && !wayPoints.isEmpty()) {
-			String[] wayPointsArray = wayPoints.split("\\|");
-			for (String point : wayPointsArray) {
-				String[] coords = point.split(",");
-				wayPointList.add(new PlaceDTO(Double.parseDouble(coords[0]), Double.parseDouble(coords[1])));
-			}
-		}
+	    if (wayPoints != null && !wayPoints.isEmpty()) {
+	        String[] wayPointsArray = wayPoints.split("\\|");
+	        for (String point : wayPointsArray) {
+	            String[] coords = point.split(",");
+	            wayPointList.add(new PlaceDTO(Double.parseDouble(coords[0]), Double.parseDouble(coords[1])));
+	        }
+	    }
 
-		try {
-			List<PlaceDTO> placeList = KakaoApiUtil.getVehiclePaths(fromPoint, toPoint, wayPointList, "RECOMMEND");
-			String placeListJson = new ObjectMapper().writeValueAsString(placeList);
-			model.addAttribute("fromPoint", fromPoint);
-			model.addAttribute("toPoint", toPoint);
-			model.addAttribute("wayPoint2", wayPointList.isEmpty() ? null : wayPointList);
-			model.addAttribute("placeList", placeListJson);
+	    
+	    // 시간이랑 거리 넣는거 때문에 DTO에서 MAP으로 바꿈
+	    try {
+	        Map<String, Object> resultMap = KakaoApiUtil.getVehiclePaths(fromPoint, toPoint, wayPointList, "RECOMMEND");
+	        List<PlaceDTO> placeList = (List<PlaceDTO>) resultMap.get("placeList");
+	        double distance = (double) resultMap.get("distance");
+	        int duration = (int) resultMap.get("duration");
 
-			System.out.println("kkkk" + placeListJson);
-		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-			model.addAttribute("errorMessage", "경로를 계산하는 도중 오류가 발생했습니다.");
-			return "error";
-		}
+	        String placeListJson = new ObjectMapper().writeValueAsString(placeList);
+	        model.addAttribute("fromPoint", fromPoint);
+	        model.addAttribute("toPoint", toPoint);
+	        model.addAttribute("wayPoint2", wayPointList.isEmpty() ? null : wayPointList);
+	        model.addAttribute("placeList", placeListJson);
+	        model.addAttribute("distance", distance);
+	        model.addAttribute("duration", duration);
 
-		return "mapPaths";
+	        System.out.println("Place List JSON: " + placeListJson);
+	    } catch (IOException | InterruptedException e) {
+	        e.printStackTrace();
+	        model.addAttribute("errorMessage", "경로를 계산하는 도중 오류가 발생했습니다.");
+	        return "error";
+	    }
+
+	    return "mapPaths";
 	}
 
 	@GetMapping("map")

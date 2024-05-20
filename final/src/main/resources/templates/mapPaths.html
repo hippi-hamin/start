@@ -1,19 +1,48 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUITE/fonts/static/woff2/SUITE.css" rel="stylesheet">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" th:href="@{/css/header.css}">
-<link rel="stylesheet" th:href="@{/css/footer.css}">
-<link rel="stylesheet" th:href="@{/css/mapPaths.css}">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/css/header.css}">
+	<link rel="stylesheet" th:href="@{/css/footer.css}">
+	<link rel="stylesheet" th:href="@{/css/mapPaths.css}">
+	<style>
+		.container {
+			display: flex;
+		}
+
+		#placeList {
+			width: 30%;
+		}
+
+		.info-container {
+			background: white;
+			padding: 10px;
+			border: 1px solid black;
+			border-radius: 5px;
+			box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+			margin-bottom: 10px;
+			/* Change from margin-top to margin-bottom */
+		}
+
+		.distance-info,
+		.duration-info {
+			margin-bottom: 5px;
+		}
+		
+		.place-list-header { 
+			font-weight: bold;
+			margin-bottom: 10px;
+		}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3926d3c8dcc51df1b147cee756c64e7&libraries=services"></script>
 
 </head>
+
 <body>
 	<!-- 헤더 -->
 	<th:block th:replace="~{fragments/header :: header}"></th:block>
@@ -23,16 +52,21 @@
 		<div id="map"></div>
 		<!-- 장소 리스트 위치, 크기 -->
 		<div id="placeList">
-		<!-- 리스트 헤더 -->
-		<div class="place-list-header">선택하신 리스트입니다.</div>
-		<!-- 리스트 푸터 -->
-		<div class="place-list-footer"></div>
+			<!-- 리스트 헤더 -->
+			<div class="place-list-header">선택하신 리스트입니다.</div>
+			<!-- 리스트 푸터 -->
+			<div class="place-list-footer"></div>
+			<!-- 정보 컨테이너 -->
+			<div class="info-container">
+				<div class="distance-info">총 거리: 0 km</div>
+				<div class="duration-info">예상 시간: 0 분</div>
+			</div>
 		</div>
 	</div>
 	<!-- 맵과 리스트의 끝 지점 라인 -->
 	<div class="end-line"></div>
 	<!-- 푸터 -->
-    <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 	<script th:inline="javascript">
 		// 서버에서 전달된 좌표 데이터임
 		const fromX = /*[[${fromPoint?.x}]]*/ null;
@@ -44,6 +78,10 @@
 		var pointList = /*[[${placeList}]]*/ '[]';
 		pointList = pointList ? JSON.parse(pointList) : [];
 		const fwtList = /*[[${fwtList}]]*/ '[]';
+
+		// 시간, 거리 
+		const distance = /*[[${distance}]]*/ null;
+		const duration = /*[[${duration}]]*/ null;
 
 		console.log(wayPoint2);
 		console.log("fwtList", fwtList);
@@ -94,6 +132,8 @@
 				bounds.extend(fromMarkerPosition);
 				console.log("출발지 마커 추가:", fromMarkerPosition);
 			}
+
+			// 조건wayPoint2 추가
 
 			if (wayPoint2 && wayPoint2.length > 0) {
 				wayPoint2.forEach((waypoint, index) => {
@@ -152,16 +192,16 @@
 
 			// 각 라인의 좌표를 확인
 
-            linePath.forEach((latlng, index) => {
-                console.log(`linePath[${index}]: ${latlng.getLat()}, ${latlng.getLng()}`);
-            });
-			
-			 // 장바구니 항목 리스트를 placeListContainer에 추가
-            parsedCart.forEach((place, index) => {
-    		var listItem = document.createElement('div'); // div 요소 생성
-    		listItem.classList.add('place-list-array'); // 클래스 이름 추가
-    		listItem.innerText = `${index + 1}. ${place.p_name}`;
-    		placeListContainer.appendChild(listItem);
+			linePath.forEach((latlng, index) => {
+				console.log(`linePath[${index}]: ${latlng.getLat()}, ${latlng.getLng()}`);
+			});
+
+			// 장바구니 항목 리스트를 placeListContainer에 추가
+			parsedCart.forEach((place, index) => {
+				var listItem = document.createElement('div'); // div 요소 생성
+				listItem.classList.add('place-list-array'); // 클래스 이름 추가
+				listItem.innerText = `${index + 1}. ${place.p_name}`;
+				placeListContainer.appendChild(listItem);
 			});
 
 			var polyline = new kakao.maps.Polyline({
@@ -173,7 +213,17 @@
 			});
 			polyline.setMap(map);
 
-			// 지도의 범위를 설정합니다.
+			// 지도에 경로 거리와 예상 시간 표시
+			if (distance != null && duration != null) {
+				var distanceKm = (distance / 1000).toFixed(2); // 거리 단위를 km로 변환
+				var durationMin = Math.ceil(duration / 60); // 시간을 분 단위로 변환
+
+				document.querySelector('.distance-info').innerText = `총 거리: ${distanceKm} km`;
+				document.querySelector('.duration-info').innerText = `예상 시간: ${durationMin} 분`;
+
+				console.log(durationMin);
+			}
+
 			if (!bounds.isEmpty()) {
 				map.setBounds(bounds);
 				console.log("지도의 범위가 설정되었습니다.");
@@ -184,5 +234,6 @@
 
 		setMarkersAndPath();
 	</script>
-	</body>
+</body>
+
 </html>
