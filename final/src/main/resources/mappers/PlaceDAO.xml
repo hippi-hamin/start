@@ -96,6 +96,22 @@
 		SELECT p_id, p_name, p_location, p_stScore, p_iname
 		FROM place.placetbl
 		WHERE 1=1
+		<if test="mainRegions != null and !mainRegions.isEmpty()">
+			AND (
+			<foreach item="region" collection="mainRegions" open=""
+				separator=" OR " close="">
+				p_location LIKE CONCAT('%', #{region}, '%')
+			</foreach>
+			)
+		</if>
+		<if test="subregions != null and !subregions.isEmpty()">
+			AND (
+			<foreach item="subregion" collection="subregions" open=""
+				separator=" OR " close="">
+				p_name LIKE CONCAT('%', #{subregion}, '%')
+			</foreach>
+			)
+		</if>
 		<if test="themes != null and !themes.isEmpty()">
 			AND (
 			<foreach item="theme" collection="themes" open=""
@@ -103,19 +119,6 @@
 				p_thema = #{theme}
 			</foreach>
 			)
-		</if>
-		<if test="regions != null and !regions.isEmpty()">
-			AND (
-			<foreach item="region" collection="regions" open=""
-				separator=" OR " close="">
-				p_name LIKE CONCAT('%', #{region}, '%')
-			</foreach>
-			)
-		</if>
-		<if test="themes == null or themes.isEmpty()">
-			<if test="regions == null or regions.isEmpty()">
-				AND 1=0
-			</if>
 		</if>
 	</select>
 	<select id="fetchPlacesLocation" parameterType="String"

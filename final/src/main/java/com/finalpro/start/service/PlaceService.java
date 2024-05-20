@@ -159,13 +159,14 @@ public class PlaceService {
 
 	// 필요없는 메서드 삭제 -안재문-
 	// make plan 필터
-	public List<PlaceDTO> searchByFilters(List<String> themes, List<String> regions) {
-		log.info("themes : " + themes);
-		log.info("regions : " + regions);
-		List<PlaceDTO> result = placeDAO.searchByFilters(themes, regions);
-		log.info("result : " + result);
-		return result;
-	}
+	public List<PlaceDTO> searchByFilters(List<String> themes, List<String> mainRegions, List<String> subregions) {
+		log.info("themes: " + themes);
+	    log.info("mainRegions: " + mainRegions);
+	    log.info("subregions: " + subregions);
+	    List<PlaceDTO> result = placeDAO.searchByFilters(themes, mainRegions, subregions);
+	    log.info("result: " + result);
+	    return result;
+    }
 
 	// 지역별 리스트
 	public List<PlaceDTO> fetchPlacesLocation(String location) {

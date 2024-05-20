@@ -43,19 +43,19 @@
 	<div class="location-array">
 		<!-- 지역 정렬 박스 -->
 		<div class="container">
-			<button class="circle-button" onclick="showCategory('서울')"><img src="/images/seoul.jpg"></button>
-			<button class="circle-button" onclick="showCategory('부산')"><img src="/images/busan.jpg"></button>
-			<button class="circle-button" onclick="showCategory('인천')"><img src="/images/incheon.jpg"></button>
-			<button class="circle-button" onclick="showCategory('대구')"><img src="/images/daegu.jpg"></button>
-			<button class="circle-button" onclick="showCategory('대전')"><img src="/images/Daejeon.jpg"></button>
-			<button class="circle-button" onclick="showCategory('울산')"><img src="/images/ulsan.jpg"></button>
-			<button class="circle-button" onclick="showCategory('광주')"><img src="/images/gwangju.jpg"></button>
-			<button class="circle-button" onclick="showCategory('경기')"><img src="/images/gyeonggi.jpg"></button>
-			<button class="circle-button" onclick="showCategory('강원')"><img src="/images/gangwon.jpg"></button>
-			<button class="circle-button" onclick="showCategory('경상')"><img src="/images/Gyeongsang.jpg"></button>
-			<button class="circle-button" onclick="showCategory('전라')"><img src="/images/Jeolla.jpg"></button>
-			<button class="circle-button" onclick="showCategory('충청')"><img src="/images/Chungcheong.jpg"></button>
-			<button class="circle-button" onclick="showCategory('제주')"><img src="/images/jeju.jpg"></button>
+			<button class="circle-button" onclick="selectRegion('서울')"><img src="/images/seoul.jpg"></button>
+            <button class="circle-button" onclick="selectRegion('부산')"><img src="/images/busan.jpg"></button>
+            <button class="circle-button" onclick="selectRegion('인천')"><img src="/images/incheon.jpg"></button>
+            <button class="circle-button" onclick="selectRegion('대구')"><img src="/images/daegu.jpg"></button>
+            <button class="circle-button" onclick="selectRegion('대전')"><img src="/images/Daejeon.jpg"></button>
+            <button class="circle-button" onclick="selectRegion('울산')"><img src="/images/ulsan.jpg"></button>
+            <button class="circle-button" onclick="selectRegion('광주')"><img src="/images/gwangju.jpg"></button>
+            <button class="circle-button" onclick="selectRegion('경기')"><img src="/images/gyeonggi.jpg"></button>
+            <button class="circle-button" onclick="selectRegion('강원')"><img src="/images/gangwon.jpg"></button>
+            <button class="circle-button" onclick="selectRegion('경상')"><img src="/images/Gyeongsang.jpg"></button>
+            <button class="circle-button" onclick="selectRegion('전라')"><img src="/images/Jeolla.jpg"></button>
+            <button class="circle-button" onclick="selectRegion('충청')"><img src="/images/Chungcheong.jpg"></button>
+            <button class="circle-button" onclick="selectRegion('제주')"><img src="/images/jeju.jpg"></button>
 		</div>
 	</div>
 	<div class="location-name-array">
@@ -1495,65 +1495,88 @@
 			});
 	}
 
-	function showCategory(category) {
-		var categorys = document.getElementsByClassName("category");
+	 let selectedRegion = '';
 
-		for (var i = 0; i < categorys.length; i++) {
-			categorys[i].style.display = "none";
-		}
+     function showCategory(category) {
+         var categories = document.getElementsByClassName("category");
+         for (var i = 0; i < categories.length; i++) {
+             categories[i].style.display = "none";
+         }
+         document.getElementById(category).style.display = "block";
+     }
 
-		document.getElementById(category).style.display = "block";
-	}
+     function selectRegion(region) {
+         selectedRegion = region;
+         console.log(region);
+         showCategory(region);
+         searchByFilters();
+     }
 
-	$(document).ready(function() {
-	    $("#테마 input[type=checkbox]").change(function() {
-	        searchByFilters();
-	    });
+     $(document).ready(function() {
+         $("#테마 input[type=checkbox]").change(function() {
+             searchByFilters();
+         });
+         $(".category input[type=checkbox]").change(function() {
+             searchByFilters();
+         });
+     });
 
-	    $(".category input[type=checkbox]").change(function() {
-	        searchByFilters();
-	    });
-	});
+     function searchByFilters() {
+         var themes = [];
+         var regions = [];
 
-	function searchByFilters() {
-	    var themes = [];
-	    var regions = [];
+         // 테마 체크박스 값 수집
+         $("#테마 input[type=checkbox]:checked").each(function() {
+             themes.push($(this).val());
+         });
 
-	    // 테마 체크박스 값 수집
-	    $("#테마 input[type=checkbox]:checked").each(function() {
-	        themes.push($(this).val());
-	    });
+         // 지역 체크박스 값 수집
+         $(".category input[type=checkbox]:checked").each(function() {
+             regions.push($(this).val());
+         });
 
-	    // 지역 체크박스 값 수집
-	    $(".category input[type=checkbox]:checked").each(function() {
-	        regions.push($(this).val());
-	    });
+         // 지역 버튼을 통한 선택값 추가
+         if (selectedRegion) {
+             regions.push(selectedRegion);
+         }
 
-	    console.log("Selected themes:", themes);
-	    console.log("Selected regions:", regions);
+         console.log("Selected themes:", themes);
+         console.log("Selected regions:", regions);
 
-	    if (themes.length === 0 && regions.length === 0) {
-	        updatePlaceList([]);
-	        return;
-	    }
 
-	    $.ajax({
-	        url: '/searchByFilters',
-	        type: 'GET',
-	        traditional: true,
-	        data: {
-	            themes: themes,
-	            regions: regions
-	        },
-	        success: function(data) {
-	            console.log("Received data:", data);
-	            updatePlaceList(data);
-	        },
-	        error: function() {
-	            alert('검색 중 오류가 발생했습니다.');
-	        }
-	    });
-	}
+         if (themes.length === 0 && regions.length === 0) {
+             $.ajax({
+                 url: '/getPlaceList',
+                 type: 'GET',
+                 success: function(data) {
+                     console.log("Received data:", data);
+                     updatePlaceList(data);
+                 },
+                 error: function() {
+                     alert('검색 중 오류가 발생했습니다.');
+                 }
+             });
+             return;
+         }
+
+         $.ajax({
+             url: '/searchByFilters',
+             type: 'GET',
+             traditional: true,
+             data: {
+                 themes: themes,
+                 regions: regions
+             },
+             success: function(data) {
+                 console.log("Received data:", data);
+                 updatePlaceList(data);
+             },
+             error: function() {
+                 alert('검색 중 오류가 발생했습니다.');
+             }
+         });
+     }
+
 	function updatePlaceList(data) {
 		var placeList = $("#place-list");
 		placeList.empty();

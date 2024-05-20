@@ -1,8 +1,11 @@
 package com.finalpro.start.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,13 +38,30 @@ public class PlaceRestController {
 	}
 
 	@GetMapping("/searchByFilters")
-	public List<PlaceDTO> searchByFilters(@RequestParam(value = "themes", required = false) List<String> themes,
-			@RequestParam(value = "regions", required = false) List<String> regions) {
-		// 로그 추가
-		log.info("Received themes: " + themes);
-		log.info("Received regions :" + regions);
-		return placeService.searchByFilters(themes, regions);
+	public List<PlaceDTO> searchByFilters(
+	        @RequestParam(value = "themes", required = false) List<String> themes,
+	        @RequestParam(value = "regions", required = false) List<String> regions) {
+	    log.info("Received themes: " + themes);
+	    log.info("Received regions: " + regions);
+
+	    // 지역 리스트가 비어 있지 않다면 첫 번째 지역을 메인 지역으로 사용하고 나머지는 서브 지역으로 사용합니다.
+	    List<String> mainRegions = new ArrayList<>();
+	    List<String> subregions = new ArrayList<>();
+	    if (regions != null && !regions.isEmpty()) {
+	    	mainRegions.add(regions.get(0));
+	        if (regions.size() > 1) {
+	            subregions.addAll(regions.subList(1, regions.size()));
+	        }
+	    }
+
+	    if ((themes == null || themes.isEmpty()) && (regions == null || regions.isEmpty())) {
+	        return placeService.getPlaceList(null, null);
+	    }
+
+	    return placeService.searchByFilters(themes, mainRegions, subregions);
 	}
+
+
 
 	// 지역별 리스트
 	@GetMapping("/fetchPlacesByLocation")
