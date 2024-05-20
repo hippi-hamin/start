@@ -183,6 +183,12 @@ public class PlaceController {
 		return view;
 	}
 
+	@GetMapping("/deletePlace")
+	public String deletePlace(@RequestAttribute(name = "p_id") int p_id) {
+		log.info("deletePlace");
+		return "";
+	}
+
 	// 장소 수정 -안재문
 	@GetMapping("/updatePlace/{p_id}")
 	public String updatePlace(@PathVariable("p_id") int p_id, Model model) {
@@ -402,7 +408,6 @@ public class PlaceController {
 	public String getMethodName() {
 		return "map";
 	}
-
 	// 장소관리 페이지 이동 -안재문-
 	@GetMapping("/adminPage/managePlace")
 	public String managePlace(Model model) {
@@ -410,5 +415,4 @@ public class PlaceController {
 		placeService.getPlaceList(model);
 		return "managePlace";
 	}
-
 }
