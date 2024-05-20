@@ -1,5 +1,44 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+	<meta charset="UTF-8">
+	<title>장소 리스트</title>
+	<link rel="stylesheet" th:href="@{/css/placeList.css}">
+</head>
+
+<body>
+	<h1>장소 리스트</h1>
+	<div id="place-list">
+		<ul>
+			<th:block th:each="place : ${placeList}">
+				<li class="place-item">
+					<div class="place-content">
+						<a th:href="@{'/placeDetail/' + ${place.p_id}}" class="place-link">
+							<img th:src="@{'/getImage/' + ${place.p_iname}}" class="place-image"
+								alt="Image of ${place.p_name}" width="150px" />
+							<div class="place-info">
+								<span th:text="${place.p_name}"></span>
+								<span th:text="'지역: ' + ${place.p_location}"></span>
+								<span th:text="'별점: ' + ${place.p_stScore}"></span>
+							</div>
+						</a>
+						<a th:href="@{'/updatePlace/' + ${place.p_id}}">수정</a>
+						<form th:action="@{/deletePlaceProc}" method="post" style="display: inline;">
+							<input type="hidden" name="p_id" th:value="${place.p_id}" />
+							<button type="submit">삭제</button>
+						</form>
+					</div>
+
+				</li>
+			</th:block>
+		</ul>
+	</div>
+</body>
+
+</html>
+=======
 <head>
     <meta charset="UTF-8">
     <title>장소 리스트</title>

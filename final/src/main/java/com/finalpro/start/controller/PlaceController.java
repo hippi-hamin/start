@@ -173,11 +173,14 @@ public class PlaceController {
 			return "redirect:upLoadPlace";
 		}
 	}
-
-	@GetMapping("/deletePlace")
-	public String deletePlace(@RequestAttribute(name = "p_id") int p_id) {
-		log.info("deletePlace");
-		return "";
+	
+	// 장소 삭제 메소드
+	@PostMapping("/deletePlaceProc")
+	public String deletePlaceProc(@RequestParam(name = "p_id") int p_id, Model model, RedirectAttributes rttr) {
+		
+		String view = placeService.deletePlace(p_id, rttr);
+		
+		return view;
 	}
 
 	// 장소 수정 -안재문
