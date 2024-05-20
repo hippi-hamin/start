@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -173,6 +174,12 @@ public class PlaceController {
 		}
 	}
 
+	@GetMapping("/deletePlace")
+	public String deletePlace (@RequestAttribute(name ="p_id") int p_id) {
+		log.info("deletePlace");
+		return "";
+	}
+	
 	// 장소 수정 -안재문
 	@GetMapping("/updatePlace/{p_id}")
 	public String updatePlace(@PathVariable("p_id") int p_id, Model model) {
@@ -233,6 +240,19 @@ public class PlaceController {
 				cart = new ArrayList<>();
 				session.setAttribute("cart", cart);
 			}
+			
+			// 로그인 상태 확인
+	        boolean isLoggedIn = session.getAttribute("signedInUser") != null;
+
+	        // 경유지 개수 제한 설정
+	        int maxWaypoints = isLoggedIn ? 5 : 2;
+	        long waypointCount = cart.stream().filter(place -> "경유지".equals(place.getP_id())).count();
+
+	        if (waypointCount >= maxWaypoints) {
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("경유지는 최대 " + maxWaypoints + "개까지 추가할 수 있습니다.");
+	        }
+			
+			
 			PlaceDTO place = placeService.findById(p_id);
 			if (place != null && !cart.contains(place)) {
 				cart.add(place);
@@ -244,7 +264,23 @@ public class PlaceController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid product ID");
 		}
 	}
+	
+	// 로그인 상태 확인하는 메서드
+	@GetMapping("/checkLoginStatus")
+	public ResponseEntity<Map<String, Boolean>> checkLoginStatus(HttpSession session) {
+	    boolean isLoggedIn = session.getAttribute("signedInUser") != null;
+	    Map<String, Boolean> response = Map.of("isLoggedIn", isLoggedIn);
+	    return ResponseEntity.ok(response);
+	}
 
+	@GetMapping("/cartItemCount")
+    public ResponseEntity<Integer> getCartItemCount(HttpSession session) {
+        List<PlaceDTO> cart = (List<PlaceDTO>) session.getAttribute("cart");
+        int itemCount = (cart != null) ? cart.size() : 0;
+        return ResponseEntity.ok(itemCount);
+    }
+
+	
 	@GetMapping("/showCart")
 	public ResponseEntity<List<PlaceDTO>> showCart(HttpSession session) {
 		List<PlaceDTO> cart = (List<PlaceDTO>) session.getAttribute("cart");

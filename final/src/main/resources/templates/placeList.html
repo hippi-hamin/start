@@ -1189,365 +1189,397 @@
 	<th:block th:id="footer" th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
 <script th:inline="javascript">
-    /*<![CDATA[*/
+	/*<![CDATA[*/
+	let cartItemCount = 0; // 현재 장바구니 항목 수를 저장하는 변수
+        let isLoggedIn = false; // 로그인 상태를 저장하는 변수
 
-    function addToCart(p_id) {
-        var id = parseInt(p_id, 10);
-        if (!Number.isInteger(id)) {
-            alert("잘못된 상품 ID입니다.");
-            return;
+
+	function checkLoginStatus() {
+            $.get("/checkLoginStatus", function(response) {
+                isLoggedIn = response.isLoggedIn;
+            });
         }
 
-        $.post("/addPlaceToCart", { p_id: id })
-            .done(function () {
-                alert("장소가 장바구니에 추가되었습니다.");
-                updateCart(); // 장바구니 업데이트
-            })
-            .fail(function () {
-                alert("장소를 추가하는데 문제가 발생했습니다.");
-            });
-    }
 
-    function removeFromCart(pid) {
-        $.post("/removeItemFromCart", { p_id: pid })
-            .done(function () {
-                alert("상품이 장바구니에서 제거되었습니다.");
-                updateCart(); // 장바구니 UI 업데이트
-            })
-            .fail(function () {
-                alert("상품을 제거하는데 문제가 발생했습니다.");
-            });
-    }
+	function addToCart(p_id) {
+		var id = parseInt(p_id, 10);
+		if (!Number.isInteger(id)) {
+			alert("잘못된 상품 ID입니다.");
+			return;
+		}
+		
+		// 로그인 상태에 따른 경유지 개수 제한 설정
+            let maxWaypoints = isLoggedIn ? 5 : 2;
+            let waypointCount = $('#wayPoints li').length;
 
-    function updateCart() {
-        $.get("/showCart")
-            .done(function (response) {
-                // 기존 내용을 지웁니다.
-                $("#startPoint").empty();
-                $("#wayPoints").empty();
-                $("#endPoint").empty();
+            if (waypointCount >= maxWaypoints) {
+                alert("비회원은 경유지를 최대 " + maxWaypoints + "개까지 추가할 수 있습니다.");
+                return;
+            }
 
-                if (response.length > 0) {
-                    // 출발지 추가
-                    $("#startPoint").append(`<li data-pid="${response[0].p_id}">${response[0].p_name} <button type="button" class="removeItem" data-pid="${response[0].p_id}">삭제</button></li>`);
-                    // 경유지 추가
-                    for (var i = 1; i < response.length - 1; i++) {
-                        $("#wayPoints").append(`<li data-pid="${response[i].p_id}">${response[i].p_name} <button type="button" class="removeItem" data-pid="${response[i].p_id}">삭제</button></li>`);
-                    }
-                    // 목적지 추가
-                    $("#endPoint").append(`<li data-pid="${response[response.length - 1].p_id}">${response[response.length - 1].p_name} <button type="button" class="removeItem" data-pid="${response[response.length - 1].p_id}">삭제</button></li>`);
+
+		// 현재 장바구니 항목 수를 확인합니다.
+            $.get("/cartItemCount", function(itemCount) {
+                if (itemCount >= 7) {
+                    alert("장바구니에는 최대 7개까지 추가할 수 있습니다.");
+                    return;
                 }
 
-                updateMap(response); // 지도 업데이트
-            });
-    }
+			// 장바구니에 항목을 추가합니다.
+			$.post("/addPlaceToCart", {p_id: id})
+				.done(function () {
+					cartItemCount++; // 추가 성공 시 장바구니 항목 수 증가
+					updateCart(); // 장바구니 업데이트
+				})
+				.fail(function () {
+					alert("중복된 장소를 추가했습니다.");
+				});
+		});
+	}
 
-    function initMap() {
-        var mapContainer = document.getElementById('map'),
-            mapOption = {
-                center: new kakao.maps.LatLng(37.5665, 126.9780), // 초기 지도의 중심 좌표
-                level: 3 // 초기 지도의 확대 레벨
-            };
+	function removeFromCart(pid) {
+		$.post("/removeItemFromCart", {p_id: pid})
+			.done(function () {
+				alert("상품이 장바구니에서 제거되었습니다.");
+				updateCart(); // 장바구니 UI 업데이트
+			})
+			.fail(function () {
+				alert("상품을 제거하는데 문제가 발생했습니다.");
+			});
+	}
 
-        var map = new kakao.maps.Map(mapContainer, mapOption);
-        var bounds = new kakao.maps.LatLngBounds();
-        return { map, bounds };
-    }
+	function updateCart() {
+		$.get("/showCart")
+			.done(function (response) {
+				// 기존 내용을 지웁니다.
+				$("#startPoint").empty();
+				$("#wayPoints").empty();
+				$("#endPoint").empty();
 
-    function updateMap(locations) {
-        var { map, bounds } = initMap(); // 초기 지도를 설정
+				if (response.length > 0) {
+					// 출발지 추가
+					$("#startPoint").append(`<li data-pid="${response[0].p_id}">${response[0].p_name} <button type="button" class="removeItem" data-pid="${response[0].p_id}">삭제</button></li>`);
+					// 경유지 추가
+					for (var i = 1; i < response.length - 1; i++) {
+						$("#wayPoints").append(`<li data-pid="${response[i].p_id}">${response[i].p_name} <button type="button" class="removeItem" data-pid="${response[i].p_id}">삭제</button></li>`);
+					}
+					// 목적지 추가
+					$("#endPoint").append(`<li data-pid="${response[response.length - 1].p_id}">${response[response.length - 1].p_name} <button type="button" class="removeItem" data-pid="${response[response.length - 1].p_id}">삭제</button></li>`);
+				}
+				cartItemCount = response.length; // 장바구니 업데이트 시 현재 항목 수를 갱신
+				updateMap(response); // 지도 업데이트
+			});
+	}
 
-        if (locations.length === 0) {
-            return;
-        }
+	function initMap() {
+		var mapContainer = document.getElementById('map'),
+			mapOption = {
+				center: new kakao.maps.LatLng(37.5665, 126.9780), // 초기 지도의 중심 좌표
+				level: 3 // 초기 지도의 확대 레벨
+			};
 
-        // 출발지, 경유지, 목적지에만 마커 추가
-        if (locations.length > 0) {
-            var fromMarkerPosition = new kakao.maps.LatLng(locations[0].y, locations[0].x);
-            var fromMarker = new kakao.maps.Marker({
-                position: fromMarkerPosition,
-                title: '출발지'
-            });
-            fromMarker.setMap(map);
-            bounds.extend(fromMarkerPosition);
-        }
+		var map = new kakao.maps.Map(mapContainer, mapOption);
+		var bounds = new kakao.maps.LatLngBounds();
+		return {map, bounds};
+	}
 
-        if (locations.length > 2) {
-            for (var i = 1; i < locations.length - 1; i++) {
-                var wayMarkerPosition = new kakao.maps.LatLng(locations[i].y, locations[i].x);
-                var wayMarker = new kakao.maps.Marker({
-                    position: wayMarkerPosition,
-                    title: '경유지'
-                });
-                wayMarker.setMap(map);
-                bounds.extend(wayMarkerPosition);
-            }
-        }
+	function updateMap(locations) {
+		var {map, bounds} = initMap(); // 초기 지도를 설정
 
-        if (locations.length > 1) {
-            var toMarkerPosition = new kakao.maps.LatLng(locations[locations.length - 1].y, locations[locations.length - 1].x);
-            var toMarker = new kakao.maps.Marker({
-                position: toMarkerPosition,
-                title: '목적지'
-            });
-            toMarker.setMap(map);
-            bounds.extend(toMarkerPosition);
-        }
+		if (locations.length === 0) {
+			return;
+		}
 
-        // 선을 구성하는 좌표 배열입니다.
-        var linePath = [];
-        if (Array.isArray(locations) && locations.length > 0) {
-            locations.forEach(point => {
-                linePath.push(new kakao.maps.LatLng(point.y, point.x));
-            });
+		// 출발지, 경유지, 목적지에만 마커 추가
+		if (locations.length > 0) {
+			var fromMarkerPosition = new kakao.maps.LatLng(locations[0].y, locations[0].x);
+			var fromMarker = new kakao.maps.Marker({
+				position: fromMarkerPosition,
+				title: '출발지'
+			});
+			fromMarker.setMap(map);
+			bounds.extend(fromMarkerPosition);
+		}
 
-            // 디버깅 로그 추가
-            console.log('Line Path:', linePath);
+		if (locations.length > 2) {
+			for (var i = 1; i < locations.length - 1; i++) {
+				var wayMarkerPosition = new kakao.maps.LatLng(locations[i].y, locations[i].x);
+				var wayMarker = new kakao.maps.Marker({
+					position: wayMarkerPosition,
+					title: '경유지'
+				});
+				wayMarker.setMap(map);
+				bounds.extend(wayMarkerPosition);
+			}
+		}
 
-            // 선을 생성합니다.
-            var polyline = new kakao.maps.Polyline({
-                path: linePath,
-                strokeWeight: 5,
-                strokeColor: 'blue',
-                strokeOpacity: 0.7,
-                strokeStyle: 'solid'
-            });
+		if (locations.length > 1) {
+			var toMarkerPosition = new kakao.maps.LatLng(locations[locations.length - 1].y, locations[locations.length - 1].x);
+			var toMarker = new kakao.maps.Marker({
+				position: toMarkerPosition,
+				title: '목적지'
+			});
+			toMarker.setMap(map);
+			bounds.extend(toMarkerPosition);
+		}
 
-            // 지도에 선을 표시합니다.
-            polyline.setMap(map);
-        }
+		// 선을 구성하는 좌표 배열입니다.
+		var linePath = [];
+		if (Array.isArray(locations) && locations.length > 0) {
+			locations.forEach(point => {
+				linePath.push(new kakao.maps.LatLng(point.y, point.x));
+			});
 
-        map.setBounds(bounds); // 지도의 경계를 마커가 모두 보이도록 설정합니다
-        
-    }
+			// 디버깅 로그 추가
+			console.log('Line Path:', linePath);
 
-    // 드래그 앤 드롭을 설정합니다.
-    new Sortable(document.getElementById('startPoint'), {
-        group: 'shared',
-        draggable: 'li',
-        onEnd: function (evt) {
-            updateOrder();
-        }
-    });
+			// 선을 생성합니다.
+			var polyline = new kakao.maps.Polyline({
+				path: linePath,
+				strokeWeight: 5,
+				strokeColor: 'blue',
+				strokeOpacity: 0.7,
+				strokeStyle: 'solid'
+			});
 
-    new Sortable(document.getElementById('wayPoints'), {
-        group: 'shared',
-        draggable: 'li',
-        onEnd: function (evt) {
-            updateOrder();
-        }
-    });
+			// 지도에 선을 표시합니다.
+			polyline.setMap(map);
+		}
 
-    new Sortable(document.getElementById('endPoint'), {
-        group: 'shared',
-        draggable: 'li',
-        onEnd: function (evt) {
-            updateOrder();
-        }
-    });
+		map.setBounds(bounds); // 지도의 경계를 마커가 모두 보이도록 설정합니다
 
-    function updateOrder() {
-        // 출발지, 경유지, 목적지의 순서를 가져와서 업데이트합니다.
-        let startPoint = [];
-        $('#startPoint li').each(function() {
-            startPoint.push($(this).attr('data-pid'));
-        });
+	}
 
-        let wayPoints = [];
-        $('#wayPoints li').each(function() {
-            wayPoints.push($(this).attr('data-pid'));
-        });
+	// 드래그 앤 드롭을 설정합니다.
+	new Sortable(document.getElementById('startPoint'), {
+		group: 'shared',
+		draggable: 'li',
+		onEnd: function (evt) {
+			updateOrder();
+		}
+	});
 
-        let endPoint = [];
-        $('#endPoint li').each(function() {
-            endPoint.push($(this).attr('data-pid'));
-        });
+	new Sortable(document.getElementById('wayPoints'), {
+		group: 'shared',
+		draggable: 'li',
+		onEnd: function (evt) {
+			updateOrder();
+		}
+	});
 
-        console.log('Start Point:', startPoint);
-        console.log('Way Points:', wayPoints);
-        console.log('End Point:', endPoint);
+	new Sortable(document.getElementById('endPoint'), {
+		group: 'shared',
+		draggable: 'li',
+		onEnd: function (evt) {
+			updateOrder();
+		}
+	});
 
-        // AJAX 요청을 통해 서버에 순서를 업데이트합니다.
-        $.ajax({
-            url: '/updateCartOrder',
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                startPoint: startPoint,
-                wayPoints: wayPoints,
-                endPoint: endPoint
-            }),
-            success: function(response) {
-                console.log('Updated Cart:', response);
-                updateCart(); // 장바구니 UI 업데이트
-            },
-            error: function(error) {
-                console.log('Error updating order:', error);
-            }
-        });
-    }
+	function updateOrder() {
+		// 출발지, 경유지, 목적지의 순서를 가져와서 업데이트합니다.
+		let startPoint = [];
+		$('#startPoint li').each(function () {
+			startPoint.push($(this).attr('data-pid'));
+		});
 
-    $(document).ready(function () {
-        updateCart(); // 페이지 로드 시 장바구니 및 지도 업데이트
+		let wayPoints = [];
+		$('#wayPoints li').each(function () {
+			wayPoints.push($(this).attr('data-pid'));
+		});
 
-        $('#clearCartButton').click(function () {
-            $.post("/clearCart")
-                .done(function (response) {
-                    alert(response); // 성공 메시지 표시
-                    updateCart(); // 장바구니 UI 업데이트
-                })
-                .fail(function () {
-                    alert('장바구니를 비우는 데 실패했습니다.');
-                });
-        });
+		let endPoint = [];
+		$('#endPoint li').each(function () {
+			endPoint.push($(this).attr('data-pid'));
+		});
 
-        $('#routeButton').click(function () {
-            console.log("길찾기 버튼 클릭됨"); // 디버깅 로그
-            startRoute(); // 길찾기 기능 실행
-        });
+		console.log('Start Point:', startPoint);
+		console.log('Way Points:', wayPoints);
+		console.log('End Point:', endPoint);
 
-        // 개별 삭제 버튼 클릭 시
-        $(document).on('click', '.removeItem', function () {
-            var pid = $(this).data('pid');
-            removeFromCart(pid); // 해당 상품을 장바구니에서 제거
-        });
+		// AJAX 요청을 통해 서버에 순서를 업데이트합니다.
+		$.ajax({
+			url: '/updateCartOrder',
+			method: 'POST',
+			contentType: 'application/json',
+			data: JSON.stringify({
+				startPoint: startPoint,
+				wayPoints: wayPoints,
+				endPoint: endPoint
+			}),
+			success: function (response) {
+				console.log('Updated Cart:', response);
+				updateCart(); // 장바구니 UI 업데이트
+			},
+			error: function (error) {
+				console.log('Error updating order:', error);
+			}
+		});
+	}
 
-        // 드래그 앤 드롭을 설정합니다.
-        new Sortable(document.getElementById('startPoint'), {
-            group: 'shared',
-            draggable: 'li',
-            onEnd: function (evt) {
-                updateOrder();
-            }
-        });
-        //
+	$(document).ready(function () {
+		checkLoginStatus(); // 페이지 로드 시 로그인 상태 확인
+		updateCart(); // 페이지 로드 시 장바구니 및 지도 업데이트
 
-        new Sortable(document.getElementById('wayPoints'), {
-            group: 'shared',
-            draggable: 'li',
-            onEnd: function (evt) {
-                updateOrder();
-            }
-        });
+		$('#clearCartButton').click(function () {
+			$.post("/clearCart")
+				.done(function (response) {
+					alert(response); // 성공 메시지 표시
+					updateCart(); // 장바구니 UI 업데이트
+				})
+				.fail(function () {
+					alert('장바구니를 비우는 데 실패했습니다.');
+				});
+		});
 
-        new Sortable(document.getElementById('endPoint'), {
-            group: 'shared',
-            draggable: 'li',
-            onEnd: function (evt) {
-                updateOrder();
-            }
-        });
-    });
+		$('#routeButton').click(function () {
+			console.log("길찾기 버튼 클릭됨"); // 디버깅 로그
+			startRoute(); // 길찾기 기능 실행
+		});
 
-    function startRoute() {
-        $.get("/showCart")
-            .done(function (response) {
-                if (response.length > 0) {
-                    var fromPoint = response[0];
-                    var toPoint = response[response.length - 1];
-                    var wayPoints = response.slice(1, response.length - 1);
-                    var params = {
-                        fromX: fromPoint.x,
-                        fromY: fromPoint.y,
-                        toX: toPoint.x,
-                        toY: toPoint.y,
-                    };
+		// 개별 삭제 버튼 클릭 시
+		$(document).on('click', '.removeItem', function () {
+			var pid = $(this).data('pid');
+			removeFromCart(pid); // 해당 상품을 장바구니에서 제거
+		});
 
-                    if (wayPoints.length > 0) {
-                        params.wayPoints = wayPoints.map(point => `${point.x},${point.y}`).join('|');
-                    }
+		// 드래그 앤 드롭을 설정합니다.
+		new Sortable(document.getElementById('startPoint'), {
+			group: 'shared',
+			draggable: 'li',
+			onEnd: function (evt) {
+				updateOrder();
+			}
+		});
+		//
 
-                    var paramString = $.param(params);
-                    window.location.href = "/mapPaths?" + paramString;
-                } else {
-                    alert("장바구니에 장소가 없습니다.");
-                }
-            });
-    }
-    
-    function showCategory(category) {
-        var categorys = document.getElementsByClassName("category");
+		new Sortable(document.getElementById('wayPoints'), {
+			group: 'shared',
+			draggable: 'li',
+			onEnd: function (evt) {
+				updateOrder();
+			}
+		});
 
-        for (var i = 0; i < categorys.length; i++) {
-            categorys[i].style.display = "none";
-        }
+		new Sortable(document.getElementById('endPoint'), {
+			group: 'shared',
+			draggable: 'li',
+			onEnd: function (evt) {
+				updateOrder();
+			}
+		});
+	});
 
-        document.getElementById(category).style.display = "block";
-    }
+	function startRoute() {
+		$.get("/showCart")
+			.done(function (response) {
+				if (response.length > 0) {
+					var fromPoint = response[0];
+					var toPoint = response[response.length - 1];
+					var wayPoints = response.slice(1, response.length - 1);
+					var params = {
+						fromX: fromPoint.x,
+						fromY: fromPoint.y,
+						toX: toPoint.x,
+						toY: toPoint.y,
+					};
 
-    $(document).ready(function() {
-        $("input[type=checkbox]").change(function() {
-            searchByRegion();
-        });
-    });
+					if (wayPoints.length > 0) {
+						params.wayPoints = wayPoints.map(point => `${point.x},${point.y}`).join('|');
+					}
 
-    function searchByRegion() {
-        var regions = [];
-        $("input[type=checkbox]:checked").each(function() {
-            regions.push($(this).val());
-        });
+					var paramString = $.param(params);
+					window.location.href = "/mapPaths?" + paramString;
+				} else {
+					alert("장바구니에 장소가 없습니다.");
+				}
+			});
+	}
 
-        $.ajax({
-            url : '/searchByRegion',
-            type : 'GET',
-            traditional : true,
-            data : {
-                regions : regions
-            },
-            success : function(data) {
-                updatePlaceList(data);
-            },
-            error : function() {
-                alert('지역 검색 중 오류가 발생했습니다.');
-            }
-        });
-    }
+	function showCategory(category) {
+		var categorys = document.getElementsByClassName("category");
 
-    function updatePlaceList(data) {
-        var placeList = $("#place-list");
-        placeList.empty();
-        if (data.length > 0) {
-            data.forEach(function(place, index) {
-                var placeHtml = '<li class="place-item' + (index === 0 ? ' first-item' : '') + '">'
-                    + '<div class="place-content">'
-                    + '<a href="/placeDetail/' + place.p_id + '" class="place-link">'
-                    + '<img src="/getImage/' + place.p_iname + '" class="place-image" width="150px" />'
-                    + '<div class="place-info">'
-                    + '<span>' + place.p_name + '</span>'
-                    + '<span>지역 : ' + place.p_location + '</span>'
-                    + '<span>별점: ' + place.p_stScore.toFixed(1) + '</span>'
-                    + '</div>'
-                    + '</a>'
-                    + '<div class="button-wrapper">'
-                    + '<button type="button" data-pid="' + place.p_id + '" class="add-to-cart-button" onclick="addToCart(this.getAttribute(\'data-pid\'))">장바구니에 추가</button>'
-                    + '</div>'
-                    + '</div>'
-                    + '</li>';
+		for (var i = 0; i < categorys.length; i++) {
+			categorys[i].style.display = "none";
+		}
 
-                placeList.append(placeHtml);
-            });
-        } else {
-            placeList.append('<div class="no-result-place">검색 결과가 없습니다.</div>');
-        }
-    }
+		document.getElementById(category).style.display = "block";
+	}
 
-    // 스크롤 이벤트 리스너 추가
-    window.addEventListener('scroll', function() {
-        var cartSection = document.getElementById('cart-section');
-        var footer = document.querySelector('footer'); // 푸터 요소를 선택
-        var scrollPosition = window.scrollY || document.documentElement.scrollTop;
-        var windowHeight = window.innerHeight;
-        var footerTop = footer.getBoundingClientRect().top + scrollPosition;
-        var scrollThreshold = document.documentElement.scrollHeight * 0.05; // 문서 높이의 30%
+	$(document).ready(function () {
+		$("input[type=checkbox]").change(function () {
+			searchByRegion();
+		});
+	});
 
-        // 스크롤 위치에 따라 cart-section의 위치를 조정
-        if (scrollPosition + windowHeight >= footerTop) {
-            cartSection.style.top = '-35%';
-        } else if (scrollPosition > scrollThreshold) {
-            cartSection.style.top = '0%';
-        } else {
-            cartSection.style.top = '30%';
-        }
-    });
+	function searchByRegion() {
+		var regions = [];
+		$("input[type=checkbox]:checked").each(function () {
+			regions.push($(this).val());
+		});
+
+		$.ajax({
+			url: '/searchByRegion',
+			type: 'GET',
+			traditional: true,
+			data: {
+				regions: regions
+			},
+			success: function (data) {
+				updatePlaceList(data);
+			},
+			error: function () {
+				alert('지역 검색 중 오류가 발생했습니다.');
+			}
+		});
+	}
+
+	function updatePlaceList(data) {
+		var placeList = $("#place-list");
+		placeList.empty();
+		if (data.length > 0) {
+			data.forEach(function (place, index) {
+				var placeHtml = '<li class="place-item' + (index === 0 ? ' first-item' : '') + '">'
+					+ '<div class="place-content">'
+					+ '<a href="/placeDetail/' + place.p_id + '" class="place-link">'
+					+ '<img src="/getImage/' + place.p_iname + '" class="place-image" width="150px" />'
+					+ '<div class="place-info">'
+					+ '<span>' + place.p_name + '</span>'
+					+ '<span>지역 : ' + place.p_location + '</span>'
+					+ '<span>별점: ' + place.p_stScore.toFixed(1) + '</span>'
+					+ '</div>'
+					+ '</a>'
+					+ '<div class="button-wrapper">'
+					+ '<button type="button" data-pid="' + place.p_id + '" class="add-to-cart-button" onclick="addToCart(this.getAttribute(\'data-pid\'))">장바구니에 추가</button>'
+					+ '</div>'
+					+ '</div>'
+					+ '</li>';
+
+				placeList.append(placeHtml);
+			});
+		} else {
+			placeList.append('<div class="no-result-place">검색 결과가 없습니다.</div>');
+		}
+	}
+
+	// 스크롤 이벤트 리스너 추가
+	window.addEventListener('scroll', function () {
+		var cartSection = document.getElementById('cart-section');
+		var footer = document.querySelector('footer'); // 푸터 요소를 선택
+		var scrollPosition = window.scrollY || document.documentElement.scrollTop;
+		var windowHeight = window.innerHeight;
+		var footerTop = footer.getBoundingClientRect().top + scrollPosition;
+		var scrollThreshold = document.documentElement.scrollHeight * 0.05; // 문서 높이의 30%
+
+		// 스크롤 위치에 따라 cart-section의 위치를 조정
+		if (scrollPosition + windowHeight >= footerTop) {
+			cartSection.style.top = '-35%';
+		} else if (scrollPosition > scrollThreshold) {
+			cartSection.style.top = '0%';
+		} else {
+			cartSection.style.top = '30%';
+		}
+	});
+
+	/*]]>*/
 </script>
 </html>
