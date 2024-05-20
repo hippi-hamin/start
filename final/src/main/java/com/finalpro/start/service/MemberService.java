@@ -1,10 +1,12 @@
 package com.finalpro.start.service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.finalpro.start.dao.MemberDAO;
@@ -158,11 +160,15 @@ public class MemberService {
 		MemberDTO userInfo = memberDAO.getUserInfo(m_id);
 		return userInfo;
 	}
-
+	// 회원 탈퇴 
 	public void withdrawMember(String memberId) {
 		log.info("wtihdrawMember(), service");
 		memberDAO.deleteBoardByMemberId(memberId);
 		memberDAO.withdrawMember(memberId);
 	}
-
+	// 회원 관리 , 정보 
+	public void manageMember(Model model) {
+		List<MemberDTO> result = memberDAO.manageMember();
+		model.addAttribute("memberList", result);
+	}
 }

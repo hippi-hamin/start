@@ -1505,34 +1505,55 @@
 		document.getElementById(category).style.display = "block";
 	}
 
-	$(document).ready(function () {
-		$("input[type=checkbox]").change(function () {
-			searchByRegion();
-		});
+	$(document).ready(function() {
+	    $("#테마 input[type=checkbox]").change(function() {
+	        searchByFilters();
+	    });
+
+	    $(".category input[type=checkbox]").change(function() {
+	        searchByFilters();
+	    });
 	});
 
-	function searchByRegion() {
-		var regions = [];
-		$("input[type=checkbox]:checked").each(function () {
-			regions.push($(this).val());
-		});
+	function searchByFilters() {
+	    var themes = [];
+	    var regions = [];
 
-		$.ajax({
-			url: '/searchByRegion',
-			type: 'GET',
-			traditional: true,
-			data: {
-				regions: regions
-			},
-			success: function (data) {
-				updatePlaceList(data);
-			},
-			error: function () {
-				alert('지역 검색 중 오류가 발생했습니다.');
-			}
-		});
+	    // 테마 체크박스 값 수집
+	    $("#테마 input[type=checkbox]:checked").each(function() {
+	        themes.push($(this).val());
+	    });
+
+	    // 지역 체크박스 값 수집
+	    $(".category input[type=checkbox]:checked").each(function() {
+	        regions.push($(this).val());
+	    });
+
+	    console.log("Selected themes:", themes);
+	    console.log("Selected regions:", regions);
+
+	    if (themes.length === 0 && regions.length === 0) {
+	        updatePlaceList([]);
+	        return;
+	    }
+
+	    $.ajax({
+	        url: '/searchByFilters',
+	        type: 'GET',
+	        traditional: true,
+	        data: {
+	            themes: themes,
+	            regions: regions
+	        },
+	        success: function(data) {
+	            console.log("Received data:", data);
+	            updatePlaceList(data);
+	        },
+	        error: function() {
+	            alert('검색 중 오류가 발생했습니다.');
+	        }
+	    });
 	}
-
 	function updatePlaceList(data) {
 		var placeList = $("#place-list");
 		placeList.empty();

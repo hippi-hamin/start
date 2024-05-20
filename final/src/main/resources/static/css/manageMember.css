@@ -1,0 +1,18 @@
+table {
+	border-collapse: separate; /* 테이블 셀 간의 간격을 유지 */
+	border-spacing: 10px; /* 셀 간의 간격을 설정 */
+	width: 90%;
+}
+
+th, td {
+	padding: 10px; /* 셀 내부의 패딩을 설정 */
+	text-align: left;
+}
+
+th {
+	background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+	background-color: #f9f9f9;
+}
