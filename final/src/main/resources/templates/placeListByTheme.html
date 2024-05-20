@@ -40,11 +40,7 @@
                 <span class="theme-name">데이트</span>
             </div>
             <div class="button-text-container">
-<<<<<<< HEAD
-                <button class="circle-button">우정여행</button>
-=======
                 <button class="circle-button" data-theme="우정여행">우정여행</button>
->>>>>>> develop
                 <span class="theme-name">우정여행</span>
             </div>
             <div class="button-text-container">
@@ -64,9 +60,6 @@
 	                        <img class="p-img" th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
 	                        <span class="place-text" th:text="${place.p_name}"></span>
 	                        <span class="location-text" th:text="${place.p_location}"></span>
-	                        <img class="st-img" src="/images/heart.png" alt="">
-	                        <span class="stScore-text" th:text="${place.p_stScore}"></span>
-	                        <div class="comment-text" th:text="${place.p_description}"></div>
 	                    </div>
 	                    <div class="list-line"></div>
 	                </a>
@@ -118,13 +111,6 @@
 									+ '<span class="location-text">'
 									+ place.p_location
 									+ '</span>'
-									+ '<img class="st-img" src="/images/heart.png">'
-									+ '<span class="stScore-text">'
-									+ place.p_stScore.toFixed(1)
-									+ '</span>'
-									+ '<div class="comment-text">'
-									+ place.p_description
-									+ '</div>'
 									+ '</div>'
 									+ '<div class="list-line"></div>' + '</a>';
 						});
