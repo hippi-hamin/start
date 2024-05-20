@@ -222,7 +222,7 @@ public class PlaceController {
 			return "redirect:updatePlace";
 		}
 	}
-
+	// 카트에 항목 추가 
 	@PostMapping("/addPlaceToCart")
 	public ResponseEntity<?> addPlaceToCart(@RequestParam(name = "p_id") String p_idStr, HttpSession session) {
 		log.info("addToCart()");
@@ -244,7 +244,7 @@ public class PlaceController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid product ID");
 		}
 	}
-
+	// 카트 리스트
 	@GetMapping("/showCart")
 	public ResponseEntity<List<PlaceDTO>> showCart(HttpSession session) {
 		List<PlaceDTO> cart = (List<PlaceDTO>) session.getAttribute("cart");
@@ -290,7 +290,7 @@ public class PlaceController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating order.");
 		}
 	}
-
+	// 카트 비우기 
 	@PostMapping("/clearCart")
 	public ResponseEntity<?> clearCart(HttpSession session) {
 		List<PlaceDTO> cart = (List<PlaceDTO>) session.getAttribute("cart");
@@ -301,7 +301,7 @@ public class PlaceController {
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cart not found.");
 	}
-
+	// 추가한 항목 삭제 
 	@PostMapping("/removeItemFromCart")
 	public ResponseEntity<String> removeItemFromCart(@RequestParam(name = "p_id") int productId, HttpSession session) {
 		// 세션에서 장바구니를 가져옴
@@ -313,7 +313,7 @@ public class PlaceController {
 		}
 		return ResponseEntity.ok("상품이 장바구니에서 제거되었습니다.");
 	}
-
+	// 경로 최적화
 	@GetMapping("mapPaths")
 	public String getMapPaths(@RequestParam(name = "fromX") Double fromX, @RequestParam(name = "fromY") Double fromY,
 			@RequestParam(name = "toX") Double toX, @RequestParam(name = "toY") Double toY,
@@ -351,5 +351,12 @@ public class PlaceController {
 	@GetMapping("map")
 	public String getMethodName() {
 		return "map";
+	}
+	
+	// 관리자 페이지 이동 -안재문-
+	@GetMapping("adminPage")
+	public String adminPage() {
+		log.info("adminPage()");
+		return "adminPage";
 	}
 }
