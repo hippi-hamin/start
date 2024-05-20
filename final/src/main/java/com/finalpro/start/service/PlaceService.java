@@ -60,7 +60,8 @@ public class PlaceService {
 
 	private List<String> fileUpLoad(List<MultipartFile> files, HttpSession session) throws IOException {
 		List<String> uploadedFileNames = new ArrayList<>();
-		String uploadDirectory = "/Users/upLoad/";
+		//String uploadDirectory = "/Users/upLoad/";
+		String uploadDirectory = "C:\\Development\\upLoad";
 
 		File folder = new File(uploadDirectory);
 

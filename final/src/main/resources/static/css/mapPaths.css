@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	font-family: 'SUITE', sans-serif;
+}
+/* 맵과 리스트의 정렬 위치 */
+.container {
+	display: flex;
+	flex-direction: row; /* 수평 정렬 */
+	justify-content: center; /* 필요에 따라 중앙 정렬 */
+	width: 100%;
+	height: 635px;
+}
+/* 맵 크기 조정 */
+#map {
+	width: 70%;
+	height: 100%; /* 부모의 높이를 채우도록 변경 */	
+	border: 1px solid black;
+}
+/* 리스트 박스 */
+#placeList {
+	width: 30%;
+	height: 635px; /* 부모의 높이를 채우도록 변경 */
+	border-bottom: 1px solid black;
+	border-right: 1px solid black;
+}
+/* 리스트의 각 위치별 칸 나누기 */
+.place-list-array {
+	width: 100%;
+	height: 18%;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	border-bottom: 1px solid;
+}
+/* 리스트의 헤더 */
+.place-list-header {
+	background-color: black;
+	color: white;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	height: 35px;
+}
+/* 리스트의 푸터 */
+.place-list-footer {
+	background-color: black;
+	color: white;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	height: 35px;
+	bottom: 2px;
+    position: absolute;
+}
+/* 맵과 리스트의 끝 지점 선 */
+.end-line {
+	width: 80%;
+	border-bottom: 1px solid black;
+	margin-top: 2.5%;
+	margin-bottom: 2.5%;
+	position: relative;
+    left: 50%; 
+    transform: translate(-50%, -50%); 	
+}
