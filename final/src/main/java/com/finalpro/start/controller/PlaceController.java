@@ -175,7 +175,7 @@ public class PlaceController {
 	}
 
 	@GetMapping("/deletePlace")
-	public String deletePlace (@RequestAttribute(name ="p_id") int p_id) {
+	public String deletePlace(@RequestAttribute(name = "p_id") int p_id) {
 		log.info("deletePlace");
 		
 	
@@ -183,7 +183,7 @@ public class PlaceController {
 		
 		return "";
 	}
-	
+
 	// 장소 수정 -안재문
 	@GetMapping("/updatePlace/{p_id}")
 	public String updatePlace(@PathVariable("p_id") int p_id, Model model) {
@@ -234,6 +234,7 @@ public class PlaceController {
 		}
 	}
 
+	// 카트에 항목 추가
 	@PostMapping("/addPlaceToCart")
 	public ResponseEntity<?> addPlaceToCart(@RequestParam(name = "p_id") String p_idStr, HttpSession session) {
 		log.info("addToCart()");
@@ -244,19 +245,19 @@ public class PlaceController {
 				cart = new ArrayList<>();
 				session.setAttribute("cart", cart);
 			}
-			
+
 			// 로그인 상태 확인
-	        boolean isLoggedIn = session.getAttribute("signedInUser") != null;
+			boolean isLoggedIn = session.getAttribute("signedInUser") != null;
 
-	        // 경유지 개수 제한 설정
-	        int maxWaypoints = isLoggedIn ? 5 : 2;
-	        long waypointCount = cart.stream().filter(place -> "경유지".equals(place.getP_id())).count();
+			// 경유지 개수 제한 설정
+			int maxWaypoints = isLoggedIn ? 5 : 2;
+			long waypointCount = cart.stream().filter(place -> "경유지".equals(place.getP_id())).count();
 
-	        if (waypointCount >= maxWaypoints) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("경유지는 최대 " + maxWaypoints + "개까지 추가할 수 있습니다.");
-	        }
-			
-			
+			if (waypointCount >= maxWaypoints) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+						.body("경유지는 최대 " + maxWaypoints + "개까지 추가할 수 있습니다.");
+			}
+
 			PlaceDTO place = placeService.findById(p_id);
 			if (place != null && !cart.contains(place)) {
 				cart.add(place);
@@ -268,23 +269,22 @@ public class PlaceController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid product ID");
 		}
 	}
-	
+
 	// 로그인 상태 확인하는 메서드
 	@GetMapping("/checkLoginStatus")
 	public ResponseEntity<Map<String, Boolean>> checkLoginStatus(HttpSession session) {
-	    boolean isLoggedIn = session.getAttribute("signedInUser") != null;
-	    Map<String, Boolean> response = Map.of("isLoggedIn", isLoggedIn);
-	    return ResponseEntity.ok(response);
+		boolean isLoggedIn = session.getAttribute("signedInUser") != null;
+		Map<String, Boolean> response = Map.of("isLoggedIn", isLoggedIn);
+		return ResponseEntity.ok(response);
 	}
 
 	@GetMapping("/cartItemCount")
-    public ResponseEntity<Integer> getCartItemCount(HttpSession session) {
-        List<PlaceDTO> cart = (List<PlaceDTO>) session.getAttribute("cart");
-        int itemCount = (cart != null) ? cart.size() : 0;
-        return ResponseEntity.ok(itemCount);
-    }
+	public ResponseEntity<Integer> getCartItemCount(HttpSession session) {
+		List<PlaceDTO> cart = (List<PlaceDTO>) session.getAttribute("cart");
+		int itemCount = (cart != null) ? cart.size() : 0;
+		return ResponseEntity.ok(itemCount);
+	}
 
-	
 	@GetMapping("/showCart")
 	public ResponseEntity<List<PlaceDTO>> showCart(HttpSession session) {
 		List<PlaceDTO> cart = (List<PlaceDTO>) session.getAttribute("cart");
@@ -331,6 +331,7 @@ public class PlaceController {
 		}
 	}
 
+	// 카트 비우기
 	@PostMapping("/clearCart")
 	public ResponseEntity<?> clearCart(HttpSession session) {
 		List<PlaceDTO> cart = (List<PlaceDTO>) session.getAttribute("cart");
@@ -342,6 +343,7 @@ public class PlaceController {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cart not found.");
 	}
 
+	// 추가한 항목 삭제
 	@PostMapping("/removeItemFromCart")
 	public ResponseEntity<String> removeItemFromCart(@RequestParam(name = "p_id") int productId, HttpSession session) {
 		// 세션에서 장바구니를 가져옴
@@ -354,6 +356,7 @@ public class PlaceController {
 		return ResponseEntity.ok("상품이 장바구니에서 제거되었습니다.");
 	}
 
+	// 경로 최적화
 	@GetMapping("mapPaths")
 	public String getMapPaths(@RequestParam(name = "fromX") Double fromX, @RequestParam(name = "fromY") Double fromY,
 			@RequestParam(name = "toX") Double toX, @RequestParam(name = "toY") Double toY,
@@ -392,4 +395,5 @@ public class PlaceController {
 	public String getMethodName() {
 		return "map";
 	}
+
 }
