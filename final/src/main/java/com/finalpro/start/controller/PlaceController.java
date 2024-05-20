@@ -177,6 +177,10 @@ public class PlaceController {
 	@GetMapping("/deletePlace")
 	public String deletePlace (@RequestAttribute(name ="p_id") int p_id) {
 		log.info("deletePlace");
+		
+	
+		
+		
 		return "";
 	}
 	
