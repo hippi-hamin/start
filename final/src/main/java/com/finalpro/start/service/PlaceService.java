@@ -156,5 +156,18 @@ public class PlaceService {
 
 		return placeDAO.searchByRegion(regions);
 	}
+	// 테마별 
+	public List<PlaceDTO> searchByTheme(List<String> themes) {	  
+	    log.info("searchByTheme()", themes);
+		return placeDAO.searchByTheme(themes);
+	}
+
+	public List<PlaceDTO> searchByFilters(List<String> themes, List<String> regions) {
+		log.info("themes : " + themes );
+		log.info("regions : " + regions);
+	    List<PlaceDTO> result = placeDAO.searchByFilters(themes, regions);
+	    log.info("result : " + result);
+	    return result;
+	}
 
 }

@@ -13,6 +13,7 @@ body {
    height: 125%;
    display: flex;
    flex-direction: column;
+   font-family: 'SUITE', sans-serif;
 }
 /* 머릿글 영문 텍스트 */
 .center-eng-text {
@@ -123,6 +124,17 @@ input[type=file]::file-selector-button {
 }
 /* 업로드 버튼 */
 .btn-upLoad {
+	position: absolute;
+	width: 25%;
+	height: 30px;
+	border: 1px solid gray;
+	border-radius: 2px;
+	cursor: pointer;
+	background-color: black;
+	color: white;
+	font-size: 14px;
+	top: 115%;
+	left: 50%;
    position: absolute;
    width: 25%;
    height: 30px;
