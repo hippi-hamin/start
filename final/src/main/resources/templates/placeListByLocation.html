@@ -7,6 +7,8 @@
 <link rel="stylesheet" th:href="@{/css/header.css}">
 <link rel="stylesheet" th:href="@{/css/footer.css}">
 <link rel="stylesheet" th:href="@{/css/placeListByLocation.css}">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 </head>
 <body>
 	<!-- 헤더 -->
@@ -16,79 +18,81 @@
 		<!-- 지역 정렬 박스 -->
 		<div class="container">
 			<div class="button-text-container">
-				<button class="circle-button"><img src="/images/seoul.jpg"></button>
+				<button class="circle-button" data-location="서울"><img src="/images/seoul.jpg"></button>
 				<span class="location-name">서울</span>
 			</div>
 			<div class="button-text-container">
-				<button class="circle-button"><img src="/images/busan.jpg"></button>
+				<button class="circle-button" data-location="부산"><img src="/images/busan.jpg"></button>
 				<span class="location-name">부산</span>
 			</div>
 			<div class="button-text-container">
-				<button class="circle-button"><img src="/images/incheon.jpg"></button>
+				<button class="circle-button" data-location="인천"><img src="/images/incheon.jpg"></button>
 				<span class="location-name">인천</span>
 			</div>
 			<div class="button-text-container">
-				<button class="circle-button"><img src="/images/대구.jpg"></button>
+				<button class="circle-button" data-location="대구"><img src="/images/daegu.jpg"></button>
 				<span class="location-name">대구</span>
 			</div>
 			<div class="button-text-container">
-				<button class="circle-button"><img src="/images/대전.jpg"></button>
+				<button class="circle-button" data-location="대전"><img src="/images/daejeon.jpg"></button>
 				<span class="location-name">대전</span>
 			</div>
 			<div class="button-text-container">
-				<button class="circle-button"><img src="/images/울산.jpg"></button>
+				<button class="circle-button" data-location="울산"><img src="/images/ulsan.jpg"></button>
 				<span class="location-name">울산</span>
 			</div>
 			<div class="button-text-container">
-				<button class="circle-button"><img src="/images/광주.jpg"></button>
+				<button class="circle-button" data-location="광주"><img src="/images/gwangju.jpg"></button>
 				<span class="location-name">광주</span>
 			</div>
 			<div class="button-text-container">
-				<button class="circle-button"><img src="/images/경기.jpg"></button>
+				<button class="circle-button" data-location="서울"><img src="/images/gyeonggi.jpg"></button>
 				<span class="location-name">경기</span>
 			</div>
 			<div class="button-text-container">
-				<button class="circle-button"><img src="/images/강원.jpg"></button>
+				<button class="circle-button" data-location="강원도"><img src="/images/gangwon.jpg"></button>
 				<span class="location-name">강원</span>
 			</div>
 			<div class="button-text-container">
-				<button class="circle-button"><img src="/images/경상.jpg"></button>
+				<button class="circle-button" data-location="경상도"><img src="/images/Gyeongsang.jpg"></button>
 				<span class="location-name">경상</span>
 			</div>
 			<div class="button-text-container">
-				<button class="circle-button"><img src="/images/전라.jpg"></button>
+				<button class="circle-button" data-location="전라도"><img src="/images/Jeolla.jpg"></button>
 				<span class="location-name">전라</span>
 			</div>
 			<div class="button-text-container">
-				<button class="circle-button"><img src="/images/충청.jpg"></button>
+				<button class="circle-button" data-location="충청도"><img src="/images/Chungcheong.jpg"></button>
 				<span class="location-name">충청</span>
 			</div>
 			<div class="button-text-container">
-				<button class="circle-button"><img src="/images/제주.jpg"></button>
+				<button class="circle-button" data-location="제주도"><img src="/images/jeju.jpg"></button>
 				<span class="location-name">제주</span>
 			</div>
 		</div>
 	</div>
 	<div class="start-line"></div>
 	<!-- 장소 리스트를 반복하여 표시 -->
-	<th:block th:if="${placeListByLocation != null and placeListByLocation.size() > 0}">
-		<div class="image-container">
-			<th:block th:each="place : ${placeListByLocation}">
-				<a class="image-item" th:href="@{'/placeDetail/' + ${place.p_id}}">
-					<div class="image-wrapper">
-						<img class="p-img" th:src="@{'/getImage/' + ${place.p_iname}}"
-							alt="이미지"> <span class="place-text"
-							th:text="${place.p_name}"></span> <span class="location-text"
-							th:text="${place.p_location}"></span> <img class="st-img"
-							src="/images/heart.png"> <span class="stScore-text"
-							th:text="${place.p_stScore}"></span>
-						<div class="comment-text" th:text="${place.p_description}"></div>
-					</div>
-					<div class="list-line"></div>
-				</a>
-			</th:block>
-		</div>
-	</th:block>
+	<div id="place-list">
+		<th:block th:if="${placeListByLocation != null and placeListByLocation.size() > 0}">
+			<div class="image-container">
+				<th:block th:each="place : ${placeListByLocation}">
+					<a class="image-item" th:href="@{'/placeDetail/' + ${place.p_id}}">
+						<div class="image-wrapper">
+							<img class="p-img" th:src="@{'/getImage/' + ${place.p_iname}}"
+								alt="이미지"> <span class="place-text"
+								th:text="${place.p_name}"></span> <span class="location-text"
+								th:text="${place.p_location}"></span> <img class="st-img"
+								src="/images/heart.png"> <span class="stScore-text"
+								th:text="${place.p_stScore}"></span>
+							<div class="comment-text" th:text="${place.p_description}"></div>
+						</div>
+						<div class="list-line"></div>
+					</a>
+				</th:block>
+			</div>
+		</th:block>
+	</div>
 	<th:block
 		th:unless="${placeListByLocation != null and placeListByLocation.size() > 0}">
 		<div class="non-content-text">장소 리스트가 존재하지 않습니다.</div>
@@ -97,30 +101,61 @@
 	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 	<script>
 		$(document).ready(function() {
-			$('.save-btn').click(function() {
-				var placeName = $(this).siblings('.place-text').text();
-				var location = $(this).siblings('.location-text').text();
-				
-
-				// Ajax 요청을 보냄
-				$.ajax({
-					url : '/savePlace',
-					method : 'POST',
-					data : {
-						placeName : placeName,
-						location : location,
-					},
-					success : function(response) {
-						// 성공적으로 저장되면 할 일
-						console.log('저장되었습니다.');
-					},
-					error : function(xhr, status, error) {
-						// 저장 중 오류가 발생하면 할 일
-						console.error('저장 중 오류가 발생했습니다:', error);
-					}
-				});
+			$('.circle-button').click(function() {
+				var location = $(this).data('location');
+				console.log(location);
+				fetchPlacesByLocation(location);
 			});
 		});
+		function fetchPlacesByLocation(location) {
+			$.ajax({
+				url : '/fetchPlacesByLocation',
+				method : 'GET',
+				data : {
+					location : location
+				},
+				success : function(response) {
+					updatePlaceList(response);
+				},
+				error : function(xhr, status, error) {
+					console.error('장소를 가져오는 중 오류가 발생했습니다:', error);
+				}
+			});
+		}
+
+		function updatePlaceList(data) {
+			var placeList = $('#place-list');
+			placeList.empty();
+			if (data.length > 0) {
+				var html = '<div class="image-container">';
+				data
+						.forEach(function(place) {
+							html += '<a class="image-item" href="/placeDetail/' + place.p_id + '">'
+									+ '<div class="image-wrapper">'
+									+ '<img class="p-img" src="/getImage/' + place.p_iname + '" alt="이미지">'
+									+ '<span class="place-text">'
+									+ place.p_name
+									+ '</span>'
+									+ '<span class="location-text">'
+									+ place.p_location
+									+ '</span>'
+									+ '<img class="st-img" src="/images/heart.png">'
+									+ '<span class="stScore-text">'
+									+ place.p_stScore.toFixed(1)
+									+ '</span>'
+									+ '<div class="comment-text">'
+									+ place.p_description
+									+ '</div>'
+									+ '</div>'
+									+ '<div class="list-line"></div>' + '</a>';
+						});
+				html += '</div>';
+				placeList.append(html);
+			} else {
+				placeList
+						.append('<div class="non-content-text">장소 리스트가 존재하지 않습니다.</div>');
+			}
+		}
 	</script>
 </body>
 </html>

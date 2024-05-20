@@ -171,4 +171,12 @@ public class PlaceService {
 	    return result;
 	}
 
+	public List<PlaceDTO> fetchPlacesLocation(String location) {
+		log.info(location);
+		
+		List<PlaceDTO> result = placeDAO.fetchPlacesLocation(location);
+		
+		return result;
+	}
+
 }
