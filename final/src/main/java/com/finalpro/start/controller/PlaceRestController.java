@@ -33,31 +33,28 @@ public class PlaceRestController {
 
 		return "redirect:placeListByLocation";
 	}
-	// 체크박스 체크 시 해당 지역 리스트(지역) -안재문-
-	@GetMapping("/searchByRegion")
-	public List<PlaceDTO> searchByRegion(@RequestParam(value = "regions", required = false) List<String> regions) {
-		return placeService.searchByRegion(regions);
-	}
-	
-	// 체크박스 선택 시 해당 지역 리스트(테마) -안재문-
-	@GetMapping("/searchByTheme")
-	public List<PlaceDTO> searchByTheme(@RequestParam(value="themes", required = false) List<String> themes){
-		return placeService.searchByTheme(themes);
-	}
-	
+
 	@GetMapping("/searchByFilters")
-	public List<PlaceDTO> searchByFilters(
-	        @RequestParam(value = "themes", required = false) List<String> themes,
-	        @RequestParam(value = "regions", required = false) List<String> regions) {
-	    // 로그 추가
-	    log.info("Received themes: " + themes);
-	    log.info("Received regions :" + regions);
-	    return placeService.searchByFilters(themes, regions);
+	public List<PlaceDTO> searchByFilters(@RequestParam(value = "themes", required = false) List<String> themes,
+			@RequestParam(value = "regions", required = false) List<String> regions) {
+		// 로그 추가
+		log.info("Received themes: " + themes);
+		log.info("Received regions :" + regions);
+		return placeService.searchByFilters(themes, regions);
 	}
 
+	// 지역별 리스트
 	@GetMapping("/fetchPlacesByLocation")
-	public List<PlaceDTO> fetchPlacesLocation(@RequestParam(value = "location", required = false) String location){
+	public List<PlaceDTO> fetchPlacesLocation(@RequestParam(value = "location", required = false) String location) {
 		log.info(location);
 		return placeService.fetchPlacesLocation(location);
 	}
+
+	// 테마별 리스트
+	@GetMapping("/fetchPlacesByTheme")
+	public List<PlaceDTO> fetchPlacesTheme(@RequestParam(value = "theme", required = false) String theme) {
+		log.info(theme);
+		return placeService.fetchPlacesTheme(theme);
+	}
+
 }
