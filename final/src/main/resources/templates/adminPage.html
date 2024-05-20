@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUITE/fonts/static/woff2/SUITE.css" rel="stylesheet">
+<head>
+<meta charset="UTF-8">
+<title>관리자 페이지</title>
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/footer.css}">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+	<th:block th:replace="~{fragments/header :: header}"></th:block>
+	<a href="/adminPage/manageMember">회원관리</a>
+    <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+</body>
+</html>

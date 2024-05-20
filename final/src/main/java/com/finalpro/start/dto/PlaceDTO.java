@@ -1,5 +1,7 @@
 package com.finalpro.start.dto;
 
+import java.util.Objects;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.Getter;
@@ -30,5 +32,21 @@ public class PlaceDTO {
     public PlaceDTO(double x, double y) {
         this.x = x;
         this.y = y;
+    }
+    
+    
+    
+    // 장소가 중복되지 않게 만들어줌
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlaceDTO placeDTO = (PlaceDTO) o;
+        return p_id == placeDTO.p_id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(p_id);
     }
 }

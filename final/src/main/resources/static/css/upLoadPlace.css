@@ -151,4 +151,58 @@ input[type=file]::file-selector-button {
 	border-bottom: 1px solid gray;
 	color: black;
 	font-size: 14px;
+=======
+  	position: absolute; 
+   	top: 65%;
+    left: 50%; 
+    transform: translate(-50%, -50%);    
+    width: 25%;
+    height: 30px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid gray;
+    color: black;
+    font-size: 14px;
+}
+/* 상세 정보 창 */
+.write-input {
+  	position: absolute;
+   	margin: 0 auto;
+  	top: 95%;
+    left: 50%; 
+    transform: translate(-50%, -50%);    
+    width: 25%;
+    height: 25%;
+}
+/* 업로드 버튼 */
+.btn-upLoad {
+   position: absolute;
+   width: 25%;
+   height: 30px;
+   border: 1px solid gray;
+   border-radius: 2px;
+   cursor: pointer;
+   background-color: black;
+   color: white;
+   font-size: 14px;
+   top: 115%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+}
+/* 주소 등록 창 */
+.address-write {
+  	position: absolute; 
+   	top: 75%;
+    left: 50%; 
+    transform: translate(-50%, -50%);    
+    width: 25%;
+    height: 30px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid gray;
+    color: black;
+    font-size: 14px;
+>>>>>>> develop
 }

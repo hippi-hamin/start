@@ -79,13 +79,9 @@
 				<th:block th:each="place : ${placeListByLocation}">
 					<a class="image-item" th:href="@{'/placeDetail/' + ${place.p_id}}">
 						<div class="image-wrapper">
-							<img class="p-img" th:src="@{'/getImage/' + ${place.p_iname}}"
-								alt="이미지"> <span class="place-text"
-								th:text="${place.p_name}"></span> <span class="location-text"
-								th:text="${place.p_location}"></span> <img class="st-img"
-								src="/images/heart.png"> <span class="stScore-text"
-								th:text="${place.p_stScore}"></span>
-							<div class="comment-text" th:text="${place.p_description}"></div>
+							<img class="p-img" th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지"> 
+							<span class="place-text" th:text="${place.p_name}"></span> 
+							<span class="location-text" th:text="${place.p_location}"></span>
 						</div>
 						<div class="list-line"></div>
 					</a>
@@ -139,13 +135,6 @@
 									+ '<span class="location-text">'
 									+ place.p_location
 									+ '</span>'
-									+ '<img class="st-img" src="/images/heart.png">'
-									+ '<span class="stScore-text">'
-									+ place.p_stScore.toFixed(1)
-									+ '</span>'
-									+ '<div class="comment-text">'
-									+ place.p_description
-									+ '</div>'
 									+ '</div>'
 									+ '<div class="list-line"></div>' + '</a>';
 						});

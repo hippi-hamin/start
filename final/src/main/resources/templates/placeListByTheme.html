@@ -3,7 +3,7 @@
 <link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUITE/fonts/static/woff2/SUITE.css" rel="stylesheet">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>테마별</title>
 <link rel="stylesheet" th:href="@{/css/header.css}">
 <link rel="stylesheet" th:href="@{/css/footer.css}">
 <link rel="stylesheet" th:href="@{/css/placeListByTheme.css}">
@@ -60,9 +60,6 @@
 	                        <img class="p-img" th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
 	                        <span class="place-text" th:text="${place.p_name}"></span>
 	                        <span class="location-text" th:text="${place.p_location}"></span>
-	                        <img class="st-img" src="/images/heart.png" alt="">
-	                        <span class="stScore-text" th:text="${place.p_stScore}"></span>
-	                        <div class="comment-text" th:text="${place.p_description}"></div>
 	                    </div>
 	                    <div class="list-line"></div>
 	                </a>
@@ -75,62 +72,55 @@
     </th:block>
     <!-- 푸터 -->
     <th:block th:replace="~{fragments/footer :: footer}"></th:block>
-   	<script type="text/javascript">
-   	$(document).ready(function() {
-		$('.circle-button').click(function() {
-			var theme = $(this).data('theme');
-			console.log(theme);
-			fetchPlacesByTheme(theme);
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.circle-button').click(function() {
+				var theme = $(this).data('theme');
+				console.log(theme);
+				fetchPlacesByTheme(theme);
+			});
 		});
-	});
-   	function fetchPlacesByTheme(theme) {
-		$.ajax({
-			url : '/fetchPlacesByTheme',
-			method : 'GET',
-			data : {
-				theme : theme
-			},
-			success : function(response) {
-				updatePlaceList(response);
-			},
-			error : function(xhr, status, error) {
-				console.error('장소를 가져오는 중 오류가 발생했습니다:', error);
-			}
-		});
-	}
-   	function updatePlaceList(data) {
-		var placeList = $('#place-list');
-		placeList.empty();
-		if (data.length > 0) {
-			var html = '<div class="image-container">';
-			data
-					.forEach(function(place) {
-						html += '<a class="image-item" href="/placeDetail/' + place.p_id + '">'
-								+ '<div class="image-wrapper">'
-								+ '<img class="p-img" src="/getImage/' + place.p_iname + '" alt="이미지">'
-								+ '<span class="place-text">'
-								+ place.p_name
-								+ '</span>'
-								+ '<span class="location-text">'
-								+ place.p_location
-								+ '</span>'
-								+ '<img class="st-img" src="/images/heart.png">'
-								+ '<span class="stScore-text">'
-								+ place.p_stScore.toFixed(1)
-								+ '</span>'
-								+ '<div class="comment-text">'
-								+ place.p_description
-								+ '</div>'
-								+ '</div>'
-								+ '<div class="list-line"></div>' + '</a>';
-					});
-			html += '</div>';
-			placeList.append(html);
-		} else {
-			placeList
-					.append('<div class="non-content-text">장소 리스트가 존재하지 않습니다.</div>');
+		function fetchPlacesByTheme(theme) {
+			$.ajax({
+				url : '/fetchPlacesByTheme',
+				method : 'GET',
+				data : {
+					theme : theme
+				},
+				success : function(response) {
+					updatePlaceList(response);
+				},
+				error : function(xhr, status, error) {
+					console.error('장소를 가져오는 중 오류가 발생했습니다:', error);
+				}
+			});
 		}
-	}
-   	</script>
+		function updatePlaceList(data) {
+			var placeList = $('#place-list');
+			placeList.empty();
+			if (data.length > 0) {
+				var html = '<div class="image-container">';
+				data
+						.forEach(function(place) {
+							html += '<a class="image-item" href="/placeDetail/' + place.p_id + '">'
+									+ '<div class="image-wrapper">'
+									+ '<img class="p-img" src="/getImage/' + place.p_iname + '" alt="이미지">'
+									+ '<span class="place-text">'
+									+ place.p_name
+									+ '</span>'
+									+ '<span class="location-text">'
+									+ place.p_location
+									+ '</span>'
+									+ '</div>'
+									+ '<div class="list-line"></div>' + '</a>';
+						});
+				html += '</div>';
+				placeList.append(html);
+			} else {
+				placeList
+						.append('<div class="non-content-text">장소 리스트가 존재하지 않습니다.</div>');
+			}
+		}
+	</script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.finalpro.start.controller;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.finalpro.start.dto.MemberDTO;
+import com.finalpro.start.dto.PlaceDTO;
 import com.finalpro.start.service.MemberService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -128,6 +130,21 @@ public class MemberController {
 		log.info(changePwEmail);
 		String view = memberServ.changePassword(m_pw, changePwEmail, rttr);
 		return view;
+	}
+
+	// 관리자 페이지 이동 -안재문-
+	@GetMapping("adminPage")
+	public String adminPage() {
+		log.info("adminPage()");
+		return "adminPage";
+	}
+
+	// 회원관리 이동, 회원 리스트 
+	@GetMapping("/adminPage/manageMember")
+	public String manageMember(Model model) {
+		log.info("manageMember()");
+		memberServ.manageMember(model);
+		return "manageMember";
 	}
 
 }

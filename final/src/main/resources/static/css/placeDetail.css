@@ -196,10 +196,9 @@ body {
    font-weight: bold;
    position: relative;
    text-align: center;
-   margin: 5%;
    width: 80%;
-   border: 1px solid black;
    margin: 0 auto;
+   margin-top: 2%;
 }
 /* 세부 디테일 정렬 박스 */
 .place-detail-array-box {
@@ -228,7 +227,7 @@ body {
     top: 30px;
 }
 /* 조회수, 별점 정렬 */
-.views-stscore-view {
+.views-array {
    height: 10%;
    width: 80%;
    margin: 0 auto;
@@ -241,36 +240,4 @@ body {
    font-weight: bold;
    position: relative;
     float: right;
-}
-/* 별점 */
-.st-score {
-   color: black;
-   font-size: 14px;
-   font-weight: bold;
-   position: absolute;
-   left: 12.5%;
-}
-.st-img {
-	height: 20px;
-	width: 20px;
-	position: absolute;
-}
-
-.st-score-button {
-    width: 50px;
-    min-height: 50px;
-    border: 1px solid black;
-    border-radius: 3px;
-    background-color: white;
-    margin: 0 auto;
-    position: relative;
-    bottom: 15%;
-    display: flex; /* Flexbox 사용 */
-    align-items: center; /* 수직 중앙 정렬 */
-    justify-content: center; /* 수평 중앙 정렬 */
-}
-
-.st-score-button img {
-    width: 20px;
-    height: 20px; /* height 속성을 설정해 min-height를 height로 변경 */
 }
