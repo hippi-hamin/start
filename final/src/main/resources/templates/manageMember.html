@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 관리</title>
+    <link rel="stylesheet" th:href="@{/css/manageMember.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+	<link rel="stylesheet" th:href="@{/css/footer.css}">
+</head>
+<body>
+	<th:block th:replace="~{fragments/header :: header}"></th:block>
+    <h1>회원 관리</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="member : ${memberList}">
+                <td th:text="${member.m_id}">ID</td>
+                <td th:text="${member.m_email}">Email</td>
+                <td th:text="${member.m_name}">Name</td>
+                <td th:text="${member.m_phone}">Phone</td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/adminPage">이전</a>
+    <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+</body>
+</html>

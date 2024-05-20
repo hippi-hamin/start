@@ -353,10 +353,4 @@ public class PlaceController {
 		return "map";
 	}
 	
-	// 관리자 페이지 이동 -안재문-
-	@GetMapping("adminPage")
-	public String adminPage() {
-		log.info("adminPage()");
-		return "adminPage";
-	}
 }

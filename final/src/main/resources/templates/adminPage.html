@@ -1,41 +1,17 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUITE/fonts/static/woff2/SUITE.css" rel="stylesheet">
 <head>
 <meta charset="UTF-8">
 <title>관리자 페이지</title>
-<link rel="stylesheet" href="/css/admin.css">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/footer.css}">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
-<header class="admin-header">
-    <div class="logo">
-        <a href="/admin">Admin Dashboard</a>
-    </div>
-    <div class="header-right">
-        <a href="/logout">LogOut</a>
-    </div>
-</header>
-
-<div class="admin-container">
-    <nav class="admin-sidebar">
-        <ul>
-            
-            <li><a href="/admin/users">사용자 관리</a></li>
-            <li><a href="/admin/content">콘텐츠 관리</a></li>
-            <li><a href="/admin/reports">데이터 및 리포트</a></li>
-            <li><a href="/admin/settings">설정</a></li>
-            <li><a href="/admin/tools">관리자 도구</a></li>
-            <li><a href="/admin/products">상품 관리</a></li>
-            <li><a href="/admin/orders">주문 관리</a></li>
-            <li><a href="/admin/support">고객 지원</a></li>
-        </ul>
-    </nav>
-
-    <main class="admin-main">
-        <h1>관리자 페이지</h1>
-        <p>관리자 페이지에 오신 것을 환영합니다. 좌측 메뉴를 통해 다양한 관리 기능을 이용하실 수 있습니다.</p>
-    </main>
-</div>
-
+	<th:block th:replace="~{fragments/header :: header}"></th:block>
+	<a href="/adminPage/manageMember">회원관리</a>
+    <th:block th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
 </html>
