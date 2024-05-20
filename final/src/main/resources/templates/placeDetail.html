@@ -23,18 +23,18 @@
          <div class="preview-img-array-box">
          <!-- 대표 이미지 -->
             <div class="preview-img">
-               <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
+               <!-- <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">  -->
             </div>
             <!-- 부가 이미지들 -->
             <div class="preview-imgs">
                <div class="preview-img-lt">
-                  <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
+                  <!-- <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지"> -->
                </div>
                <div class="preview-img-rt">
-                  <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
+                  <!-- <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지"> -->
                </div>
                <div class="preview-img-lb">
-                  <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
+                  <!-- <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지"> -->
                </div>
                <!-- 더보기 클릭 이미지 -->
                <div class="preview-img-rb">
@@ -42,7 +42,7 @@
                      <img src="/images/scrollArrow.png" alt="">
                   </div>
                   <div class="preview-img-page">
-                     <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
+                     <!-- <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지"> -->
                   </div>
                </div>
             </div>
@@ -54,7 +54,7 @@
          <div class="place-location" th:text="${place.p_location}"></div>
          <!-- 세부 이미지 이미지 출력 -->
          <div class="place-detail-description-img">
-         	
+         <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
          </div>
          <!-- 세부 디테일 내용 페이지 글 -->
          <div class="place-detail-array-box">

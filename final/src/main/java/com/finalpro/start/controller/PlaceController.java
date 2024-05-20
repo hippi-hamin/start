@@ -109,7 +109,9 @@ public class PlaceController {
 	public ResponseEntity<byte[]> getImage(@PathVariable String imageName, HttpSession session) {
 	    try {
 	        // 실제 이미지 파일이 저장된 디렉터리 경로 설정
-	        String uploadDirectory = "/Users/upLoad/";
+//	        String uploadDirectory = "/Users/upLoad/";
+	    	String uploadDirectory = "C:\\Development\\upLoad";
+	    			
 
 	        // 이미지 파일의 경로 설정
 	        Path imagePath = Paths.get(uploadDirectory, imageName);

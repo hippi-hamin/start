@@ -197,6 +197,9 @@ body {
    position: relative;
    text-align: center;
    margin: 5%;
+   width: 80%;
+   border: 1px solid black;
+   margin: 0 auto;
 }
 /* 세부 디테일 정렬 박스 */
 .place-detail-array-box {
@@ -210,6 +213,10 @@ body {
    position: relative;
    margin: 0 auto;
    margin-top: 10%;
+}
+.place-detail-description-img img {
+	height: 500px;
+   	width: 100%;
 }
 /* 세부 디테일 끝맺음 공백 */
 .detail-img-end {
