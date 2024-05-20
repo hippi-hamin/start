@@ -124,8 +124,6 @@ input[type=file]::file-selector-button {
 }
 /* 업로드 버튼 */
 .btn-upLoad {
-<<<<<<< HEAD
-<<<<<<< HEAD
 	position: absolute;
 	width: 25%;
 	height: 30px;
@@ -137,9 +135,6 @@ input[type=file]::file-selector-button {
 	font-size: 14px;
 	top: 115%;
 	left: 50%;
-=======
-=======
->>>>>>> develop
    position: absolute;
    width: 25%;
    height: 30px;
@@ -151,10 +146,6 @@ input[type=file]::file-selector-button {
    font-size: 14px;
    top: 115%;
    left: 50%;
-<<<<<<< HEAD
->>>>>>> develop
-=======
->>>>>>> develop
    transform: translate(-50%, -50%);
 }
 /* 주소 등록 창 */

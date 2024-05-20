@@ -87,16 +87,18 @@
 		<div class="filter2-checkbox">
 			<!-- 테마 출력 -->
 			<div class="category" id="테마" style="display: none;">
+			<!-- 파라미터값 변경 -->
 				<div class="filter-list1">
+				
 					<label class="checkbox"> 
-					<input type="checkbox" id="맛집탐방" name="맛집탐방" value="맛집탐방"> 
+					<input type="checkbox" id="먹방여행" name="먹방여행" value="먹방여행"> 
 					<span class="checkbox_icon"></span>
 					<span class="checkbox_text">맛집탐방</span>
 					</label> 
 					<label class="checkbox">
-					<input type="checkbox" id="효도여행" name="효도여행" value="효도여행">
+					<input type="checkbox" id="반려동물과" name="반려동물과" value="반려동물과">
 					<span class="checkbox_icon"></span> 
-					<span class="checkbox_text">효도여행</span>
+					<span class="checkbox_text">반려동물과</span>
 					</label> 
 					<label class="checkbox"> 
 					<input type="checkbox" id="역사여행" name="역사여행" value="역사여행"> 
@@ -109,18 +111,18 @@
 					<span class="checkbox_text">놀이공원</span>
 					</label> 
 					<label class="checkbox"> 
-					<input type="checkbox" id="가족" name="가족" value="가족"> 
+					<input type="checkbox" id="가족여행" name="가족여행" value="가족여행"> 
 					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">가족</span>
+					<span class="checkbox_text">가족여행</span>
 					</label> 
 					<label class="checkbox">
 					<input type="checkbox" id="데이트" name="데이트" value="데이트"> 
 					<span class="checkbox_icon"></span> 
 					<span class="checkbox_text">데이트</span>
 					</label> <label class="checkbox"> 
-					<input type="checkbox" id="친구" name="친구" value="친구"> 
+					<input type="checkbox" id="우정여행" name="우정여행" value="우정여행"> 
 					<span class="checkbox_icon"></span>
-					<span class="checkbox_text">친구</span>
+					<span class="checkbox_text">우정여행</span>
 					</label> 
 					<label class="checkbox">
 					<input type="checkbox" id="나홀로" name="나홀로" value="나홀로"> 
@@ -278,7 +280,7 @@
 						<span class="checkbox_text">사상구</span>
 					</label> <label class="checkbox"> <input type="checkbox" id="사하"
 						name="사하" value="사하"> <span class="checkbox_icon"></span>
-						<span class="checkbox_text">사하</span>
+						<span class="checkbox_text">사하구</span>
 					</label> <label class="checkbox"> <input type="checkbox" id="서구"
 						name="서구" value="서구"> <span class="checkbox_icon"></span>
 						<span class="checkbox_text">서구</span>
@@ -1181,7 +1183,7 @@
 			<div id="map"></div>
 		</div>
 	<!-- 푸터 -->
-	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+	<th:block th:id="footer" th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
 <script th:inline="javascript">
         /*<![CDATA[*/
@@ -1403,31 +1405,58 @@
 			document.getElementById(category).style.display = "block";
 		}
 		$(document).ready(function() {
-			$("input[type=checkbox]").change(function() {
-				searchByRegion();
-			});
+		    // 테마 체크박스 변경 이벤트
+		    $("#테마 input[type=checkbox]").change(function() {
+		        searchByFilters();
+		    });
+
+		    // 지역 체크박스 변경 이벤트
+		    $(".category input[type=checkbox]").change(function() {
+		        searchByFilters();
+		    });
 		});
 
-		function searchByRegion() {
-			var regions = [];
-			$("input[type=checkbox]:checked").each(function() {
-				regions.push($(this).val());
-			});
+		function searchByFilters() {
+		    var themes = [];
+		    var regions = [];
 
-			$.ajax({
-				url : '/searchByRegion',
-				type : 'GET',
-				traditional : true,
-				data : {
-					regions : regions
-				},
-				success : function(data) {
-					updatePlaceList(data);
-				},
-				error : function() {
-					alert('지역 검색 중 오류가 발생했습니다.');
-				}
-			});
+		    // 테마 체크박스 값 수집
+		    $("#테마 input[type=checkbox]:checked").each(function() {
+		        themes.push($(this).val());
+		    });
+
+		    // 지역 체크박스 값 수집
+		    $(".category input[type=checkbox]:checked").each(function() {
+		        regions.push($(this).val());
+		    });
+
+		    // 디버깅용 로그 추가
+		    console.log("Selected themes:", themes);
+		    console.log("Selected regions:", regions);
+
+		    // 테마와 지역 값이 모두 없는 경우 빈 리스트로 업데이트
+		    if (themes.length === 0 && regions.length === 0) {
+		        updatePlaceList([]);
+		        return;
+		    }
+
+		    // AJAX 요청
+		    $.ajax({
+		        url: '/searchByFilters',
+		        type: 'GET',
+		        traditional: true,
+		        data: {
+		            themes: themes,
+		            regions: regions
+		        },
+		        success: function(data) {
+		            console.log("Received data:", data); // 디버깅용 로그 추가
+		            updatePlaceList(data);
+		        },
+		        error: function() {
+		            alert('검색 중 오류가 발생했습니다.');
+		        }
+		    });
 		}
 		function updatePlaceList(data) {
 		    var placeList = $("#place-list");
@@ -1456,6 +1485,7 @@
 		        placeList.append('<div class="no-result-place">검색 결과가 없습니다.</div>');
 		    }
 		}
+		
 		
 		// 스크롤 이벤트 리스너 추가
 		window.addEventListener('scroll', function() {

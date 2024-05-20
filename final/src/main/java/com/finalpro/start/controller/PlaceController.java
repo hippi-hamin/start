@@ -170,7 +170,7 @@ public class PlaceController {
 		}
 	}
 
-	// 장소 수정 -안재문 
+	// 장소 수정 -안재문
 	@GetMapping("/updatePlace/{p_id}")
 	public String updatePlace(@PathVariable("p_id") int p_id, Model model) {
 		log.info("updatePlace()");
@@ -183,13 +183,13 @@ public class PlaceController {
 
 		return "updatePlace";
 	}
-	// 장소 수정 처리 -안재문 
+
+	// 장소 수정 처리 -안재문
 	@PostMapping("/updatePlaceProc")
 	public String updatePlaceProc(@RequestParam("files") List<MultipartFile> files, HttpSession session,
 			@RequestParam("p_id") int p_id, @RequestParam("p_location") String p_location,
 			@RequestParam("p_name") String p_name, @RequestParam("p_thema") String p_thema,
-			@RequestParam("p_description") String p_description,
-			@RequestParam("address") String address,
+			@RequestParam("p_description") String p_description, @RequestParam("address") String address,
 			RedirectAttributes rttr) {
 		String view = null;
 
@@ -201,19 +201,16 @@ public class PlaceController {
 			placeDTO.setP_name(p_name);
 			placeDTO.setP_thema(p_thema);
 			placeDTO.setP_description(p_description);
-			
-	        
+
 			// 주소로부터 좌표 추출
-	        PlaceDTO optionalCoords = KakaoApiUtil.getPointByAddress(address);
-	        if (optionalCoords != null) {
-	            placeDTO.setX(optionalCoords.getX()); // 좌표 설정
-	            placeDTO.setY(optionalCoords.getY());
-	        } else {
-	            rttr.addFlashAttribute("msg", "주소로부터 좌표를 찾을 수 없습니다.");
-	            return "redirect:updatePlace";
-	        }
-	        
-	       
+			PlaceDTO optionalCoords = KakaoApiUtil.getPointByAddress(address);
+			if (optionalCoords != null) {
+				placeDTO.setX(optionalCoords.getX()); // 좌표 설정
+				placeDTO.setY(optionalCoords.getY());
+			} else {
+				rttr.addFlashAttribute("msg", "주소로부터 좌표를 찾을 수 없습니다.");
+				return "redirect:updatePlace";
+			}
 
 			view = placeService.updatePlaceProc(files, session, placeDTO, rttr);
 			return view;

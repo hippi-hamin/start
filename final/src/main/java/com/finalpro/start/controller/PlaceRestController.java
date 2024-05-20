@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.finalpro.start.dto.PlaceDTO;
 import com.finalpro.start.service.PlaceService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
+@Slf4j
 public class PlaceRestController {
 
 	@Autowired
@@ -30,9 +33,27 @@ public class PlaceRestController {
 
 		return "redirect:placeListByLocation";
 	}
-
+	// 체크박스 체크 시 해당 지역 리스트(지역) -안재문-
 	@GetMapping("/searchByRegion")
 	public List<PlaceDTO> searchByRegion(@RequestParam(value = "regions", required = false) List<String> regions) {
 		return placeService.searchByRegion(regions);
 	}
+	
+	// 체크박스 선택 시 해당 지역 리스트(테마) -안재문-
+	@GetMapping("/searchByTheme")
+	public List<PlaceDTO> searchByTheme(@RequestParam(value="themes", required = false) List<String> themes){
+		return placeService.searchByTheme(themes);
+	}
+	
+	@GetMapping("/searchByFilters")
+	public List<PlaceDTO> searchByFilters(
+	        @RequestParam(value = "themes", required = false) List<String> themes,
+	        @RequestParam(value = "regions", required = false) List<String> regions) {
+	    // 로그 추가
+	    log.info("Received themes: " + themes);
+	    log.info("Received regions :" + regions);
+	    return placeService.searchByFilters(themes, regions);
+	}
+
+
 }
