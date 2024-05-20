@@ -8,7 +8,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -54,7 +56,7 @@ public class KakaoApiUtil {
         return placeList;
     }
 
-    public static List<PlaceDTO> getVehiclePaths(PlaceDTO from, PlaceDTO to, List<PlaceDTO> waypoints, String priority)
+    public static Map<String, Object> getVehiclePaths(PlaceDTO from, PlaceDTO to, List<PlaceDTO> waypoints, String priority)
             throws IOException, InterruptedException {
 
         HttpClient client = HttpClient.newHttpClient();
@@ -68,13 +70,9 @@ public class KakaoApiUtil {
             String waypointsParam = waypoints.stream()
                     .map(wp -> wp.getX() + "," + wp.getY())
                     .collect(Collectors.joining("|"));
-            // URL 인코딩 처리
             waypointsParam = URLEncoder.encode(waypointsParam, StandardCharsets.UTF_8.toString());
             url.append("&waypoints=").append(waypointsParam);
         }
-
-        // 요청 URL을 로깅하여 확인
-        System.out.println("Request URL: " + url.toString());
 
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Authorization", "KakaoAK " + REST_API_KEY)
@@ -86,42 +84,39 @@ public class KakaoApiUtil {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         String responseBody = response.body();
 
-        // 응답 본문을 로깅하여 확인
-        System.out.println("Response Body: " + responseBody);
-
         if (response.statusCode() != 200) {
             throw new IOException("HTTP error code : " + response.statusCode());
         }
 
-        // JSON 응답 확인
         ObjectMapper objectMapper = new ObjectMapper();
-        KakaoDirections kakaoDirections;
-        try {
-            kakaoDirections = objectMapper.readValue(responseBody, KakaoDirections.class);
-        } catch (Exception e) {
-            System.err.println("Failed to parse response: " + e.getMessage());
-            e.printStackTrace();
-            return new ArrayList<>(); // 빈 리스트 반환
-        }
+        KakaoDirections kakaoDirections = objectMapper.readValue(responseBody, KakaoDirections.class);
 
+        Map<String, Object> resultMap = new HashMap<>();
         List<PlaceDTO> placeList = new ArrayList<>();
 
         List<KakaoDirections.Route> routes = kakaoDirections.getRoutes();
-        for (KakaoDirections.Route route : routes) {
-            List<KakaoDirections.Route.Section> sections = route.getSections();
+        if (!routes.isEmpty()) {
+            KakaoDirections.Route.Summary summary = routes.get(0).getSummary();
+            resultMap.put("distance", summary.getDistance());
+            resultMap.put("duration", summary.getDuration());
+
+            List<KakaoDirections.Route.Section> sections = routes.get(0).getSections();
             for (KakaoDirections.Route.Section section : sections) {
                 List<KakaoDirections.Route.Section.Road> roads = section.getRoads();
                 for (KakaoDirections.Route.Section.Road road : roads) {
                     List<Double> vertexes = road.getVertexes();
-                    for (int i = 0; i < vertexes.size(); i += 2) { // i를 2씩 증가시킴
+                    for (int i = 0; i < vertexes.size(); i += 2) {
                         placeList.add(new PlaceDTO(vertexes.get(i + 1), vertexes.get(i)));
                     }
                 }
             }
         }
 
-        return placeList;
+        resultMap.put("placeList", placeList);
+        return resultMap;
     }
+
+
 
 
     public static PlaceDTO getPointByAddress(String address) throws IOException, InterruptedException {
