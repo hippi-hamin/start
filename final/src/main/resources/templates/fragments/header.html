@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" th:href="@{/css/header.css}">
+<head>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+</head>
+<body>
 <header class="--header" th:fragment="header">
    <div class="header">
       <div class="logo">
@@ -9,12 +12,16 @@
       <div class="header-right">
             <!-- 로그인 상태일 때 -->
             <th:block th:if="${session.signedInUserEmail != null}">
-                <!-- 로그인한 사용자를 위한 다른 UI 표시 -->
-                <a href="/mypage">MyPage</a>
-                <a href="/logout">LogOut</a>
-                <!-- 세션에 저장된 사용자 정보가 "admin@admin"인 경우 -->
+                <!-- 세션에 저장된 사용자 정보가 "ajm0111@naver.com"인 경우 -->
                 <th:block th:if="${session.signedInUserEmail == 'ajm0111@naver.com'}">
+                    <a href="adminPage">Admin</a>
                     <a href="upLoadPlace">Upload</a>
+                    <a href="/logout">LogOut</a>
+                </th:block>
+                <!-- 다른 사용자일 경우 -->
+                <th:block th:if="${session.signedInUserEmail != 'ajm0111@naver.com'}">
+                    <a href="/mypage">MyPage</a>
+                    <a href="/logout">LogOut</a>
                 </th:block>
             </th:block>
             <!-- 비로그인 상태일 때 -->
@@ -25,4 +32,5 @@
       </div>
     </div>
 </header>
+</body>
 </html>
