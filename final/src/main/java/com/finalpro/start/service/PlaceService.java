@@ -4,9 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+// 필요없는 라이브러리 삭제 -안재문- 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.web.server.ServerHttpSecurity.HttpsRedirectSpec;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -23,8 +22,7 @@ public class PlaceService {
 
 	@Autowired
 	private PlaceDAO placeDAO;
-	@Autowired
-	private PlatformService platformService;
+	// 필요없는 클래스 삭제 -안재문-
 
 	public String upLoadPlaceProc(List<MultipartFile> files, HttpSession session, PlaceDTO placeDTO,
 
@@ -118,7 +116,8 @@ public class PlaceService {
 	public void savePlace(PlaceDTO place) {
 		placeDAO.savePlace(place);
 	}
-	// 장소 수정 오류 해결 -안재문 
+
+	// 장소 수정 오류 해결 -안재문
 	public String updatePlaceProc(List<MultipartFile> files, HttpSession session, PlaceDTO placeDTO,
 			RedirectAttributes rttr) {
 		log.info("updatePlaceProc(), service");
@@ -157,6 +156,19 @@ public class PlaceService {
 	public List<PlaceDTO> searchByRegion(List<String> regions) {
 
 		return placeDAO.searchByRegion(regions);
+	}
+	// 테마별 
+	public List<PlaceDTO> searchByTheme(List<String> themes) {	  
+	    log.info("searchByTheme()", themes);
+		return placeDAO.searchByTheme(themes);
+	}
+
+	public List<PlaceDTO> searchByFilters(List<String> themes, List<String> regions) {
+		log.info("themes : " + themes );
+		log.info("regions : " + regions);
+	    List<PlaceDTO> result = placeDAO.searchByFilters(themes, regions);
+	    log.info("result : " + result);
+	    return result;
 	}
 
 }
