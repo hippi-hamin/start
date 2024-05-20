@@ -42,4 +42,6 @@ public interface PlaceDAO {
 	List<PlaceDTO> searchByTheme(@Param("themes") List<String> themes);
 
 	List<PlaceDTO> searchByFilters(@Param("themes") List<String> themes, @Param("regions") List<String> regions);
+
+	List<PlaceDTO> fetchPlacesLocation(@Param("location") String location);
 }
