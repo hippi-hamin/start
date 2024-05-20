@@ -118,6 +118,10 @@
 			</if>
 		</if>
 	</select>
-	
+	<select id="fetchPlacesLocation" parameterType="String" resultType="place">
+		SELECT p_name, p_location, p_description, p_iname
+		FROM place.placetbl
+		WHERE p_location=#{location}
+	</select>
 
 </mapper>

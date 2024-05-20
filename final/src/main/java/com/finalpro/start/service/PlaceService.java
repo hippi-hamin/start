@@ -170,10 +170,10 @@ public class PlaceService {
 	    return result;
 	}
 
-	public List<PlaceDTO> fetchPlacesLocation(String p_location) {
-		log.info(p_location);
+	public List<PlaceDTO> fetchPlacesLocation(String location) {
+		log.info(location);
 		
-		List<PlaceDTO> result = placeDAO.fetchPlacesLocation(p_location);
+		List<PlaceDTO> result = placeDAO.fetchPlacesLocation(location);
 		
 		return result;
 	}
