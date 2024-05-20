@@ -113,7 +113,7 @@ height: 575px;
 #h1_container {
 	display: flex;
 	margin-left: 10%;
-	font-size : 24px;
+	font-size : 10px;
 	font-weight: bold;
 	font-color: black;
 	justify-content: space-between; /* 하민 */

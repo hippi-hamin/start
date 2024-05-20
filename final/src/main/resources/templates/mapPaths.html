@@ -14,14 +14,23 @@
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3926d3c8dcc51df1b147cee756c64e7&libraries=services"></script>
 </head>
 <body>
+	<!-- 헤더 -->
 	<th:block th:replace="~{fragments/header :: header}"></th:block>
+	<!-- 맵과 리스트의 정렬 위치 -->
 	<div class="container">
+		<!-- 맵 위치, 크기 -->
 		<div id="map"></div>
+		<!-- 장소 리스트 위치, 크기 -->
 		<div id="placeList">
+		<!-- 리스트 헤더 -->
 		<div class="place-list-header">선택하신 리스트입니다.</div>
+		<!-- 리스트 푸터 -->
+		<div class="place-list-footer"></div>
 		</div>
 	</div>
+	<!-- 맵과 리스트의 끝 지점 라인 -->
 	<div class="end-line"></div>
+	<!-- 푸터 -->
     <th:block th:replace="~{fragments/footer :: footer}"></th:block>
 	<script th:inline="javascript">
 		// 서버에서 전달된 좌표 데이터임
