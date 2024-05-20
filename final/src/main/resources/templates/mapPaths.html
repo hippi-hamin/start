@@ -131,10 +131,11 @@
 			
 			 // 장바구니 항목 리스트를 placeListContainer에 추가
             parsedCart.forEach((place, index) => {
-                var listItem = document.createElement('<div class="place-list">');
-                listItem.innerText = `${index + 1}. ${place.p_name}`;
-                placeListContainer.appendChild(listItem);
-            });
+    		var listItem = document.createElement('div'); // div 요소 생성
+    		listItem.classList.add('place-list-array'); // 클래스 이름 추가
+    		listItem.innerText = `${index + 1}. ${place.p_name}`;
+    		placeListContainer.appendChild(listItem);
+			});
 
 			var polyline = new kakao.maps.Polyline({
 				path: linePath,
