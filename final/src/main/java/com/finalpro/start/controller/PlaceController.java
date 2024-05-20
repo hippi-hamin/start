@@ -372,6 +372,8 @@ public class PlaceController {
 	        }
 	    }
 
+	    
+	    // 시간이랑 거리 넣는거 때문에 DTO에서 MAP으로 바꿈
 	    try {
 	        Map<String, Object> resultMap = KakaoApiUtil.getVehiclePaths(fromPoint, toPoint, wayPointList, "RECOMMEND");
 	        List<PlaceDTO> placeList = (List<PlaceDTO>) resultMap.get("placeList");

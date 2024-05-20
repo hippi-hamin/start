@@ -56,6 +56,8 @@ public class KakaoApiUtil {
         return placeList;
     }
 
+    
+ // 시간이랑 거리 넣는거 때문에 DTO에서 MAP으로 바꿈
     public static Map<String, Object> getVehiclePaths(PlaceDTO from, PlaceDTO to, List<PlaceDTO> waypoints, String priority)
             throws IOException, InterruptedException {
 
