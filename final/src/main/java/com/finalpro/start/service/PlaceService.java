@@ -170,4 +170,12 @@ public class PlaceService {
 	    return result;
 	}
 
+	public List<PlaceDTO> fetchPlacesLocation(String p_location) {
+		log.info(p_location);
+		
+		List<PlaceDTO> result = placeDAO.fetchPlacesLocation(p_location);
+		
+		return result;
+	}
+
 }

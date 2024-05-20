@@ -56,4 +56,9 @@ public class PlaceRestController {
 	}
 
 
+	
+	@GetMapping("/fetchPlacesByLocation")
+	public List<PlaceDTO> fetchPlacesLocation(@RequestParam(value = "p_location", required = false) String p_location){
+		return placeService.fetchPlacesLocation(p_location);
+	}
 }
