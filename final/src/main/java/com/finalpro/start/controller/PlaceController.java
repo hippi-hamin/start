@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finalpro.start.dto.OrderUpdateDTO;
 import com.finalpro.start.dto.PlaceDTO;
@@ -365,18 +367,20 @@ public class PlaceController {
 		return ResponseEntity.ok("상품이 장바구니에서 제거되었습니다.");
 	}
 
-	// 경로 최적화
-	@GetMapping("mapPaths")  // priority parameter 추가
-	public String getMapPaths(@RequestParam(name = "priority", defaultValue = "RECOMMEND") String priority,
-							  @RequestParam(name = "fromX") Double fromX, @RequestParam(name = "fromY") Double fromY,
-	                          @RequestParam(name = "toX") Double toX, @RequestParam(name = "toY") Double toY,
-	                          @RequestParam(name = "wayPoints", required = false) String wayPoints, Model model) {
-		
+	@GetMapping("mapPaths")
+	public String getMapPaths(
+	    @RequestParam(name = "priority", defaultValue = "RECOMMEND") String priority,
+	    @RequestParam(name = "fromX") Double fromX, @RequestParam(name = "fromY") Double fromY,
+	    @RequestParam(name = "toX") Double toX, @RequestParam(name = "toY") Double toY,
+	    @RequestParam(name = "wayPoints", required = false) String wayPoints, Model model) {
+
 	    PlaceDTO fromPoint = new PlaceDTO(fromX, fromY);
 	    PlaceDTO toPoint = new PlaceDTO(toX, toY);
 	    List<PlaceDTO> wayPointList = new ArrayList<>();
+	    
 	    log.info("waypoint {}", wayPoints);
-	    if (wayPoints.equals(null) && wayPoints.isEmpty()) {
+
+	    if (wayPoints != null && !wayPoints.isEmpty()) {
 	        String[] wayPointsArray = wayPoints.split("\\|");
 	        for (String point : wayPointsArray) {
 	            String[] coords = point.split(",");
@@ -384,25 +388,23 @@ public class PlaceController {
 	        }
 	    }
 
-	    
-	    // 시간이랑 거리 넣는거 때문에 DTO에서 MAP으로 바꿈
-	    try { // 기존 "RECOMMEND"로 하드코딩 돼있던 거 priority로 바꿈 그래서 mapPaths에서 경로 옵션 변경 할 수 있게 만듦.
+	    try {
 	        Map<String, Object> resultMap = KakaoApiUtil.getVehiclePaths(fromPoint, toPoint, wayPointList, priority);
 	        List<PlaceDTO> placeList = (List<PlaceDTO>) resultMap.get("placeList");
 	        double distance = (double) resultMap.get("distance");
 	        int duration = (int) resultMap.get("duration");
 
 	        String placeListJson = new ObjectMapper().writeValueAsString(placeList);
-	        
-	        // priority 모델 추가
+
 	        model.addAttribute("priority", priority);
 	        model.addAttribute("fromPoint", fromPoint);
 	        model.addAttribute("toPoint", toPoint);
-	        model.addAttribute("wayPoint2", wayPointList.isEmpty() ? null : wayPointList);
+	        model.addAttribute("wayPoint2", wayPointList.isEmpty() ? "[]" : new ObjectMapper().writeValueAsString(wayPointList));
 	        model.addAttribute("placeList", placeListJson);
 	        model.addAttribute("distance", distance);
 	        model.addAttribute("duration", duration);
-	        log.info("waypoiintList {}",wayPointList);
+
+	        log.info("wayPointList {}", wayPointList);
 	        System.out.println("Place List JSON: " + placeListJson);
 	    } catch (IOException | InterruptedException e) {
 	        e.printStackTrace();
@@ -412,6 +414,9 @@ public class PlaceController {
 
 	    return "mapPaths";
 	}
+
+
+	
 
 	@GetMapping("map")
 	public String getMethodName() {
