@@ -1201,7 +1201,7 @@
 						toX: toPoint.x,
 						toY: toPoint.y,
 					};
-
+					console.log(wayPoints);
 					if (wayPoints.length > 0) {
 						params.wayPoints = wayPoints.map(point => `${point.x},${point.y}`).join('|');
 					}
