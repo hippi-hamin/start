@@ -47,4 +47,7 @@ public interface PlaceDAO {
 
 	// 지역 삭제
 	void deletePlace(int p_id);
+
+	// 키워드로 검색 -안재문-
+	List<PlaceDTO> searchByKeyword(@Param("query") String query);
 }

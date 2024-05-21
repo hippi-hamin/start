@@ -68,5 +68,11 @@ public class PlaceRestController {
 		log.info(theme);
 		return placeService.fetchPlacesTheme(theme);
 	}
-
+	
+	// 키워드로 검색
+	@GetMapping("/searchByKeyword")
+	public List<PlaceDTO> searchByKeyword(@RequestParam(value = "query", required = true) String query) {
+		log.info("searchByKeyword()");
+		return placeService.searchByKeyword(query);
+	}
 }
