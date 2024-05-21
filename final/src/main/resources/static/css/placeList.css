@@ -81,6 +81,7 @@ body {
 	align-items: center;
     position: relative;
     margin: 0 auto;
+    width: 100%;
 }
 /* 검색창 전체네모 */
 .search-background {
