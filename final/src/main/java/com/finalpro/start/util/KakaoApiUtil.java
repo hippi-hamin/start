@@ -118,9 +118,8 @@ public class KakaoApiUtil {
         return resultMap;
     }
 
-
-
-
+    
+    // 장소 등록할 때 주소를 좌표로 바꿔주는 메소
     public static PlaceDTO getPointByAddress(String address) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         String url = "https://dapi.kakao.com/v2/local/search/address.json";

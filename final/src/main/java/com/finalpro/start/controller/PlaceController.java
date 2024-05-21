@@ -131,12 +131,16 @@ public class PlaceController {
 		}
 	}
 
+	
+	// 장소 등록 이동 메서드
 	@GetMapping("upLoadPlace")
 	public String upLoadPlace() {
 		log.info("upLoad()");
 		return "upLoadPlace";
 	}
 
+	
+	// 장소 등록 메서드
 	@PostMapping("upLoadPlaceProc")
 	public String upLoadPlaceProc(@RequestParam(name = "files") List<MultipartFile> files,
 			@RequestParam(name = "address") String address, // 주소 파라미터 추가

@@ -63,7 +63,7 @@ public class PlaceService {
 	private List<String> fileUpLoad(List<MultipartFile> files, HttpSession session) throws IOException {
 		List<String> uploadedFileNames = new ArrayList<>();
 		// String uploadDirectory = "/Users/upLoad/";
-		String uploadDirectory = "C:\\Development\\upLoad";
+		String uploadDirectory = "/Users/upLoad/";
 
 		File folder = new File(uploadDirectory);
 
@@ -85,6 +85,8 @@ public class PlaceService {
 		return uploadedFileNames;
 	}
 
+	
+	// 장소 디테일 저장하는 메소드
 	private void savePlaceDetails(PlaceDTO placeDTO) {
 		placeDAO.upLoadPlaceProc(placeDTO);
 	}
