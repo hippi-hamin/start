@@ -233,14 +233,14 @@
 		parsedCart.forEach((place, index) => {
 			var listItem = document.createElement('div'); // div 요소 생성
 			listItem.classList.add('place-list-array'); // 클래스 이름 추가
-			 listItem.innerText = `${index + 1}. ${place.p_name}`;
-			// if(index == 0){
-			//	listItem.innerText = `${'출발지'} : ${place.p_name}`;
-		//	} else if(index > wayPoint2.length){
-		//		listItem.innerText = `${'도착지'} : ${place.p_name}`;
-		//	} else {
-		//		listItem.innerText = `${'경유지'} ${index} : ${place.p_name}`;
-		//	}
+		//	 listItem.innerText = `${index + 1}. ${place.p_name}`;
+			 if(index == 0){
+				listItem.innerText = `${'출발지'} : ${place.p_name}`;
+			} else if(index > wayPoint2.length){
+				listItem.innerText = `${'도착지'} : ${place.p_name}`;
+			} else {
+				listItem.innerText = `${'경유지'} ${index} : ${place.p_name}`;
+			}
 			
 			placeListContainer.appendChild(listItem);
 		});
