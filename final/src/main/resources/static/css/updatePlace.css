@@ -198,7 +198,7 @@ input[type=file]::file-selector-button {
    background-color: black;
    color: white;
    font-size: 14px;
-   top: 115%;
+   top: 112%;
    left: 50%;
    transform: translate(-50%, -50%);
 }
