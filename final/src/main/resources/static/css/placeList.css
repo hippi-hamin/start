@@ -199,6 +199,7 @@ body {
     font-size: 10px;
     position: relative;
     bottom: 2px;
+    cursor: pointer;
 }
 .point-button-array {
 	position: relative;
@@ -215,6 +216,7 @@ body {
     border-radius: 3px;
     font-size: 10px;
     margin-right: 3%;
+    cursor: pointer;
 }
 .route-button {
 	background-color: black;
@@ -223,6 +225,7 @@ body {
     height: 30px;
     border-radius: 3px;
     font-size: 10px;
+    cursor: pointer;
 }
 #mainContent {
     flex: 1;
@@ -369,7 +372,8 @@ body {
 .add-to-cart-button {
 	position: absolute;
     left: 60%;
-    transform: translateX(-50%); 
+    transform: translateX(-50%);
+    cursor: pointer;
 }
 .no-result-place {
 	text-align: center;
