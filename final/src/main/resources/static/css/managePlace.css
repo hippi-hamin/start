@@ -1,0 +1,143 @@
+@charset "UTF-8";
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	height: 50%;
+	display: flex;
+	flex-direction: column;
+	font-family: 'SUITE', sans-serif;
+}
+/* 머릿글 영문 텍스트 */
+.center-eng-text {
+	text-align: center;
+	color: black;
+	position: relative;
+	margin-top: 5%;
+	font-size: 24px;
+	font-weight: bold;
+}
+/* 머릿글 한글 텍스트 */
+.center-ko-text {
+	text-align: center;
+	color: black;
+	position: relative;
+	margin-top: 2.5%;
+	font-size: 16px;
+}
+/* 텍스트 종료 라인 */
+.write-line {
+	width: 15%;
+	border-top: 1px solid gray;
+	margin: 0 auto;
+	position: relative;
+	margin-top: 2.5%;
+	margin-bottom: 5%;
+}
+
+.st-text {
+	position: relative;
+	bottom: 10px;
+	left: 100%;
+	transform: translate(-50%, -50%);
+}
+
+.st-img {
+	height: 20px;
+	width: 20px;
+	position: relative;
+}
+
+#place-list {
+	position: relative;
+	width: 100%;
+	margin-left: 10%;
+}
+/* 각 리스트 아이템에 대한 스타일 */
+.place-item {
+	position: relative; /* 절대 위치를 위한 기준 요소 */
+	margin-bottom: 20px;
+	list-style-type: none;
+}
+/* 첫 번째 아이템의 위쪽에 여백 추가 */
+.place-item.first-item {
+	margin-top: 450px; /* 첫 번째 아이템의 위쪽에 450px 여백 추가 */
+}
+/* 컨텐츠 스타일 */
+.place-content {
+	display: flex;
+	align-items: center;
+	border: 1px solid black;
+	width: 80%;
+	height: 200px;
+}
+
+.place-content:hover {
+	background-color: #d4d4d4;
+}
+/* 링크 스타일 */
+.place-link {
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	color: inherit;
+	flex: 1; /* 버튼을 오른쪽으로 밀기 위해 flex-grow 사용 */
+}
+/* 이미지 스타일 */
+.place-image {
+	width: 150px;
+	margin-right: 20px;
+	margin-left: 20px;
+}
+/* 텍스트 정보 스타일 */
+.place-info {
+	display: flex;
+	flex-direction: column;
+}
+
+.place-info span {
+	display: block;
+	margin-bottom: 5px; /* 각 줄 간격 조절 */
+}
+
+.btn-array {
+	width: 15%
+}
+/* 수정 버튼 */
+.correction-button {
+	background-color: black;
+	color: white;
+	font-weight: bold;
+	width: 80%;
+	height: 30px;
+	position: relative;
+	text-decoration-line: none;
+	border-radius: 3px;
+	font-size: 14px;
+	display: flex;
+	flex-direction: row; /* 수평 정렬 */
+	justify-content: center; /* 필요에 따라 중앙 정렬 */
+	line-height: 30px;
+	margin-bottom: 5%;
+}
+/* 삭제 버튼 */
+.delete-button {
+	background-color: black;
+	color: white;
+	font-weight: bold;
+	width: 80%;
+	height: 30px;
+	position: relative;
+	line-height: 30px;
+	text-decoration-line: none;
+	border-radius: 3px;
+	font-size: 14px;
+	cursor: pointer;
+}
