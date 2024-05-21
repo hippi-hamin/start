@@ -2,33 +2,45 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>회원 관리</title>
+    <title>회원 정보</title>
     <link rel="stylesheet" th:href="@{/css/manageMember.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
 	<link rel="stylesheet" th:href="@{/css/footer.css}">
 </head>
 <body>
+	<!-- 헤더 -->
 	<th:block th:replace="~{fragments/header :: header}"></th:block>
-    <h1>회원 관리</h1>
+   	<!-- 회원 관리 텍스트 -->
+	 <div class="center-eng-text">M e m b e r S t a t u s</div>
+	<!-- <div class="center-eng-text">회 원 정 보</div> -->
+	<!-- <div class="center-ko-text">회원 정보</div> -->
+	<div class="write-line"></div>
+	<!-- 표 크기 -->
+	<div class="member-graph">
     <table>
         <thead>
-            <tr>
-                <th>ID</th>
-                <th>Email</th>
-                <th>Name</th>
-                <th>Phone</th>
+        	<!-- 표 헤더 -->
+            <tr class="member-graph-header">
+                <th class="member-graph-header">ID</th>
+                <th class="member-graph-header">Email</th>
+                <th class="member-graph-header">Name</th>
+                <th class="member-graph-header">Phone</th>
             </tr>
         </thead>
-        <tbody>
-            <tr th:each="member : ${memberList}">
-                <td th:text="${member.m_id}">ID</td>
-                <td th:text="${member.m_email}">Email</td>
-                <td th:text="${member.m_name}">Name</td>
-                <td th:text="${member.m_phone}">Phone</td>
+        <!-- 리스트 -->
+        <tbody class="member-graph-list">
+            <tr class="member-graph-list" th:each="member : ${memberList}">
+                <td class="member-graph-list" th:text="${member.m_id}">ID</td>
+                <td class="member-graph-list" th:text="${member.m_email}">Email</td>
+                <td class="member-graph-list" th:text="${member.m_name}">Name</td>
+                <td class="member-graph-list" th:text="${member.m_phone}">Phone</td>
             </tr>
         </tbody>
     </table>
-    <a href="/adminPage">이전</a>
+    </div>
+    <!-- 이전 버튼 -->
+    <a class="back-button" href="/adminPage">이전 페이지</a>
+    <!-- 푸터 -->
     <th:block th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
 </html>
