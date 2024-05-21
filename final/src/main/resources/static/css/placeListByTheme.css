@@ -155,7 +155,9 @@ body {
 	text-align: center;
 	color: black;
 	position: relative;
-	top: 100%;
+	top: 35%;
+    left: 50%; 
+    transform: translate(-50%, -50%); 	
 	font-size: 16px;
 }
 

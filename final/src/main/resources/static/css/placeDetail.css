@@ -1,243 +1,99 @@
 @charset "UTF-8";
+
 * {
-   box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 html {
-   height: 100%;
+	height: 100%;
 }
 
 body {
-   margin: 0;
-   height: 20%;
-   display: flex;
-   flex-direction: column;
-   font-family: 'SUITE', sans-serif;
+	margin: 0;
+	height: 25%;
+	display: flex;
+	flex-direction: column;
+	font-family: 'SUITE', sans-serif;
 }
 /* 첫화면 이미지 정렬 박스 */
 .previews {
-    width: 80%;
-    margin: 0 auto;
-    position: relative;
-    margin-top: 50px;
-}
-/* 이미지 위치 조절 */
-.preview-img-array-box{
-   position: relative;
-   left: 9.5%;
+	width: 100%;
+	margin: 0 auto;
+	position: relative;
 }
 /* 메인 이미지 */
 .preview-img {
-    width: 500px;
-    height: 500px;
-    background-color: black;
-    position: relative;
-    float: left;
-    margin: 0 auto;
-    overflow: hidden;
-    cursor: pointer;
+	width: 100%;
+	height: 550px;
+	background-color: black;
+	position: relative;
 }
-/* 서브 이미지 정렬 박스 */
-.preview-imgs {
-    width: 500px;
-    height: 500px;
-    position: relative;
-    float: left;
+.preview-img img{
+	width: 100%;
+	height: 500px;
+	background-color: black;
+	position: relative;
 }
-/* 서브 이미지 왼쪽 윗 박스 */
-.preview-img-lt {
-    width: 250px;
-    height: 250px;
-    background-color: blue;
-    position: absolute; /* 부모 요소에 대해 절대 위치 지정 */
-    left: 0; /* 왼쪽에 위치 */
-    top: 0; /* 위쪽에 위치 */
-    overflow: hidden;
-    cursor: pointer;
-}
-/* 서브 이미지 오른쪽 윗 박스 */
-.preview-img-rt {
-    width: 250px;
-    height: 250px;
-    background-color: red;
-    position: absolute; /* 부모 요소에 대해 절대 위치 지정 */
-    right: 0; /* 오른쪽에 위치 */
-    top: 0; 
-    overflow: hidden;
-    cursor: pointer;
-}
-/* 서브 이미지 오른쪽 아래 박스 */
-.preview-img-lb {
-    width: 250px;
-    height: 250px;
-    background-color: green;
-    position: absolute; /* 부모 요소에 대해 절대 위치 지정 */
-    left: 0; /* 왼쪽에 위치 */
-    bottom: 0; 
-    overflow: hidden;
-    cursor: pointer;
-}
-/* 서브 이미지 왼쪽 아래 박스 */
-.preview-img-rb {
-    width: 250px;
-    height: 250px;
-    background-color: yellow;
-    position: absolute; /* 부모 요소에 대해 절대 위치 지정 */
-    right: 0; /* 오른쪽에 위치 */
-    bottom: 0;
-    overflow: hidden;
-    cursor: pointer;
-}
-/* 이미지 더보기 */
-.preview-img-page {
-   position: relative;
-    width: 100%;
-    height: 100%;
-}
-/* 이미지 더보기 화살표 */
-.preview-img-page-arrow {
-   width: 50px;
-    height: 50px;
-    position: absolute;
-    top: 40%;
-    left: 40%;
-    transform: rotate(90deg);
-    z-index: 1;
-}
-/* 이미지 크기 키우기 호버 */
-.preview-img-page-arrow:hover img {
-   transform: scale(1.4);
-}
-/* 이미지 크기 키우기 호버 */
-.preview-img img {
-   width: 100%;
-   height: 100%;
-   transition: all 0.2s linear;
-}
-/* 이미지 크기 키우기 호버 */
-.preview-img:hover img {
-  transform: scale(1.4);
-}
-/* 이미지 크기 키우기 호버 */
-.preview-img-lt img,
-.preview-img-rt img,
-.preview-img-lb img,
-.preview-img-rb img {
-   width: 100%;
-   height: 100%;
-   transition: all 0.2s linear;
-}
-/* 이미지 크기 키우기 호버 */
-.preview-img-lt:hover img,
-.preview-img-rt:hover img,
-.preview-img-lb:hover img,
-.preview-img-rb:hover img {
-   transform: scale(1.4);
-}
-/* 이미지 크기 키우기 호버 및 흐림처리 */
-.preview-img-page:hover img {
-   transform: scale(1.4);
-   -webkit-filter:blur(3px);
-}
+
 .text-start-line {
 	width: 80%;
 	border-top: gray 1px solid;
-	position: relative; 
+	position: relative;
 	margin: 0 auto;
 }
 /* 장소 이름 */
 .place-name {
-   color: black;
-   font-size: 36px;
-   font-weight: bold;
-   position: relative;
-   width: fit-content;
-   left: 10%;
-   top: 50px;
+	color: black;
+	font-size: 36px;
+	font-weight: bold;
+	position: relative;
+	width: fit-content;
+	left: 10%;
+	top: 50px;
 }
 /* 지역 이름 */
 .place-location {
-   color: black;
-   font-size: 24px;
-   position: relative;
-   left: 10%;
-   top: 50px;
-}
-/* 화살표 위치 박스 */
-.arrow-box {
-   text-align: center;
-   display:inline-block;
-   position:sticky;
-     bottom: 30px;
-}
-/* 화살표 크기 조절 */
-.arrow-box-motion {
-   width: 30px;
-   height: 30px;
-    /* animation: motion 0.3s
-    linear 0s
-    infinite alternate; */
-    margin-top: 0;
-    transform: rotate(180deg);
-}
-/* 화살표 위 아래 모션 추후 필요할때 사용 */
-@keyframes motion {
-   0% {
-   margin-top: 0px;
-   }
-   100% {
-   margin-top: 10px;
-   }
+	color: black;
+	font-size: 24px;
+	position: relative;
+	margin-left: 10%;
+	top: 50px;
 }
 /* 세부 디테일 장소글 */
 .place-detail-description {
-   color: black;
-   font-size: 36px;
-   font-weight: bold;
-   position: relative;
-   text-align: center;
-   width: 80%;
-   margin: 0 auto;
-   margin-top: 2%;
+	color: black;
+	font-size: 24px;
+	font-weight: bold;
+	position: relative;
+	text-align: center;
+	width: 80%;
+	margin: 0 auto;
+	margin-top: 2%;
+	border: 1px solid black;
 }
 /* 세부 디테일 정렬 박스 */
 .place-detail-array-box {
-   position: relative;
+	position: relative;
 }
 /* 세부 디테일 이미지 */
 .place-detail-description-img {
-   height: 500px;
-   width: 75%;
-   background-color: black;
-   position: relative;
-   margin: 0 auto;
-   margin-top: 10%;
-}
-.place-detail-description-img img {
 	height: 500px;
-   	width: 100%;
-}
-/* 세부 디테일 끝맺음 공백 */
-.detail-img-end {
-   height: 10%;
-   width: 90%;
-   margin: 0 auto;
-    position: relative;
-    border: 1px gray solid;
-    top: 30px;
+	width: 75%;
+	background-color: black;
+	position: relative;
+	margin: 0 auto;
+	margin-top: 10%;
 }
 /* 조회수, 별점 정렬 */
 .views-array {
-   height: 10%;
-   width: 80%;
-   margin: 0 auto;
-   margin-top: 5%;
+	height: 10%;
+	width: 70%;
+	margin: 0 auto;
 }
 /* 조회수 */
 .views {
-   color: black;
-   font-size: 14px;
-   font-weight: bold;
-   position: relative;
-    float: right;
+	color: black;
+	font-size: 14px;
+	font-weight: bold;
+	float: right;
 }

@@ -10,8 +10,9 @@
 <link rel="stylesheet" th:href="@{/css/placeDetail.css}">
 </head>
 <body>
-   <th:block th:replace="~{fragments/header :: header}"></th:block>
-   <div th:if="${place}">
+	<!-- 헤더 -->
+   	<th:block th:replace="~{fragments/header :: header}"></th:block>
+   	<div th:if="${place}">
       <!-- 이 부근은 DB에서 사진 불러오는게 안되서 주석처리했습니다. 
           사진 불러오는게 정상적으로 처리되면 아래의 previews의 
           preview-img class를 입히면 됩니다. -->
@@ -20,63 +21,29 @@
        -->
        <!-- 디테일 첫 화면 이미지 -->
   	<div class="previews">
-    	<div class="preview-img-array-box">
          <!-- 대표 이미지 -->
             <div class="preview-img">
+            	<img src="/images/nightView.jpg">
                <!-- <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">  -->
             </div>
-            <!-- 부가 이미지들 -->
-            <div class="preview-imgs">
-               <div class="preview-img-lt">
-                  <!-- <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지"> -->
-               </div>
-               <div class="preview-img-rt">
-                  <!-- <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지"> -->
-               </div>
-               <div class="preview-img-lb">
-                  <!-- <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지"> -->
-               </div>
-               <!-- 더보기 클릭 이미지 -->
-               <div class="preview-img-rb">
-                  <div class="preview-img-page-arrow">
-                     <img src="/images/scrollArrow.png" alt="">
-                  </div>
-                  <div class="preview-img-page">
-                     <!-- <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지"> -->
-                  </div>
-               </div>
-            </div>
-         </div>
-         <!-- 장소 이름 -->
-         <div class="place-name" th:text="${place.p_name}"></div>
-         <div class="text-start-line"></div>
-         <!-- 지역 이름 -->
-         <div class="place-location" th:text="${place.p_location}"></div>
-         <!-- 세부 이미지 이미지 출력 -->
-         <div class="place-detail-description-img">
-         <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
-         </div>
+		</div>
+		<!-- 장소 이름 -->
+		<div class="place-name" th:text="${place.p_name}"></div>
+		<div class="text-start-line"></div>
+		<!-- 지역 이름 -->
+		<div class="place-location" th:text="${place.p_location}"></div>
+		<!-- 조회수, 별점 위치 -->
+   		<div class="views-array">
+     	<div class="views" th:if="${place != null}">
+   		 조회수 : <span th:text="${place.p_views}"></span>
+		</div>
+   		</div>
          <!-- 세부 디테일 내용 페이지 글 -->
          <div class="place-detail-array-box">
             <div class="place-detail-description"
                th:text="${place.p_description}"></div>
          </div>
-         <!-- 세부 디테일 끝맺음 -->
-         <div class="detail-img-end"></div>
       </div>
-   </div>
-   <!-- 조회수, 별점 위치 -->
-   <div class="views-array">
-     <div class="views" th:if="${place != null}">
-   		 조회수 : <span th:text="${place.p_views}"></span>
-	</div>
-   </div>
-	
-	<!-- 아래 화살표 -->
-   <div class="arrow-box">
-      <img class="arrow-box-motion" src="/images/scrollArrow.png" alt="">
-   </div>
-
 	<!-- 푸터 -->
    	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
