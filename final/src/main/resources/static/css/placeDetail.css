@@ -10,7 +10,7 @@ html {
 
 body {
 	margin: 0;
-	height: 25%;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	font-family: 'SUITE', sans-serif;
@@ -62,7 +62,7 @@ body {
 /* 세부 디테일 장소글 */
 .place-detail-description {
 	color: black;
-	font-size: 24px;
+	font-size: 16px;
 	font-weight: bold;
 	position: relative;
 	text-align: center;
