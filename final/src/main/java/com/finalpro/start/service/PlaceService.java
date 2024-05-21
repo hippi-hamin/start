@@ -64,9 +64,7 @@ public class PlaceService {
 
 	private List<String> fileUpLoad(List<MultipartFile> files, HttpSession session) throws IOException {
 		List<String> uploadedFileNames = new ArrayList<>();
-
 		String uploadDirectory = "/Users/upLoad/";
-
 		File folder = new File(uploadDirectory);
 
 		if (!folder.exists() && !folder.mkdirs()) {
@@ -198,18 +196,25 @@ public class PlaceService {
 			log.info("deletePlace 실행 성공");
 			placeDAO.deletePlace(p_id);
 			
-			msg = "삭제 성공!";
+			msg = "삭제 완료되었습니다.";
 			view = "redirect:/adminPage";
 			
 		} catch (Exception e) {
 			log.info("deletePlace 실행 오류");
 			
-			msg = "삭제 실패!";
+			msg = "다시 시도해주세요.";
 			view = "redirect:/";
 		}
 		
 		rttr.addFlashAttribute("msg", msg);
 		return view;
 	}
-
+	
+	// 키워드 검색 -안재문-
+	public List<PlaceDTO> searchByKeyword(String query) {
+		log.info("query : " +query);
+		List<PlaceDTO> result = placeDAO.searchByKeyword(query);
+		
+		return result;
+	}
 }

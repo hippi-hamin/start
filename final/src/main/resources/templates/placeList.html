@@ -69,11 +69,11 @@
 	</div>
 	<!-- 검색창 바탕 -->
 	<div class="search-background">
-		<!-- 검색 적는 박스 -->
-		<input class="search-write-box" type="text" id="search-query" name="query" placeholder="검색어를 입력해주세요."
-			th:value="${query}">
-		<!-- 검색 버튼 -->
-		<button class="search-button" type="submit">검색</button>
+		<!-- 검색 폼 -->
+	<form id="search-form">
+    	<input class="search-write-box" type="text" id="search-query" name="query" placeholder="검색어를 입력해주세요.(장소명, 지역 등)">
+    	<button class="search-button" type="submit">검색</button>
+	</form>
 	</div>
 	<!-- 지역, 테마 필터 박스 -->
 	<div class="filter2-array">
@@ -862,9 +862,9 @@
 	<div class="start-line"></div>
 	<!-- 장소 리스트를 반복하여 표시 -->
 	<div id="place-list">
-		<ul class="place-list">
+		<div class="place-list">
 			<th:block th:each="place : ${placeList}">
-				<li class="place-item">
+				<div class="place-item">
 					<div class="place-content">
 						<a th:href="@{'/placeDetail/' + ${place.p_id}}" class="place-link">
 							<img th:src="@{'/getImage/' + ${place.p_iname}}" alt="Image of ${place.p_name}"
@@ -878,9 +878,9 @@
 							onclick="addToCart(this.getAttribute('data-pid'))" class="add-to-cart-button">장바구니에
 							추가</button>
 					</div>
-				</li>
+				</div>
 			</th:block>
-		</ul>
+		</div>
 	</div>
 	<div id="cart-section">
 		<!-- 장바구니 섹션 -->
@@ -1309,6 +1309,54 @@
              }
          });
      }
+  // 키워드 검색 -안재문-
+ 	$(document).ready(function() {
+    $('#search-form').submit(function(event) {
+        event.preventDefault(); // 폼 제출 기본 동작을 막습니다.
+
+        var query = $('#search-query').val();
+        console.log(query);
+
+        $.ajax({
+            url: '/searchByKeyword',
+            type: 'GET',
+            data: { query: query },
+            success: function(data) {
+                updatePlaceList(data); // 검색 결과 업데이트 함수 호출
+            },
+            error: function(xhr, status, error) {
+                console.error('검색 중 오류 발생: ', status, error);
+                $('#place-list').empty().append('<div>검색 중 오류가 발생했습니다. 다시 시도해주세요.</div>');
+            }
+        });
+    });
+});
+
+function updatePlaceList(data) {
+    var placeList = $("#place-list");
+    placeList.empty();
+    if (data.length > 0) {
+        data.forEach(function (place, index) {
+            var placeHtml = '<li class="place-item' + (index === 0 ? ' first-item' : '') + '">'
+                + '<div class="place-content">'
+                + '<a href="/placeDetail/' + place.p_id + '" class="place-link">'
+                + '<img src="/getImage/' + place.p_iname + '" class="place-image" width="150px" />'
+                + '<div class="place-info">'
+                + '<span>' + place.p_name + '</span>'
+                + '<span>지역 : ' + place.p_location + '</span>'
+                + '</div>'
+                + '</a>'
+                + '<button type="button" data-pid="' + place.p_id + '" class="add-to-cart-button" onclick="addToCart(this.getAttribute(\'data-pid\'))">장바구니에 추가</button>'
+                + '</div>'
+                + '</li>';
+
+            placeList.append(placeHtml);
+        });
+    } else {
+        placeList.append('<div class="no-result-place">검색 결과가 없습니다.</div>');
+    }
+}
+
 
 	function updatePlaceList(data) {
 		var placeList = $("#place-list");
@@ -1322,12 +1370,9 @@
 					+ '<div class="place-info">'
 					+ '<span>' + place.p_name + '</span>'
 					+ '<span>지역 : ' + place.p_location + '</span>'
-					+ '<span>별점: ' + place.p_stScore.toFixed(1) + '</span>'
 					+ '</div>'
 					+ '</a>'
-					+ '<div class="button-wrapper">'
 					+ '<button type="button" data-pid="' + place.p_id + '" class="add-to-cart-button" onclick="addToCart(this.getAttribute(\'data-pid\'))">장바구니에 추가</button>'
-					+ '</div>'
 					+ '</div>'
 					+ '</li>';
 
@@ -1356,7 +1401,6 @@
 			cartSection.style.top = '30%';
 		}
 	});
-
-	/*]]>*/
+	
 </script>
 </html>
