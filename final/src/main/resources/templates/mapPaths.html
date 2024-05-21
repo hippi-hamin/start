@@ -67,210 +67,209 @@
 	<div class="end-line"></div>
 	<!-- 푸터 -->
 	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
-	<script th:inline="javascript">
-		// 서버에서 전달된 좌표 데이터임
-		const fromX = /*[[${fromPoint?.x}]]*/ null;
-		const fromName = /*[[]${fromPoint?.p_name}]*/ null;
-		const fromY = /*[[${fromPoint?.y}]]*/ null;
-		let wayPoint2 = /*[[${wayPoint2}]]*/ null;
-		const toX = /*[[${toPoint?.x}]]*/ null;
-		const toY = /*[[${toPoint?.y}]]*/ null;
-		var pointList = /*[[${placeList}]]*/ '[]';
-		pointList = pointList ? JSON.parse(pointList) : [];
-		const fwtList = /*[[${fwtList}]]*/ '[]';
-
-		// 시간, 거리 
-		const distance = /*[[${distance}]]*/ null;
-		const duration = /*[[${duration}]]*/ null;
-
-		console.log(wayPoint2);
-		console.log("fwtList", fwtList);
-		console.log("fromName", fromName);
-
-		async function fetchCart() {
-			const response = await fetch('/showCart');
-			if (!response.ok) {
-				console.error("서버 응답 에러:", response.statusText);
-				return [];
-			}
-			const cart = await response.json();
-			if (!cart || cart.length === 0) {
-				console.warn("장바구니가 비어 있습니다.");
-				return [];
-			}
-			return cart;
-		}
-
-		var mapContainer = document.getElementById('map'),
-			mapOption = {
-				center: new kakao.maps.LatLng(33.450701, 126.570667),
-				level: 3
-			};
-
-		var map = new kakao.maps.Map(mapContainer, mapOption);
-		if (map) {
-			console.log("지도 객체가 성공적으로 초기화되었습니다.");
-		} else {
-			console.error("지도 객체 초기화에 실패했습니다.");
-		}
-
-		async function setMarkersAndPath() {
-			const parsedCart = await fetchCart();
-			console.log("parsedCart", parsedCart);
-			var bounds = new kakao.maps.LatLngBounds();
-			var linePath = [];
-			var placeListContainer = document.getElementById('placeList');
-
-			// 출발지 마커 찍기.
-			
-			if (fromY != null) {
-				var fromMarkerPosition = new kakao.maps.LatLng(fromY, fromX);
-				var fromMarker = new kakao.maps.Marker({
-					map: map,
-					title: "출발지"
-				});
-				
-				var content = '<img src="images/markerDep.png" style="width: 35px; height: 50px;">';
-				
-				var customOverlay = new kakao.maps.CustomOverlay({
-					position: fromMarkerPosition,
-					content: content,
-					yAnchor: 1 // 오버레이의 yAnchor를 설정하여 마커 위에 표시되도록 합니다
-				});
-				customOverlay.setMap(map);
-				
-				//linePath.push(fromMarkerPosition);
-				bounds.extend(fromMarkerPosition);
-				console.log("출발지 마커 추가:", fromMarkerPosition);
-			}
-			
-			// 경유지 마커 찍기.
-			
-			if (wayPoint2 && wayPoint2.length > 0) {
-				wayPoint2.forEach((waypoint, index) => {
-					
-					var wayMarkerPosition = new kakao.maps.LatLng(waypoint.y, waypoint.x);
-					var wayMarker = new kakao.maps.Marker({
-						map: map,
-						title: "경유지 " + (index + 1) // 경유지 순서
-					});
-
-					// 각 경유지에 해당하는 이미지를 설정
-			        var content;
-			        switch (index) {
-			            case 0:
-			                content = '<img src="images/marker1.png" style="width: 35px; height: 50px;">';
-			                break;
-			            case 1:
-			                content = '<img src="images/marker2.png" style="width: 35px; height: 50px;">';
-			                break;
-			            case 2:
-			                content = '<img src="images/marker3.png" style="width: 35px; height: 50px;">';
-			                break;
-			            case 3:
-			                content = '<img src="images/marker4.png" style="width: 35px; height: 50px;">';
-			                break;
-			            case 4:
-			                content = '<img src="images/marker5.png" style="width: 35px; height: 50px;">';
-			                break;
-			            default:
-			                content = ''; // 기본값
-			                break;
-			        }
-					
-					var customOverlay = new kakao.maps.CustomOverlay({
-						position: wayMarkerPosition,
-						content: content,
-						yAnchor: 1 // 오버레이의 yAnchor를 설정하여 마커 위에 표시되도록 합니다
-					});
-
-					customOverlay.setMap(map);
-
-					//linePath.push(wayMarkerPosition);
-					bounds.extend(wayMarkerPosition);
-					console.log("경유지 마커 추가:", wayMarkerPosition);
-				});
-			} else {
-				console.warn("경유지가 비어 있습니다.", wayPoint2);
-			}
-
-			// 목적지 마커 찍기. 
-			
-			if (toY != null) {
-				var toMarkerPosition = new kakao.maps.LatLng(toY, toX);
-				var toMarker = new kakao.maps.Marker({
-					map: map,
-					title: "목적지"
-				});
-				
-				var content = '<img src="images/markerArr.png" style="width: 35px; height: 50px;">';
-				
-				var customOverlay = new kakao.maps.CustomOverlay({
-					position: toMarkerPosition,
-					content: content,
-					yAnchor: 1 // 오버레이의 yAnchor를 설정하여 마커 위에 표시되도록 합니다
-				});
-				customOverlay.setMap(map);
-				
-				//	linePath.push(toMarkerPosition);
-				bounds.extend(toMarkerPosition);
-				console.log("목적지 마커 추가:", toMarkerPosition);
-			}
-			
-			console.log("linePath 배열:", linePath);
-			if (pointList.length > 0) {
-				pointList.forEach(point => {
-					var pointPosition = new kakao.maps.LatLng(point.x, point.y);
-					linePath.push(pointPosition);
-					bounds.extend(pointPosition);
-					// console.log("포인트 추가:", pointPosition);
-				});
-			}
-
-			// 각 라인의 좌표를 확인
-
-			linePath.forEach((latlng, index) => {
-				console.log(`linePath[${index}]: ${latlng.getLat()}, ${latlng.getLng()}`);
-			});
-
-			// 장바구니 항목 리스트를 placeListContainer에 추가
-			parsedCart.forEach((place, index) => {
-				var listItem = document.createElement('div'); // div 요소 생성
-				listItem.classList.add('place-list-array'); // 클래스 이름 추가
-				listItem.innerText = `${index + 1}. ${place.p_name}`;
-				placeListContainer.appendChild(listItem);
-			});
-
-			var polyline = new kakao.maps.Polyline({
-				path: linePath,
-				strokeWeight: 5,
-				strokeColor: 'blue',
-				strokeOpacity: 0.7,
-				strokeStyle: 'solid'
-			});
-			polyline.setMap(map);
-
-			// 지도에 경로 거리와 예상 시간 표시
-			if (distance != null && duration != null) {
-				var distanceKm = (distance / 1000).toFixed(2); // 거리 단위를 km로 변환
-				var durationMin = Math.ceil(duration / 60); // 시간을 분 단위로 변환
-
-				document.querySelector('.distance-info').innerText = `총 거리: ${distanceKm} km`;
-				document.querySelector('.duration-info').innerText = `예상 시간: ${durationMin} 분`;
-
-				console.log(durationMin);
-			}
-
-			if (!bounds.isEmpty()) {
-				map.setBounds(bounds);
-				console.log("지도의 범위가 설정되었습니다.");
-			} else {
-				console.warn("지도의 범위가 비어 있습니다.");
-			}
-		}
-
-		setMarkersAndPath();
-	</script>
 </body>
+<script th:inline="javascript">
+	// 서버에서 전달된 좌표 데이터임
+	const fromX = /*[[${fromPoint?.x}]]*/ null;		const fromName = /*[[]${fromPoint?.p_name}]*/ null;
+	const fromY = /*[[${fromPoint?.y}]]*/ null;
+	let wayPoint2 = /*[[${wayPoint2}]]*/ null;
+	const toX = /*[[${toPoint?.x}]]*/ null;
+	const toY = /*[[${toPoint?.y}]]*/ null;
+	var pointList = /*[[${placeList}]]*/ '[]';
+	pointList = pointList ? JSON.parse(pointList) : [];
+	const fwtList = /*[[${fwtList}]]*/ '[]';
+
+	// 시간, 거리 
+	const distance = /*[[${distance}]]*/ null;
+	const duration = /*[[${duration}]]*/ null;
+
+	console.log(wayPoint2);
+	console.log("fwtList", fwtList);
+	console.log("fromName", fromName);
+
+	async function fetchCart() {
+		const response = await fetch('/showCart');
+		if (!response.ok) {
+			console.error("서버 응답 에러:", response.statusText);
+			return [];
+		}
+		const cart = await response.json();
+		if (!cart || cart.length === 0) {
+			console.warn("장바구니가 비어 있습니다.");
+			return [];
+		}
+		return cart;
+	}
+
+	var mapContainer = document.getElementById('map'),
+		mapOption = {
+			center: new kakao.maps.LatLng(33.450701, 126.570667),
+			level: 3
+		};
+
+	var map = new kakao.maps.Map(mapContainer, mapOption);
+	if (map) {
+		console.log("지도 객체가 성공적으로 초기화되었습니다.");
+	} else {
+		console.error("지도 객체 초기화에 실패했습니다.");
+	}
+
+	async function setMarkersAndPath() {
+		const parsedCart = await fetchCart();
+		console.log("parsedCart", parsedCart);
+		var bounds = new kakao.maps.LatLngBounds();
+		var linePath = [];
+		var placeListContainer = document.getElementById('placeList');
+
+		// 출발지 마커 찍기.
+			
+		if (fromY != null) {
+			var fromMarkerPosition = new kakao.maps.LatLng(fromY, fromX);
+			var fromMarker = new kakao.maps.Marker({
+				map: map,
+				title: "출발지"
+			});
+				
+			var content = '<img src="images/markerDep.png" style="width: 35px; height: 50px;">';
+				
+			var customOverlay = new kakao.maps.CustomOverlay({
+				position: fromMarkerPosition,
+				content: content,
+				yAnchor: 1 // 오버레이의 yAnchor를 설정하여 마커 위에 표시되도록 합니다
+			});
+			customOverlay.setMap(map);
+				
+			//linePath.push(fromMarkerPosition);
+			bounds.extend(fromMarkerPosition);
+			console.log("출발지 마커 추가:", fromMarkerPosition);
+		}
+			
+		// 경유지 마커 찍기.
+			
+		if (wayPoint2 && wayPoint2.length > 0) {
+			wayPoint2.forEach((waypoint, index) => {
+					
+				var wayMarkerPosition = new kakao.maps.LatLng(waypoint.y, waypoint.x);
+				var wayMarker = new kakao.maps.Marker({
+					map: map,
+					title: "경유지 " + (index + 1) // 경유지 순서
+				});
+
+				// 각 경유지에 해당하는 이미지를 설정
+			    var content;
+			    switch (index) {
+		        	 case 0:
+			            content = '<img src="images/marker1.png" style="width: 35px; height: 50px;">';
+			            break;
+			         case 1:
+			            content = '<img src="images/marker2.png" style="width: 35px; height: 50px;">';
+			            break;
+			         case 2:
+			            content = '<img src="images/marker3.png" style="width: 35px; height: 50px;">';
+			            break;
+			         case 3:
+			            content = '<img src="images/marker4.png" style="width: 35px; height: 50px;">';
+			            break;
+			         case 4:
+			            content = '<img src="images/marker5.png" style="width: 35px; height: 50px;">';
+			            break;
+			         default:
+			            content = ''; // 기본값
+			            break;
+			     }
+					
+				var customOverlay = new kakao.maps.CustomOverlay({
+					position: wayMarkerPosition,
+					content: content,
+					yAnchor: 1 // 오버레이의 yAnchor를 설정하여 마커 위에 표시되도록 합니다
+				});
+
+				customOverlay.setMap(map);
+
+				//linePath.push(wayMarkerPosition);
+				bounds.extend(wayMarkerPosition);
+				console.log("경유지 마커 추가:", wayMarkerPosition);
+			});
+		} else {
+			console.warn("경유지가 비어 있습니다.", wayPoint2);
+		}
+
+		// 목적지 마커 찍기. 
+			
+		if (toY != null) {
+			var toMarkerPosition = new kakao.maps.LatLng(toY, toX);
+			var toMarker = new kakao.maps.Marker({
+				map: map,
+				title: "목적지"
+			});
+				
+			var content = '<img src="images/markerArr.png" style="width: 35px; height: 50px;">';
+				
+			var customOverlay = new kakao.maps.CustomOverlay({
+				position: toMarkerPosition,
+				content: content,
+				yAnchor: 1 // 오버레이의 yAnchor를 설정하여 마커 위에 표시되도록 합니다
+			});
+			customOverlay.setMap(map);
+				
+			//	linePath.push(toMarkerPosition);
+			bounds.extend(toMarkerPosition);
+			console.log("목적지 마커 추가:", toMarkerPosition);
+		}
+			
+		console.log("linePath 배열:", linePath);
+		if (pointList.length > 0) {
+			pointList.forEach(point => {
+				var pointPosition = new kakao.maps.LatLng(point.x, point.y);
+				linePath.push(pointPosition);
+				bounds.extend(pointPosition);
+				// console.log("포인트 추가:", pointPosition);
+			});
+		}
+
+		// 각 라인의 좌표를 확인
+
+		linePath.forEach((latlng, index) => {
+			console.log(`linePath[${index}]: ${latlng.getLat()}, ${latlng.getLng()}`);
+		});
+
+		// 장바구니 항목 리스트를 placeListContainer에 추가
+		parsedCart.forEach((place, index) => {
+			var listItem = document.createElement('div'); // div 요소 생성
+			listItem.classList.add('place-list-array'); // 클래스 이름 추가
+			listItem.innerText = `${index + 1}. ${place.p_name}`;
+			placeListContainer.appendChild(listItem);
+		});
+
+		var polyline = new kakao.maps.Polyline({
+			path: linePath,
+			strokeWeight: 5,
+			strokeColor: 'blue',
+			strokeOpacity: 0.7,
+			strokeStyle: 'solid'
+		});
+		polyline.setMap(map);
+
+		// 지도에 경로 거리와 예상 시간 표시
+		if (distance != null && duration != null) {
+			var distanceKm = (distance / 1000).toFixed(2); // 거리 단위를 km로 변환
+			var durationMin = Math.ceil(duration / 60); // 시간을 분 단위로 변환
+
+			document.querySelector('.distance-info').innerText = `총 거리: ${distanceKm} km`;
+			document.querySelector('.duration-info').innerText = `예상 시간: ${durationMin} 분`;
+
+			console.log(durationMin);
+		}
+
+		if (!bounds.isEmpty()) {
+			map.setBounds(bounds);
+			console.log("지도의 범위가 설정되었습니다.");
+		} else {
+			console.warn("지도의 범위가 비어 있습니다.");
+		}
+	}
+
+	setMarkersAndPath();
+</script>
 
 </html>
