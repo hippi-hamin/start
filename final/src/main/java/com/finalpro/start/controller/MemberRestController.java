@@ -53,7 +53,8 @@ public class MemberRestController {
 	    if (signedInUser == null) {
 	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인되지 않은 사용자입니다.");
 	    }
-
+	    
+	    //
 	    String m_name = userInfo.get("m_name");
 	    String m_phone = userInfo.get("m_phone");
 

@@ -38,43 +38,55 @@ body {
 	position: relative;
 	top: 10%;
 }
-/* 회원 표 크기 */
-.member-graph {
-	width: 80%;
-}
-/* 회원 표 위치 */
-table {
-	width: 80%;
-	position: absolute;
-	top: 40%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-}
-/* 회원 표 헤더 */
-.member-graph-header {
-	text-align: left;
-	background-color: black;
-	color: white;
-	border-radius: 1px;
-}
-/* 회원 표 리스트 */
-.member-graph-list {
-	border: 1px solid black;
-	color: black;
-	height: 35px;
-	border-radius: 1px;
-}
-/* 뒤로가기 버튼 */
-.back-button {
+/* 회원관리 페이지 버튼 */
+.btn-manage-member {
 	background-color: black;
 	color: white;
 	font-weight: bold; 
-	width: 10%;
+	width: 25%;
 	height: 30px;
 	position: absolute;
-	top: 30%;
+	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	line-height: 30px;
+	text-decoration-line: none;
+	border-radius: 3px;
+	font-size: 10px;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+}
+/* 회원관리 페이지 버튼 */
+.btn-manage-place {
+	background-color: black;
+	color: white;
+	font-weight: bold; 
+	width: 25%;
+	height: 30px;
+	position: absolute;
+	top: 60%;
+	left: 50%;
+	transform: translate(-50%, -50%); /* 가운데 정렬을 위한 이동 */
+	line-height: 30px;
+	text-decoration-line: none;
+	border-radius: 3px;
+	font-size: 10px;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+}
+/* 회원관리 페이지 버튼 */
+.btn-upload-place {
+	background-color: black;
+	color: white;
+	font-weight: bold; 
+	width: 25%;
+	height: 30px;
+	position: absolute;
+	top: 70%;
+	left: 50%;
+	transform: translate(-50%, -50%); /* 가운데 정렬을 위한 이동 */
 	line-height: 30px;
 	text-decoration-line: none;
 	border-radius: 3px;

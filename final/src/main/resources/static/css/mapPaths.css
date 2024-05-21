@@ -70,6 +70,15 @@ body {
 	border-bottom: 1px solid;
 }
 
+/* 리스트의 헤더 */
+.place-list-header {
+	background-color: black;
+	color: white;
+	width: 100%;
+	justify-content: center;
+	height: 35px;
+}
+
 /* 리스트의 푸터 */
 .place-list-footer {
 	background-color: black;
