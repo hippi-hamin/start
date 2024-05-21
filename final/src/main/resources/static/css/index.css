@@ -9,7 +9,6 @@ body {
    display: flex;
    flex-direction: column;
    font-family: 'SUITE', sans-serif;
-   background-color: #f8f9fa;
 }
 /* 슬라이드 바탕 */
 .slider-background {
