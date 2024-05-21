@@ -316,7 +316,6 @@ body {
 .filter-list1 input[type="checkbox"] {
 	margin-right: 10px; /* 체크박스 오른쪽 간격을 늘립니다. */
 }
-/* 패딩을 ul 태그에 적용 */
 .place-list {
 	padding-top: 500px;
 	list-style: none; /* 기본 리스트 스타일 제거 */

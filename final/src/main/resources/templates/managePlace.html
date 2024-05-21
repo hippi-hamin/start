@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-
-
 <head>
 	<meta charset="UTF-8">
-	<title>장소 리스트</title>
-	<link rel="stylesheet" th:href="@{/css/placeList.css}">
+	<link rel="stylesheet" th:href="@{/css/header.css}">
+	<link rel="stylesheet" th:href="@{/css/footer.css}">
+	<link rel="stylesheet" th:href="@{/css/managePlace.css}">
 </head>
-
 <body>
-	<h1>장소 리스트</h1>
+	<!-- 헤더 -->
+	<th:block th:replace="~{fragments/header :: header}"></th:block>
+	<!-- 장소 관리 텍스트 -->
+	<div class="center-eng-text">M a n a g e P l a c e</div>
+	<div class="center-ko-text">장소 관리</div>
+	<div class="write-line"></div>
+	<!-- 리스트 출력 위치 -->
 	<div id="place-list">
-		<ul>
 			<th:block th:each="place : ${placeList}">
 				<li class="place-item">
 					<div class="place-content">
@@ -21,51 +24,23 @@
 							<div class="place-info">
 								<span th:text="${place.p_name}"></span>
 								<span th:text="'지역: ' + ${place.p_location}"></span>
-								<span th:text="'별점: ' + ${place.p_stScore}"></span>
 							</div>
 						</a>
-						<a th:href="@{'/updatePlace/' + ${place.p_id}}">수정</a>
+						<!-- 버튼 정렬 -->
+						<div class="btn-array">
+						<!-- 수정 버튼 -->
+						<a class="correction-button" th:href="@{'/updatePlace/' + ${place.p_id}}">수정</a>
+						<!-- 삭제 버튼 -->
 						<form th:action="@{/deletePlaceProc}" method="post" style="display: inline;">
 							<input type="hidden" name="p_id" th:value="${place.p_id}" />
-							<button type="submit">삭제</button>
+							<button class="delete-button" type="submit">삭제</button>
 						</form>
+						</div>
 					</div>
-
 				</li>
 			</th:block>
-		</ul>
-	</div>
-</body>
-
-</html>
-=======
-<head>
-    <meta charset="UTF-8">
-    <title>장소 리스트</title>
-    <link rel="stylesheet" th:href="@{/css/placeList.css}">
-</head>
-<body>
-    <h1>장소 리스트</h1>
-    <div id="place-list">
-        <ul>
-            <th:block th:each="place : ${placeList}">
-                <li class="place-item">
-                    <div class="place-content">
-                        <a th:href="@{'/placeDetail/' + ${place.p_id}}" class="place-link">
-                            <img th:src="@{'/getImage/' + ${place.p_iname}}" class="place-image" alt="Image of ${place.p_name}" width="150px" />
-                            <div class="place-info">
-                                <span th:text="${place.p_name}"></span>
-                                <span th:text="'지역: ' + ${place.p_location}"></span>
-                                <span th:text="'별점: ' + ${place.p_stScore}"></span>
-                            </div>
-                        </a>
-                        <a th:href="@{'/updatePlace/' + ${place.p_id}}">수정</a>
-                        <a th:href="@{'/updatePlace/' + ${place.p_id}}">삭제</a>
-                    </div>
-                    
-				</li>
-            </th:block>
-        </ul>
-    </div>
+		</div>
+	<!-- 푸터 -->
+    <th:block th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
 </html>
