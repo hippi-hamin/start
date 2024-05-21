@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUITE/fonts/static/woff2/SUITE.css" rel="stylesheet">
 
@@ -13,6 +13,22 @@
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3926d3c8dcc51df1b147cee756c64e7&libraries=services"></script>
 
+	<script th:inline="javascript">
+		
+	const fromX = /*[[${fromPoint?.x}]]*/ null; 
+	const fromName = /*[[]${fromPoint?.p_name}]*/ null;
+	const fromY = /*[[${fromPoint?.y}]]*/ null;
+	let wayPoint2 = /*[[${wayPoint2}]]*/ null;
+	const toX = /*[[${toPoint?.x}]]*/ null;
+	const toY = /*[[${toPoint?.y}]]*/ null;
+	var pointList = /*[[${placeList}]]*/ '[]';
+	pointList = pointList ? JSON.parse(pointList) : [];
+	const fwtList = /*[[${fwtList}]]*/ '[]';
+
+	// 시간, 거리 
+	const distance = /*[[${distance}]]*/ null;
+	const duration = /*[[${duration}]]*/ null;
+	</script>
 </head>
 
 <body>
@@ -49,9 +65,14 @@
         <!-- 출발지, 도착지, 경유지 정보를 포함한 숨겨진 필드들 -->
         <input type="hidden" name="fromX" th:value="${fromPoint?.x}" />
         <input type="hidden" name="fromY" th:value="${fromPoint?.y}" />
+         <!-- 경유지 좌표를 숨겨진 input 필드로 설정 -->
+    	<th:block th:each="waypoint, iterStat : ${wayPoint2}">
+        	<input type="hidden" name="wayPointX" th:value="${waypoint.x}" />
+        	<input type="hidden" name="wayPointY" th:value="${waypoint.y}" />
+    	</th:block>
         <input type="hidden" name="toX" th:value="${toPoint?.x}" />
         <input type="hidden" name="toY" th:value="${toPoint?.y}" />
-        <input type="hidden" name="wayPoints" th:value="${wayPoints}" />
+       
         <button type="submit">경로 탐색</button>
     </form>
 
@@ -63,19 +84,7 @@
 
 <script th:inline="javascript">
 	// 서버에서 전달된 좌표 데이터임
-	const fromX = /*[[${fromPoint?.x}]]*/ null; 
-	const fromName = /*[[]${fromPoint?.p_name}]*/ null;
-	const fromY = /*[[${fromPoint?.y}]]*/ null;
-	let wayPoint2 = /*[[${wayPoint2}]]*/ null;
-	const toX = /*[[${toPoint?.x}]]*/ null;
-	const toY = /*[[${toPoint?.y}]]*/ null;
-	var pointList = /*[[${placeList}]]*/ '[]';
-	pointList = pointList ? JSON.parse(pointList) : [];
-	const fwtList = /*[[${fwtList}]]*/ '[]';
-
-	// 시간, 거리 
-	const distance = /*[[${distance}]]*/ null;
-	const duration = /*[[${duration}]]*/ null;
+	
 
 	console.log(wayPoint2);
 	console.log("fwtList", fwtList);
@@ -233,13 +242,13 @@
 		parsedCart.forEach((place, index) => {
 			var listItem = document.createElement('div'); // div 요소 생성
 			listItem.classList.add('place-list-array'); // 클래스 이름 추가
-		//	 listItem.innerText = `${index + 1}. ${place.p_name}`;
-			 if(index == 0){
+			 // listItem.innerText = `${index + 1}. ${place.p_name}`;
+			if(index == 0){
 				listItem.innerText = `${'출발지'} : ${place.p_name}`;
-			} else if(index > wayPoint2.length){
-				listItem.innerText = `${'도착지'} : ${place.p_name}`;
-			} else {
+			} else if(wayPoint2 && index <= wayPoint2.length){
 				listItem.innerText = `${'경유지'} ${index} : ${place.p_name}`;
+			} else {
+				listItem.innerText = `${'도착지'} : ${place.p_name}`;
 			}
 			
 			placeListContainer.appendChild(listItem);
