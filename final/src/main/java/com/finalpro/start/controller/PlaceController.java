@@ -131,12 +131,16 @@ public class PlaceController {
 		}
 	}
 
+	
+	// 장소 등록 이동 메서드
 	@GetMapping("upLoadPlace")
 	public String upLoadPlace() {
 		log.info("upLoad()");
 		return "upLoadPlace";
 	}
 
+	
+	// 장소 등록 메서드
 	@PostMapping("upLoadPlaceProc")
 	public String upLoadPlaceProc(@RequestParam(name = "files") List<MultipartFile> files,
 			@RequestParam(name = "address") String address, // 주소 파라미터 추가
@@ -362,8 +366,9 @@ public class PlaceController {
 	}
 
 	// 경로 최적화
-	@GetMapping("mapPaths")
-	public String getMapPaths(@RequestParam(name = "fromX") Double fromX, @RequestParam(name = "fromY") Double fromY,
+	@GetMapping("mapPaths")  // priority parameter 추가
+	public String getMapPaths(@RequestParam(name = "priority", defaultValue = "RECOMMEND") String priority,
+							  @RequestParam(name = "fromX") Double fromX, @RequestParam(name = "fromY") Double fromY,
 	                          @RequestParam(name = "toX") Double toX, @RequestParam(name = "toY") Double toY,
 	                          @RequestParam(name = "wayPoints", required = false) String wayPoints, Model model) {
 	    PlaceDTO fromPoint = new PlaceDTO(fromX, fromY);
@@ -380,13 +385,16 @@ public class PlaceController {
 
 	    
 	    // 시간이랑 거리 넣는거 때문에 DTO에서 MAP으로 바꿈
-	    try {
-	        Map<String, Object> resultMap = KakaoApiUtil.getVehiclePaths(fromPoint, toPoint, wayPointList, "RECOMMEND");
+	    try { // 기존 "RECOMMEND"로 하드코딩 돼있던 거 priority로 바꿈 그래서 mapPaths에서 경로 옵션 변경 할 수 있게 만듦.
+	        Map<String, Object> resultMap = KakaoApiUtil.getVehiclePaths(fromPoint, toPoint, wayPointList, priority);
 	        List<PlaceDTO> placeList = (List<PlaceDTO>) resultMap.get("placeList");
 	        double distance = (double) resultMap.get("distance");
 	        int duration = (int) resultMap.get("duration");
 
 	        String placeListJson = new ObjectMapper().writeValueAsString(placeList);
+	        
+	        // priority 모델 추가
+	        model.addAttribute("priority", priority);
 	        model.addAttribute("fromPoint", fromPoint);
 	        model.addAttribute("toPoint", toPoint);
 	        model.addAttribute("wayPoint2", wayPointList.isEmpty() ? null : wayPointList);

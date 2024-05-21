@@ -17,40 +17,59 @@ body {
 	flex-direction: row; /* 수평 정렬 */
 	justify-content: center; /* 필요에 따라 중앙 정렬 */
 	width: 100%;
-	height: 635px;
+	height: 690px;
 }
 /* 맵 크기 조정 */
 #map {
 	width: 70%;
-	height: 100%; /* 부모의 높이를 채우도록 변경 */	
 	border: 1px solid black;
 }
 /* 리스트 박스 */
 #placeList {
 	width: 30%;
-	height: 635px; /* 부모의 높이를 채우도록 변경 */
 	border-bottom: 1px solid black;
 	border-right: 1px solid black;
 }
-/* 리스트의 각 위치별 칸 나누기 */
-.place-list-array {
+
+/* 리스트의 헤더 */
+.place-list-header {
+	display: flex;
+	flex-direction: column;
+	background-color: white;
+	color: black;
 	width: 100%;
-	height: 18%;
 	justify-content: center;
+	align-items: center;
+}
+
+.place-list-header .place-list {
+	font-weight: bold;
+	text-align: center;
+	width: 100%;
+	background: white;
+	padding: 10px;
+	border: 5px solid black;
+}
+
+.place-list-header .info-container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	background: white;
+	padding: 10px;
+	border-bottom: 1px solid;
+}
+
+/* 출발지,경유지,도착지 칸 나누기 */
+.place-list-array {
+	padding: 10px;
+	width: 100%;
+	height: 12%;
 	align-items: center;
 	display: flex;
 	border-bottom: 1px solid;
 }
-/* 리스트의 헤더 */
-.place-list-header {
-	background-color: black;
-	color: white;
-	width: 100%;
-	justify-content: center;
-	align-items: center;
-	display: flex;
-	height: 35px;
-}
+
 /* 리스트의 푸터 */
 .place-list-footer {
 	background-color: black;
