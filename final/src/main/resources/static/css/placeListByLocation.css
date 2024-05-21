@@ -110,7 +110,7 @@ body {
 .place-text {
 	position: absolute;
 	left: 50%;
-	bottom: -15%;
+	bottom: -25%;
 	transform: translateX(-50%);
 	color: black;
 	font-size: 20px;
@@ -119,59 +119,25 @@ body {
 
 .location-text {
 	position: absolute;
-	left: 10%;
-	bottom: -25%;
+	left: 50%;
+	bottom: -40%;
 	transform: translateX(-50%);
 	color: black;
 	font-size: 14px;
 	text-align: center;
 }
-
-.stScore-text {
-	position: absolute;
-	left: 90%;
-	bottom: -25%;
-	transform: translateX(-50%);
-	color: black;
-	font-size: 14px;
-	text-align: center;
-}
-
 .p-img {
 	width: 100%;
 	height: 275px;
 	transition: transform 0.3s ease;
 }
-
 .p-img:hover {
 	transform: scale(1.05);
 }
-
-.st-img {
-	height: 20px;
-	width: 20px;
-	position: absolute;
-	left: 70%;
-	bottom: -25%;
-}
-
-.comment-text {
-	position: absolute;
-	left: 50%;
-	bottom: -35%;
-	transform: translateX(-50%);
-	color: black;
-	font-size: 14px;
-	text-align: center;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
 .non-content-text {
 	text-align: center;
 	color: black;
 	position: relative;
-	top: 10%;
+	top: 100%;
 	font-size: 16px;
 }

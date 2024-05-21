@@ -37,30 +37,22 @@ public class PlaceRestController {
 		return "redirect:placeListByLocation";
 	}
 
+	// make plan filter
 	@GetMapping("/searchByFilters")
-	public List<PlaceDTO> searchByFilters(
-	        @RequestParam(value = "themes", required = false) List<String> themes,
-	        @RequestParam(value = "regions", required = false) List<String> regions) {
-	    log.info("Received themes: " + themes);
-	    log.info("Received regions: " + regions);
+	public List<PlaceDTO> searchByFilters(@RequestParam(value = "themes", required = false) List<String> themes,
+			@RequestParam(value = "mainRegions", required = false) List<String> mainRegions,
+			@RequestParam(value = "subregions", required = false) List<String> subregions) {
+		log.info("Received themes: " + themes);
+		log.info("Received mainRegions: " + mainRegions);
+		log.info("Received subregions: " + subregions);
 
-	    // 지역 리스트가 비어 있지 않다면 첫 번째 지역을 메인 지역으로 사용하고 나머지는 서브 지역으로 사용합니다.
-	    List<String> mainRegions = new ArrayList<>();
-	    List<String> subregions = new ArrayList<>();
-	    if (regions != null && !regions.isEmpty()) {
-	    	mainRegions.add(regions.get(0));
-	        if (regions.size() > 1) {
-	            subregions.addAll(regions.subList(1, regions.size()));
-	        }
-	    }
+		if ((themes == null || themes.isEmpty()) && (mainRegions == null || mainRegions.isEmpty())
+				&& (subregions == null || subregions.isEmpty())) {
+			return placeService.getPlaceList(null, null);
+		}
 
-	    if ((themes == null || themes.isEmpty()) && (regions == null || regions.isEmpty())) {
-	        return placeService.getPlaceList(null, null);
-	    }
-
-	    return placeService.searchByFilters(themes, mainRegions, subregions);
+		return placeService.searchByFilters(themes, mainRegions, subregions);
 	}
-
 
 
 	// 지역별 리스트

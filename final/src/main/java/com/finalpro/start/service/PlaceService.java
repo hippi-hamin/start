@@ -3,7 +3,9 @@ package com.finalpro.start.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 // 필요없는 라이브러리 삭제 -안재문- 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,8 +64,7 @@ public class PlaceService {
 
 	private List<String> fileUpLoad(List<MultipartFile> files, HttpSession session) throws IOException {
 		List<String> uploadedFileNames = new ArrayList<>();
-		// String uploadDirectory = "/Users/upLoad/";
-		String uploadDirectory = "C:\\Development\\upLoad";
+		String uploadDirectory = "/Users/upLoad/";
 
 		File folder = new File(uploadDirectory);
 
@@ -160,13 +161,13 @@ public class PlaceService {
 	// 필요없는 메서드 삭제 -안재문-
 	// make plan 필터
 	public List<PlaceDTO> searchByFilters(List<String> themes, List<String> mainRegions, List<String> subregions) {
-		log.info("themes: " + themes);
-	    log.info("mainRegions: " + mainRegions);
-	    log.info("subregions: " + subregions);
-	    List<PlaceDTO> result = placeDAO.searchByFilters(themes, mainRegions, subregions);
-	    log.info("result: " + result);
-	    return result;
-    }
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("themes", themes);
+	    params.put("mainRegions", mainRegions);
+	    params.put("subregions", subregions);
+	    
+	    return placeDAO.searchByFilters(params);
+	}
 
 	// 지역별 리스트
 	public List<PlaceDTO> fetchPlacesLocation(String location) {
@@ -182,6 +183,30 @@ public class PlaceService {
 		log.info(theme);
 		List<PlaceDTO> result = placeDAO.fetchPlacesTheme(theme);
 		return result;
+	}
+
+	// 장소 삭제 메소드
+	public String deletePlace(int p_id, RedirectAttributes rttr) {
+		
+		String view = null;
+		String msg = null;
+		
+		try {
+			log.info("deletePlace 실행 성공");
+			placeDAO.deletePlace(p_id);
+			
+			msg = "삭제 성공!";
+			view = "redirect:/adminPage";
+			
+		} catch (Exception e) {
+			log.info("deletePlace 실행 오류");
+			
+			msg = "삭제 실패!";
+			view = "redirect:/";
+		}
+		
+		rttr.addFlashAttribute("msg", msg);
+		return view;
 	}
 
 }

@@ -66,25 +66,17 @@
       </div>
    </div>
    <!-- 조회수, 별점 위치 -->
-   <div class="views-stscore-view">
+   <div class="views-array">
      <div class="views" th:if="${place != null}">
    		 조회수 : <span th:text="${place.p_views}"></span>
 	</div>
-	<!-- 좋아요 -->
-     <div class="st-score" th:if="${place != null}">
-     <span th:text="${place.p_stScore}"></span>
-      </div>
-     <img class="st-img" src="/images/heart.png">
-        
-   	</div>
+   </div>
 	
 	<!-- 아래 화살표 -->
-	<button type="button" class="st-score-button" id="stScoreButton">
-		<img src="/images/heart.png">
-	</button>
-   	<div class="arrow-box">
-    	<img class="arrow-box-motion" src="/images/scrollArrow.png" alt="">
-   	</div>
+   <div class="arrow-box">
+      <img class="arrow-box-motion" src="/images/scrollArrow.png" alt="">
+   </div>
+
 	<!-- 푸터 -->
    	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 </body>

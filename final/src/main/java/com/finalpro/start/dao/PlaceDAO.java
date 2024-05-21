@@ -1,6 +1,7 @@
 package com.finalpro.start.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -36,11 +37,14 @@ public interface PlaceDAO {
 	void updatePlaceProc(PlaceDTO placeDTO);
 
 	// make plan 필터
-    List<PlaceDTO> searchByFilters(@Param("themes") List<String> themes, @Param("mainRegions") List<String> mainRegions, @Param("subregions") List<String> subregions);
+    List<PlaceDTO> searchByFilters(Map<String, Object> params);
 
     // 지역별 리스트
 	List<PlaceDTO> fetchPlacesLocation(@Param("location") String location);
 
 	// 테마별 리스트
 	List<PlaceDTO> fetchPlacesTheme(@Param("theme") String theme);
+
+	// 지역 삭제
+	void deletePlace(int p_id);
 }
