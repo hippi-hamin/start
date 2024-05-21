@@ -1142,9 +1142,9 @@
 	<div class="start-line"></div>
 	<!-- 장소 리스트를 반복하여 표시 -->
 	<div id="place-list">
-		<ul class="place-list">
+		<div class="place-list">
 			<th:block th:each="place : ${placeList}">
-				<li class="place-item">
+				<div class="place-item">
 					<div class="place-content">
 						<a th:href="@{'/placeDetail/' + ${place.p_id}}" class="place-link">
 							<img th:src="@{'/getImage/' + ${place.p_iname}}" alt="Image of ${place.p_name}"
@@ -1158,9 +1158,9 @@
 							onclick="addToCart(this.getAttribute('data-pid'))" class="add-to-cart-button">장바구니에
 							추가</button>
 					</div>
-				</li>
+				</div>
 			</th:block>
-		</ul>
+		</div>
 	</div>
 	<div id="cart-section">
 		<!-- 장바구니 섹션 -->
@@ -1564,12 +1564,9 @@
 					+ '<div class="place-info">'
 					+ '<span>' + place.p_name + '</span>'
 					+ '<span>지역 : ' + place.p_location + '</span>'
-					+ '<span>별점: ' + place.p_stScore.toFixed(1) + '</span>'
 					+ '</div>'
 					+ '</a>'
-					+ '<div class="button-wrapper">'
 					+ '<button type="button" data-pid="' + place.p_id + '" class="add-to-cart-button" onclick="addToCart(this.getAttribute(\'data-pid\'))">장바구니에 추가</button>'
-					+ '</div>'
 					+ '</div>'
 					+ '</li>';
 
