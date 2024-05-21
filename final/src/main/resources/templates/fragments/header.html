@@ -15,7 +15,6 @@
                 <!-- 세션에 저장된 사용자 정보가 "ajm0111@naver.com"인 경우 -->
                 <th:block th:if="${session.signedInUserEmail == 'ajm0111@naver.com'}">
                     <a href="adminPage">Admin</a>
-                    <a href="upLoadPlace">Upload</a>
                     <!--upload adminPage로 이동 -안재문- -->
                     <a href="/logout">LogOut</a>
                 </th:block>

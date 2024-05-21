@@ -9,6 +9,14 @@
 <link rel="stylesheet" th:href="@{/css/footer.css}">
 <link rel="stylesheet" th:href="@{/css/adminPage.css}">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script th:inline="javascript">
+	$(function() {
+		var m = [[${msg}]]; // 변수를 문자열로 변환하고 큰 따옴표로 둘러싸지 않음
+		if (m !== null && m !== '') { // null이나 빈 문자열이 아닌지 확인
+			alert(m);
+		}
+	});
+</script>
 </head>
 <body>
 	<!-- 헤더 -->
@@ -20,11 +28,11 @@
 	<div class="write-line"></div>
 	<!-- 페이지 이동 -->
 		<!-- 회원관리 페이지 -->
-		<a class="btn-manage-member" href="/adminPage/manageMember">회원 관리</a>
+		<a class="btn-manage-member" href="/adminPage/manageMember">회원 현황</a>
 		<!-- 장소관리 페이지 -->
 		<a class="btn-manage-place" href="/adminPage/managePlace">장소 관리</a>
-		<!-- 업로드 페이지 -->
-		<a class="btn-upload-place" href="upLoadPlace">장소 업로드</a>
+		<!-- 이전 페이지  -->
+		<a class="back-button" href="/">이전 페이지</a>
 	<!-- 푸더 -->
 
     <th:block th:replace="~{fragments/footer :: footer}"></th:block>

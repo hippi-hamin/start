@@ -141,3 +141,42 @@ body {
 	font-size: 14px;
 	cursor: pointer;
 }
+
+.upload-button {
+	background-color: black;
+	color: white;
+	font-weight: bold;
+	margin-top: 5%;
+	width: 200px; 
+	height : 30px;
+	position: relative;
+	bottom: 10px; /* 푸터 바로 위로 20px 떨어진 위치 */
+	left: 50%;
+	transform: translateX(-50%);
+	line-height: 30px;
+	text-decoration: none;
+	border-radius: 3px;
+	font-size: 14px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.back-button {
+	background-color: black;
+	color: white;
+	font-weight: bold;
+	margin-top: 0.5%;
+	width: 200px; 
+	height : 30px;
+	position: relative;
+	bottom: 10px; /* 푸터 바로 위로 20px 떨어진 위치 */
+	left: 50%;
+	transform: translateX(-50%);
+	line-height: 30px;
+	text-decoration: none;
+	border-radius: 3px;
+	font-size: 14px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

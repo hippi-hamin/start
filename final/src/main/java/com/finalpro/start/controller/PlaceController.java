@@ -133,7 +133,7 @@ public class PlaceController {
 
 	
 	// 장소 등록 이동 메서드
-	@GetMapping("upLoadPlace")
+	@GetMapping("/adminPage/upLoadPlace")
 	public String upLoadPlace() {
 		log.info("upLoad()");
 		return "upLoadPlace";
@@ -141,7 +141,7 @@ public class PlaceController {
 
 	
 	// 장소 등록 메서드
-	@PostMapping("upLoadPlaceProc")
+	@PostMapping("/adminPage/upLoadPlaceProc")
 	public String upLoadPlaceProc(@RequestParam(name = "files") List<MultipartFile> files,
 			@RequestParam(name = "address") String address, // 주소 파라미터 추가
 			HttpSession session, @Validated @ModelAttribute("PlaceDTO") PlaceDTO placeDTO, BindingResult bindingResult,
