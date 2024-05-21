@@ -1,8 +1,11 @@
 package com.finalpro.start.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,14 +37,23 @@ public class PlaceRestController {
 		return "redirect:placeListByLocation";
 	}
 
+	// make plan filter
 	@GetMapping("/searchByFilters")
 	public List<PlaceDTO> searchByFilters(@RequestParam(value = "themes", required = false) List<String> themes,
-			@RequestParam(value = "regions", required = false) List<String> regions) {
-		// 로그 추가
+			@RequestParam(value = "mainRegions", required = false) List<String> mainRegions,
+			@RequestParam(value = "subregions", required = false) List<String> subregions) {
 		log.info("Received themes: " + themes);
-		log.info("Received regions :" + regions);
-		return placeService.searchByFilters(themes, regions);
+		log.info("Received mainRegions: " + mainRegions);
+		log.info("Received subregions: " + subregions);
+
+		if ((themes == null || themes.isEmpty()) && (mainRegions == null || mainRegions.isEmpty())
+				&& (subregions == null || subregions.isEmpty())) {
+			return placeService.getPlaceList(null, null);
+		}
+
+		return placeService.searchByFilters(themes, mainRegions, subregions);
 	}
+
 
 	// 지역별 리스트
 	@GetMapping("/fetchPlacesByLocation")

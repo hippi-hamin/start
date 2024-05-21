@@ -3,7 +3,9 @@ package com.finalpro.start.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 // 필요없는 라이브러리 삭제 -안재문- 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,12 +163,13 @@ public class PlaceService {
 
 	// 필요없는 메서드 삭제 -안재문-
 	// make plan 필터
-	public List<PlaceDTO> searchByFilters(List<String> themes, List<String> regions) {
-		log.info("themes : " + themes);
-		log.info("regions : " + regions);
-		List<PlaceDTO> result = placeDAO.searchByFilters(themes, regions);
-		log.info("result : " + result);
-		return result;
+	public List<PlaceDTO> searchByFilters(List<String> themes, List<String> mainRegions, List<String> subregions) {
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("themes", themes);
+	    params.put("mainRegions", mainRegions);
+	    params.put("subregions", subregions);
+	    
+	    return placeDAO.searchByFilters(params);
 	}
 
 	// 지역별 리스트
