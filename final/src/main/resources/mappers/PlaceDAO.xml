@@ -91,39 +91,45 @@
 			p_thema LIKE CONCAT('%', #{theme}, '%')
 		</foreach>
 	</select>
-	<select id="searchByFilters" parameterType="map" resultType="com.finalpro.start.dto.PlaceDTO">
-    SELECT p_id, p_name, p_location, p_stScore, p_iname
-    FROM place.placetbl
-    WHERE 1=1
-    <if test="(mainRegions != null and !mainRegions.isEmpty()) and (subregions == null or subregions.isEmpty())">
-        AND (
-        <foreach item="region" collection="mainRegions" open="(" separator=" OR " close=")">
-            p_location = #{region}
-        </foreach>
-        )
-    </if>
-    <if test="mainRegions != null and !mainRegions.isEmpty()">
-        AND (
-        <foreach item="region" collection="mainRegions" open="(" separator=" OR " close=")">
-            p_location = #{region}
-        </foreach>
-        )
-        <if test="subregions != null and !subregions.isEmpty()">
-            AND (
-            <foreach item="subregion" collection="subregions" open="(" separator=" OR " close=")">
-                p_name LIKE CONCAT('%', #{subregion}, '%')
-            </foreach>
-            )
-        </if>
-    </if>
-    <if test="themes != null and !themes.isEmpty()">
-        AND (
-        <foreach item="theme" collection="themes" open="(" separator=" OR " close=")">
-            p_thema = #{theme}
-        </foreach>
-        )
-    </if>
-</select>
+	<select id="searchByFilters" parameterType="map"
+		resultType="com.finalpro.start.dto.PlaceDTO">
+		SELECT p_id, p_name, p_location, p_stScore, p_iname
+		FROM place.placetbl
+		WHERE 1=1
+		<if
+			test="(mainRegions != null and !mainRegions.isEmpty()) and (subregions == null or subregions.isEmpty())">
+			AND (
+			<foreach item="region" collection="mainRegions" open="("
+				separator=" OR " close=")">
+				p_location = #{region}
+			</foreach>
+			)
+		</if>
+		<if test="mainRegions != null and !mainRegions.isEmpty()">
+			AND (
+			<foreach item="region" collection="mainRegions" open="("
+				separator=" OR " close=")">
+				p_location = #{region}
+			</foreach>
+			)
+			<if test="subregions != null and !subregions.isEmpty()">
+				AND (
+				<foreach item="subregion" collection="subregions" open="("
+					separator=" OR " close=")">
+					p_name LIKE CONCAT('%', #{subregion}, '%')
+				</foreach>
+				)
+			</if>
+		</if>
+		<if test="themes != null and !themes.isEmpty()">
+			AND (
+			<foreach item="theme" collection="themes" open="("
+				separator=" OR " close=")">
+				p_thema = #{theme}
+			</foreach>
+			)
+		</if>
+	</select>
 
 
 	<select id="fetchPlacesLocation" parameterType="String"
@@ -144,6 +150,15 @@
 		DELETE
 		FROM place.placetbl
 		WHERE p_id=#{p_id}
+	</select>
+	<select id="searchByKeyword" parameterType="String"
+		resultType="place">
+		SELECT p_name, p_location, p_description, p_iname
+		FROM place.placetbl
+		WHERE p_name LIKE CONCAT('%', #{query}, '%')
+		OR p_location LIKE CONCAT('%', #{query}, '%')
+		OR p_description LIKE CONCAT('%', #{query}, '%')
+		OR p_thema LIKE CONCAT('%' ,#{query}, '%')
 	</select>
 
 

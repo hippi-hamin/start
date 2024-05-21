@@ -64,9 +64,7 @@ public class PlaceService {
 
 	private List<String> fileUpLoad(List<MultipartFile> files, HttpSession session) throws IOException {
 		List<String> uploadedFileNames = new ArrayList<>();
-
 		String uploadDirectory = "/Users/upLoad/";
-
 		File folder = new File(uploadDirectory);
 
 		if (!folder.exists() && !folder.mkdirs()) {
@@ -211,5 +209,12 @@ public class PlaceService {
 		rttr.addFlashAttribute("msg", msg);
 		return view;
 	}
-
+	
+	// 키워드 검색 -안재문-
+	public List<PlaceDTO> searchByKeyword(String query) {
+		log.info("query : " +query);
+		List<PlaceDTO> result = placeDAO.searchByKeyword(query);
+		
+		return result;
+	}
 }
