@@ -67,9 +67,6 @@
 	        </div>
 	    </th:block>
 	 </div>
-    <th:block th:unless="${placeListByTheme != null and placeListByTheme.size() > 0}">
-        <div class="non-content-text">장소 리스트가 존재하지 않습니다.</div>
-    </th:block>
     <!-- 푸터 -->
     <th:block th:replace="~{fragments/footer :: footer}"></th:block>
 	<script type="text/javascript">
