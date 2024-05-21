@@ -44,7 +44,7 @@ body {
 	align-items: center;
 	background-color: #fff;
 	border-radius: 50%;
-	border: 2px solid black;
+	border: 1px solid gray;
 	overflow: hidden;
 	cursor: pointer;
 	position: relative; /* 이미지의 위치를 조정하기 위해 부모 요소에 상대적 위치 지정 */
@@ -317,9 +317,11 @@ body {
 	margin-right: 10px; /* 체크박스 오른쪽 간격을 늘립니다. */
 }
 .place-list {
-	padding-top: 500px;
+	padding-top: 450px;
 	list-style: none; /* 기본 리스트 스타일 제거 */
-	padding-left: 3%; /* 기본 리스트 들여쓰기 제거 */
+}
+#place-list {
+	list-style: none; /* 기본 리스트 스타일 제거 */
 }
 /* 각 리스트 아이템에 대한 스타일 */
 .place-item {
@@ -338,6 +340,7 @@ body {
     border: 1px solid black;
     width: 75%;
     height: 200px;
+	margin-left: 2%;
 }
 .place-content:hover {
 	background-color: #d4d4d4;
