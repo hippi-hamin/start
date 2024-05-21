@@ -95,14 +95,15 @@ height: 575px;
 .custom-btn {
   width: 20%;
   height: 50px;
-  font-size: 26px;
+  font-size: 23px;
   font-weight: bold;
   background-color: black; 
   color: white;
   text-decoration: none;
-  display: inline-block; 
+  display: flex; /* Flexbox 사용 */
+  justify-content: center; /* 수평 중앙 정렬 */
   text-align: center;
-  padding-top: 5px; 
+  padding-top: 10px; 
   cursor : pointer;
   overflow: hidden;
 }

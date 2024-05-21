@@ -209,5 +209,12 @@ public class PlaceService {
 		rttr.addFlashAttribute("msg", msg);
 		return view;
 	}
-
+	
+	// 키워드 검색 -안재문-
+	public List<PlaceDTO> searchByKeyword(String query) {
+		log.info("query : " +query);
+		List<PlaceDTO> result = placeDAO.searchByKeyword(query);
+		
+		return result;
+	}
 }
