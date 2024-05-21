@@ -19,8 +19,8 @@
        <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">
        -->
        <!-- 디테일 첫 화면 이미지 -->
-      <div class="previews">
-         <div class="preview-img-array-box">
+  	<div class="previews">
+    	<div class="preview-img-array-box">
          <!-- 대표 이미지 -->
             <div class="preview-img">
                <!-- <img th:src="@{'/getImage/' + ${place.p_iname}}" alt="이미지">  -->
@@ -76,30 +76,31 @@
    <div class="arrow-box">
       <img class="arrow-box-motion" src="/images/scrollArrow.png" alt="">
    </div>
+
 	<!-- 푸터 -->
-   <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+   	<th:block th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
 <script type="text/javascript">
-$(document).ready(function() {
-	$("#stScoreButton").click(function(event) {
-		event.preventDefault();
-		$.ajax({
-			type : "POST",
-			url : "like",
-			data : {
-				p_code : "${placeDetail.p_code}"
-			},
-			dataType : 'json',
-			cache : false, // 캐시 사용 x
-			success : function(newLikeCount) {
-				// 좋아요 개수를 업데이트하여 화면에 반영
-				$("#stScoreButton").text("좋아요: " + newLikeCount);
-			},
-			error : function(xhr, status, error) {
-				console.error(xhr.responseText);
-			}
+	$(document).ready(function() {
+		$("#stScoreButton").click(function(event) {
+			event.preventDefault();
+			$.ajax({
+				type : "POST",
+				url : "like",
+				data : {
+					p_code : "${placeDetail.p_code}"
+				},
+				dataType : 'json',
+				cache : false, // 캐시 사용 x
+				success : function(newLikeCount) {
+					// 좋아요 개수를 업데이트하여 화면에 반영
+					$("#stScoreButton").text("좋아요: " + newLikeCount);
+				},
+				error : function(xhr, status, error) {
+					console.error(xhr.responseText);
+				}
+			});
 		});
 	});
-});
 </script>
 </html>
