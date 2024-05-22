@@ -69,10 +69,25 @@ body {
     color: black;
     font-size: 14px;
 }
+/* input 요소의 기본 스타일 */
+input {
+   border: none; /* 기본 경계 제거 */
+   border-bottom: 1px solid gray; /* 기본 하단 경계 */
+   transition: border-bottom 0.5s ease; /* 경계 변화에 트랜지션 추가 */
+}
 /* 인풋 미리보기 텍스트 */
 input::placeholder {
    font-size: 14px;
    text-align: left;
+   color: gray; /* 기본 색상 */
+   transition: color 0.5s ease;
+}
+/* 인풋 요소의 호버 상태 */
+input:hover::placeholder {
+   color: blue; /* 호버 시 색상 */
+}
+input:hover {
+	border-bottom: 1px solid blue;	
 }
 /* 성별 선택 박스 */
 .gender-box {
@@ -82,10 +97,6 @@ input::placeholder {
     transform: translate(-50%, -50%);    
     width: 25%;
     height: 30px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 1px solid gray;
     color: gray;
     font-size: 14px;
     display: flex;
@@ -155,7 +166,7 @@ input::placeholder {
 }
 
 [type="radio"]:checked {
-  border: 0.7em solid blue;
+  border: 0.7em solid black;
 }
 
 [type="radio"]:focus-visible {
