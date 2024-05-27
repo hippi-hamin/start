@@ -66,10 +66,16 @@
         <input type="hidden" name="fromX" th:value="${fromPoint?.x}" />
         <input type="hidden" name="fromY" th:value="${fromPoint?.y}" />
          <!-- 경유지 좌표를 숨겨진 input 필드로 설정 -->
-    	<th:block th:each="waypoint, iterStat : ${wayPoint2}">
+    	<div id="waypoints">
+            <th:block th:each="waypoint : ${wayPoint2}">
+                <input type="hidden" name="wayPoints" th:value="${waypoint.x != null && waypoint.y != null ? waypoint.x + ',' + waypoint.y : ''}" />
+            </th:block>
+        </div>
+
+    	<!--th:block th:each="waypoint, iterStat : ${wayPoint2}">
         	<input type="hidden" name="wayPointX" th:value="${waypoint.x}" />
         	<input type="hidden" name="wayPointY" th:value="${waypoint.y}" />
-    	</th:block>
+    	</th:block-->
         <input type="hidden" name="toX" th:value="${toPoint?.x}" />
         <input type="hidden" name="toY" th:value="${toPoint?.y}" />
        
@@ -89,8 +95,6 @@
 	console.log(wayPoint2);
 	console.log("fwtList", fwtList);
 	console.log("fromName", fromName);
-
-
 
 	async function fetchCart() {
 		const response = await fetch('/showCart');
@@ -283,6 +287,7 @@
 	}
 
 	setMarkersAndPath();
+
 </script>
 
 </html>

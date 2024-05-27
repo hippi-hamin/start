@@ -1188,30 +1188,33 @@
 	});
 
 	function startRoute() {
-		$.get("/showCart")
-			.done(function (response) {
-				if (response.length > 0) {
-					var fromPoint = response[0];
-					var toPoint = response[response.length - 1];
-					var wayPoints = response.slice(1, response.length - 1);
-					var params = {
-						fromX: fromPoint.x,
-						fromY: fromPoint.y,
-						toX: toPoint.x,
-						toY: toPoint.y,
-					};
-					console.log(wayPoints);
-					if (wayPoints.length > 0) {
-						params.wayPoints = wayPoints.map(point => `${point.x},${point.y}`).join('|');
-					}
+	$.get("/showCart")
+		.done(function (response) {
+			if (response.length > 0) {
+				var fromPoint = response[0];
+				var toPoint = response[response.length - 1];
+				var wayPoints = response.slice(1, response.length - 1);
+				var params = {
+					fromX: fromPoint.x,
+					fromY: fromPoint.y,
+					toX: toPoint.x,
+					toY: toPoint.y,
+				};
 
-					var paramString = $.param(params);
-					window.location.href = "/mapPaths?" + paramString;
-				} else {
-					alert("장바구니에 장소가 없습니다.");
+				// 경유지 좌표를 문자열로 결합하여 params 객체에 추가
+				if (wayPoints.length > 0) {
+					params.wayPoints = wayPoints.map(point => `${point.x},${point.y}`).join('|');
 				}
-			});
-	}
+
+				// params 객체를 쿼리 문자열로 변환
+				var paramString = $.param(params);
+				window.location.href = "/mapPaths?" + paramString;
+			} else {
+				alert("장바구니에 장소가 없습니다.");
+			}
+		});
+}
+
 
 	 let selectedRegion = '';
 

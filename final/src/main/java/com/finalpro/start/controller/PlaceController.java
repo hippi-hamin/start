@@ -376,7 +376,7 @@ public class PlaceController {
 	    PlaceDTO toPoint = new PlaceDTO(toX, toY);
 	    List<PlaceDTO> wayPointList = new ArrayList<>();
 	    log.info("waypoint {}", wayPoints);
-	    if (wayPoints.equals(null) && wayPoints.isEmpty()) {
+	    if (wayPoints !=null && !wayPoints.isEmpty()) {
 	        String[] wayPointsArray = wayPoints.split("\\|");
 	        for (String point : wayPointsArray) {
 	            String[] coords = point.split(",");
@@ -402,7 +402,7 @@ public class PlaceController {
 	        model.addAttribute("placeList", placeListJson);
 	        model.addAttribute("distance", distance);
 	        model.addAttribute("duration", duration);
-	        log.info("waypoiintList {}",wayPointList);
+	        System.out.println("waypoiint" + wayPointList);
 	        System.out.println("Place List JSON: " + placeListJson);
 	    } catch (IOException | InterruptedException e) {
 	        e.printStackTrace();
